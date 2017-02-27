@@ -2,7 +2,7 @@ all:
 	make lint && make build && make docs && make open
 
 lint:
-	python cpplint.py src/*/*
+	python ./cpplint.py src/*/*
 
 build:
 	make clean && clang++ -std=c++14 -Wunicode-whitespace -g main.cpp src/*/*.cpp -o bin/main -v

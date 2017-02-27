@@ -1,53 +1,54 @@
-#ifndef CGP__CONFIGURATION_H_INCLUDED__
-#define CGP__CONFIGURATION_H_INCLUDED__
+/* Copyright 2017 Tiago Inácio */
 
-#include <cstring>
+#ifndef WORK_GITHUB_CGP_TOOLBOX_C___SRC_CGP_CONFIGURATION_H_
+#define WORK_GITHUB_CGP_TOOLBOX_C___SRC_CGP_CONFIGURATION_H_
+
 #include <map>
+#include <string>
 
 namespace cgp {
 
-    class configuration {
-        public:
-            configuration();
+class configuration {
+ public:
+    configuration();
 
-            // setters
-            void columns(unsigned int columns);
-            void comparisonFitnessOperator(std::string comparisonFitnessOperator);
-            void generations(unsigned int generations);
-            void levelsBack(unsigned int levelsBack);
-            void minimumFitnessSolution(double minimumFitnessSolution);
-            void mutationProbability(double mutationProbability);
-            void offspring(unsigned int offspring);
-            void isOutputLastNode(bool isOutputLastNode);
-            void outputs(unsigned int outputs);
-            void rows(unsigned int rows);
-            void runs(unsigned int runs);
+    // setters
+    void columns(unsigned int columns);
+    void comparisonFitnessOperator(std::string comparisonFitnessOperator);
+    void generations(unsigned int generations);
+    void levelsBack(unsigned int levelsBack);
+    void minimumFitnessSolution(double minimumFitnessSolution);
+    void mutationProbability(double mutationProbability);
+    void offspring(unsigned int offspring);
+    void isOutputLastNode(bool isOutputLastNode);
+    void outputs(unsigned int outputs);
+    void rows(unsigned int rows);
+    void runs(unsigned int runs);
 
-            // getters
-            unsigned int rows();
-            unsigned int columns();
-            unsigned int levelsBack();
-            unsigned int runs();
-            unsigned int outputs();
-            unsigned int generations();
-            unsigned int offspring();
+    // getters
+    unsigned int rows();
+    unsigned int columns();
+    unsigned int levelsBack();
+    unsigned int runs();
+    unsigned int outputs();
+    unsigned int generations();
+    unsigned int offspring();
 
-            void toString() const;
+    void toString() const;
 
-        private:
-            bool _isOutputLastNode;
-            double _minimumFitnessSolution;
-            double _mutationProbability;
-            unsigned int _columns;
-            unsigned int _generations;
-            unsigned int _levelsBack;
-            unsigned int _offspring;
-            unsigned int _outputs;
-            unsigned int _rows;
-            unsigned int _runs;
-            std::string _comparisonFitnessOperator;
-    };
-
+ private:
+    bool _isOutputLastNode;
+    double _minimumFitnessSolution;
+    double _mutationProbability;
+    unsigned int _columns;
+    unsigned int _generations;
+    unsigned int _levelsBack;
+    unsigned int _offspring;
+    unsigned int _outputs;
+    unsigned int _rows;
+    unsigned int _runs;
+    std::string _comparisonFitnessOperator;
 };
+};  // namespace cgp
 
-#endif
+#endif  // WORK_GITHUB_CGP_TOOLBOX_C___SRC_CGP_CONFIGURATION_H_
