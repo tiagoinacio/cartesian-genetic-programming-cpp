@@ -1,12 +1,12 @@
 /* Copyright 2017 Tiago Inácio */
 
-#ifndef WORK_GITHUB_CGP_TOOLBOX_C___SRC_CGP_CGP_H_
-#define WORK_GITHUB_CGP_TOOLBOX_C___SRC_CGP_CGP_H_
+#ifndef CARTESIAN_GENETIC_PROGRAMMING_CPP_SRC_CGP_CGP_H_
+#define CARTESIAN_GENETIC_PROGRAMMING_CPP_SRC_CGP_CGP_H_
 
 #include <cstring>
 #include <map>
 
-#include "./configuration.h"
+#include "./src/cgp/configuration.h"
 
 namespace cgp {
 
@@ -22,4 +22,4 @@ class cgp {
 
 };  // namespace cgp
 
-#endif  // WORK_GITHUB_CGP_TOOLBOX_C___SRC_CGP_CGP_H_
+#endif  // CARTESIAN_GENETIC_PROGRAMMING_CPP_SRC_CGP_CGP_H_

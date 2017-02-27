@@ -5,7 +5,7 @@ lint:
 	python ./cpplint.py src/*/*
 
 build:
-	make clean && clang++ -std=c++14 -Wunicode-whitespace -g main.cpp src/*/*.cpp -o bin/main -v
+	make clean && clang++ -std=c++14 -Wunicode-whitespace -g main.cpp src/*/*.cpp -I . -o bin/main -v
 
 # -I /usr/local/Cellar/boost/1.63.0/include -L /usr/local/Cellar/boost/1.63.0/lib
 run:

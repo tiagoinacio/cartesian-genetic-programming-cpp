@@ -2,8 +2,8 @@
 #include <map>
 #include <iostream>
 
-#include "src/cgp/cgp.h"
-#include "src/cgp/configuration.h"
+#include "./src/cgp/cgp.h"
+#include "./src/cgp/configuration.h"
 
 int main() {
 

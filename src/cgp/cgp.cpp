@@ -6,8 +6,8 @@
 #include <algorithm>
 #include <stdexcept>
 
-#include "./cgp.h"
-#include "./configuration.h"
+#include "src/cgp/cgp.h"
+#include "src/cgp/configuration.h"
 
 cgp::cgp::cgp(const configuration configuration) :
     _configuration(configuration)
