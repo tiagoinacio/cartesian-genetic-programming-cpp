@@ -36,8 +36,17 @@
 .vscode
 
 # tmp
-_src
-
 html
-
 bin
+tags
+
+# cmake
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake

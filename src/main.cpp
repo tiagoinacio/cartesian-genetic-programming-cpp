@@ -1,12 +1,13 @@
+/* Copyright 2017 Tiago Inácio */
+
 #include <cstring>
 #include <map>
 #include <iostream>
 
-#include "./src/cgp/cgp.h"
-#include "./src/cgp/configuration.h"
+#include "include/cgp.h"
+#include "include/configuration.h"
 
 int main() {
-
     cgp::configuration configuration;
 
     configuration.rows(5);

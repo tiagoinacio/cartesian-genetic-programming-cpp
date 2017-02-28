@@ -6,7 +6,7 @@
 #include <cstring>
 #include <map>
 
-#include "./src/cgp/configuration.h"
+#include "./include/configuration.h"
 
 namespace cgp {
 

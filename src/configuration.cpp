@@ -5,8 +5,8 @@
 #include <stdexcept>
 #include <string>
 
-#include "src/cgp/configuration.h"
-#include "src/shared/constants.h"
+#include "include/configuration.h"
+#include "include/constants.h"
 
 // constructors
 cgp::configuration::configuration()
