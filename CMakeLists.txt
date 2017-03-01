@@ -22,9 +22,10 @@ include_directories(include)
 
 #However, the file(GLOB...) allows for wildcard additions:
 file(GLOB SOURCES "src/*.cpp")
+file(GLOB SPECS "test/*.cpp")
 file(GLOB INCLUDES "include/*.h")
 
-add_executable(cgp ${SOURCES})
+add_executable(cgp ${SOURCES} main.cpp)
 
 # add a target to generate API documentation with Doxygen
 find_package(Doxygen)
@@ -42,3 +43,51 @@ add_custom_target(lint ALL
     COMMENT "Running cpplint..." VERBATIM
     )
 
+########
+# TEST #
+#######
+# Download and unpack googletest at configure time
+configure_file(CMakeLists.txt.in ${CMAKE_BINARY_DIR}/libs/googletest/CMakeLists.txt)
+execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
+    RESULT_VARIABLE result
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/libs/googletest )
+if(result)
+    message(FATAL_ERROR "CMake step for googletest failed: ${result}")
+endif()
+execute_process(COMMAND ${CMAKE_COMMAND} --build .
+    RESULT_VARIABLE result
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/libs/googletest )
+if(result)
+    message(FATAL_ERROR "Build step for googletest failed: ${result}")
+endif()
+
+# Prevent overriding the parent project's compiler/linker
+# settings on Windows
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+
+# Add googletest directly to our build. This defines
+# the gtest and gtest_main targets.
+add_subdirectory(${CMAKE_BINARY_DIR}/libs/googletest-src
+    ${CMAKE_BINARY_DIR}/libs/googletest-build)
+
+# The gtest/gtest_main targets carry header search path
+# dependencies automatically when using CMake 2.8.11 or
+# later. Otherwise we have to add them here ourselves.
+if (CMAKE_VERSION VERSION_LESS 2.8.11)
+    include_directories("${gtest_SOURCE_DIR}/include")
+endif()
+
+# For make-based builds, defines make target named test.
+# For Visual Studio builds, defines Visual Studio project named RUN_TESTS.
+enable_testing()
+
+# Extra linking for the project.
+add_executable(unit-tests ${SOURCES} ${SPECS})
+
+target_link_libraries(unit-tests gtest_main gtest)
+
+# file(GLOB TEST_SRC_FILES ${PROJECT_SOURCE_DIR}/test/*.cpp)
+add_test(
+    NAME configuration-test
+    COMMAND unit-tests
+)
