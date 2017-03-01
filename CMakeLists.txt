@@ -1,9 +1,7 @@
 # Specify the minimum version for CMake
-
 cmake_minimum_required(VERSION 2.8)
 
 # Project's name
-
 project(cartesian-genetic-programming-cpp)
 
 # Set the output folder where your program will be created
@@ -17,31 +15,11 @@ include_directories("${PROJECT_SOURCE_DIR}")
 #Bring the headers, such as Student.h into the project
 include_directories(include)
 
-#Can manually add the sources using the set command as follows:
-# set(SOURCES main.cpp)
-
-#However, the file(GLOB...) allows for wildcard additions:
-file(GLOB SOURCES "src/*.cpp")
-file(GLOB SPECS "test/*.cpp")
+file(GLOB SOURCES "src/*.cc")
+file(GLOB SPECS "test/*.cc")
 file(GLOB INCLUDES "include/*.h")
 
 add_executable(cgp ${SOURCES} main.cpp)
-
-# add a target to generate API documentation with Doxygen
-find_package(Doxygen)
-if(DOXYGEN_FOUND)
-    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY)
-    add_custom_target(doc ALL
-        ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
-        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-        COMMENT "Generating API documentation with Doxygen" VERBATIM
-        )
-endif(DOXYGEN_FOUND)
-
-add_custom_target(lint ALL
-    python ${CMAKE_SOURCE_DIR}/cpplint.py ${SOURCES} ${INCLUDES}
-    COMMENT "Running cpplint..." VERBATIM
-    )
 
 ########
 # TEST #
@@ -82,12 +60,29 @@ endif()
 enable_testing()
 
 # Extra linking for the project.
-add_executable(unit-tests ${SOURCES} ${SPECS})
+add_executable(test ${SOURCES} ${SPECS})
 
-target_link_libraries(unit-tests gtest_main gtest)
+target_link_libraries(test gtest_main gtest)
 
-# file(GLOB TEST_SRC_FILES ${PROJECT_SOURCE_DIR}/test/*.cpp)
 add_test(
-    NAME configuration-test
-    COMMAND unit-tests
+    NAME test
+    COMMAND ./bin/test
 )
+
+## DOXYGEN ##
+# add a target to generate API documentation with Doxygen
+find_package(Doxygen)
+if(DOXYGEN_FOUND)
+    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY)
+    add_custom_target(doc ALL
+        ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMENT "Generating API documentation with Doxygen" VERBATIM
+        )
+endif(DOXYGEN_FOUND)
+
+add_custom_target(lint ALL
+    python ${CMAKE_SOURCE_DIR}/cpplint.py ${SOURCES} ${INCLUDES}
+    COMMENT "Running cpplint..." VERBATIM
+    )
+
