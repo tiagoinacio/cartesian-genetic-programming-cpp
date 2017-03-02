@@ -60,13 +60,13 @@ endif()
 enable_testing()
 
 # Extra linking for the project.
-add_executable(test ${SOURCES} ${SPECS})
+add_executable(unit-tests ${SOURCES} ${SPECS})
 
-target_link_libraries(test gtest_main gtest)
+target_link_libraries(unit-tests gtest_main gtest pthread)
 
 add_test(
     NAME test
-    COMMAND ./bin/test
+    COMMAND ./bin/unit-tests
 )
 
 ## DOXYGEN ##
@@ -86,3 +86,21 @@ add_custom_target(lint ALL
     COMMENT "Running cpplint..." VERBATIM
     )
 
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMakeModules)
+SET(CMAKE_CXX_FLAGS "-g -O0 -Wall -fprofile-arcs -ftest-coverage")
+SET(CMAKE_C_FLAGS "-g -O0 -Wall -W -fprofile-arcs -ftest-coverage")
+SET(CMAKE_EXE_LINKER_FLAGS "-fprofile-arcs -ftest-coverage")
+
+
+include(CodeCoverage)
+# setup_target_for_coverage(${PROJECT_NAME}_coverage unit-tests coverage)
+
+add_custom_target(coverage
+    COMMAND lcov --zerocounters --directory ${PROJECT_BINARY_DIR}
+    COMMAND lcov --capture --initial --directory ${PROJECT_BINARY_DIR} --output-file ${PROJECT_BINARY_DIR}/build/reports/coverage
+    COMMAND ${PROJECT_BINARY_DIR}/bin/unit-tests
+    COMMAND lcov --no-checksum --directory ${PROJECT_BINARY_DIR} --capture --output-file ${PROJECT_BINARY_DIR}/build/reports/coverage.info
+    COMMAND lcov --remove ${PROJECT_BINARY_DIR}/build/reports/coverage.info "*gtest*" "*c++*" -o ${PROJECT_BINARY_DIR}/build/reports/coverage.info
+    COMMAND genhtml ${PROJECT_BINARY_DIR}/build/reports/coverage.info -o ${PROJECT_BINARY_DIR}/build/reports
+
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
