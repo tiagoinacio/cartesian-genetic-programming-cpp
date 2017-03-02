@@ -103,4 +103,10 @@ add_custom_target(coverage
     COMMAND lcov --remove ${PROJECT_BINARY_DIR}/build/reports/coverage.info "*gtest*" "*c++*" -o ${PROJECT_BINARY_DIR}/build/reports/coverage.info
     COMMAND genhtml ${PROJECT_BINARY_DIR}/build/reports/coverage.info -o ${PROJECT_BINARY_DIR}/build/reports
 
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+)
+
+add_custom_target(check
+    COMMAND make lint
+    COMMAND make coverage
+)
