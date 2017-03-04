@@ -36,8 +36,8 @@
 .vscode
 
 # tmp
-html
-bin
+html/
+bin/
 tags
 
 # cmake

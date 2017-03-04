@@ -16,14 +16,14 @@ class ConfigurationTest : public ::testing::Test {
 // Default Properties
 // Test number of rows
 TEST_F(ConfigurationTest, rows){
-    cgp::configuration configuration;
+    cgp::Configuration configuration;
     EXPECT_EQ(1, configuration.rows());
 }
 
 // Test number of columns
 TEST_F(ConfigurationTest, columns){
-    cgp::configuration configuration;
-    EXPECT_EQ(1, configuration.columns());
+    cgp::Configuration configuration;
+    EXPECT_EQ(10, configuration.columns());
 }
 
 

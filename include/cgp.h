@@ -1,23 +1,21 @@
-/* Copyright 2017 Tiago Inácio */
+// Copyright 2017
+// Tiago Inácio
 
 #ifndef CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_CGP_H_
 #define CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_CGP_H_
 
-#include <cstring>
 #include <map>
-
+#include <string>
 #include "./include/configuration.h"
 
 namespace cgp {
 
-class cgp {
+class CGP {
  public:
-    explicit cgp(configuration config);
-
-    void setRows(int rows);
+    explicit CGP(Configuration config);
 
  private:
-    const configuration _configuration;
+    const Configuration _configuration;
 };
 
 };  // namespace cgp

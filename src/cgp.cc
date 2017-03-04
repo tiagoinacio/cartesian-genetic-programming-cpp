@@ -1,15 +1,15 @@
-/* Copyright 2017 Tiago Inácio */
+// Copyright 2017
+// Tiago Inácio
 
-#include <cstring>
-#include <map>
-#include <iostream>
 #include <algorithm>
+#include <string>
+#include <iostream>
+#include <map>
 #include <stdexcept>
-
 #include "include/cgp.h"
 #include "include/configuration.h"
 
-cgp::cgp::cgp(const configuration configuration) :
+cgp::CGP::CGP(const Configuration configuration) :
     _configuration(configuration)
     {}
 

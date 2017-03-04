@@ -8,24 +8,24 @@
 #include "include/configuration.h"
 
 int main() {
-    cgp::configuration configuration;
+    cgp::Configuration configuration;
 
-    configuration.rows(5);
-    configuration.isOutputLastNode(false);
-    configuration.columns(1);
-    configuration.comparisonFitnessOperator(">=");
-    configuration.generations(1);
-    configuration.levelsBack(1);
-    configuration.minimumFitnessSolution(0.1);
-    configuration.mutationProbability(0.1);
-    configuration.offspring(1);
-    configuration.outputs(1);
-    configuration.rows(1);
-    configuration.runs(1);
+    configuration.isNodeOutputTheLastOne(false);
+    configuration.setColumns(1);
+    configuration.setComparisonOperator(">=");
+    configuration.setFitnessThreshold(0.1);
+    configuration.setGenerations(1);
+    configuration.setLevelsBack(1);
+    configuration.setMutationProbability(0.1);
+    configuration.setOffspring(1);
+    configuration.setOutputs(1);
+    configuration.setRows(1);
+    configuration.setRows(5);
+    configuration.setRuns(1);
 
     configuration.toString();
 
-    cgp::cgp cgp(configuration);
+    cgp::CGP cgp(configuration);
 
     return 0;
 }
