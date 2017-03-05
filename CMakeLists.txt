@@ -45,14 +45,19 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
 # Add googletest directly to our build. This defines
 # the gtest and gtest_main targets.
-add_subdirectory(${CMAKE_BINARY_DIR}/libs/googletest-src
-    ${CMAKE_BINARY_DIR}/libs/googletest-build)
+add_subdirectory(
+    ${CMAKE_BINARY_DIR}/libs/googletest-src
+    ${CMAKE_BINARY_DIR}/libs/googletest-build
+)
 
 # The gtest/gtest_main targets carry header search path
 # dependencies automatically when using CMake 2.8.11 or
 # later. Otherwise we have to add them here ourselves.
 if (CMAKE_VERSION VERSION_LESS 2.8.11)
-    include_directories("${gtest_SOURCE_DIR}/include")
+    include_directories(
+        "${gtest_SOURCE_DIR}/include"
+        "${gmock_SOURCE_DIR}/include"
+    )
 endif()
 
 # For make-based builds, defines make target named test.
@@ -62,7 +67,7 @@ enable_testing()
 # Extra linking for the project.
 add_executable(unit-tests ${SOURCES} ${SPECS})
 
-target_link_libraries(unit-tests gtest_main gtest pthread)
+target_link_libraries(unit-tests gtest_main gtest gmock gmock_main pthread)
 
 add_test(
     NAME test
@@ -101,6 +106,7 @@ add_custom_target(coverage
     COMMAND ${PROJECT_BINARY_DIR}/bin/unit-tests
     COMMAND lcov --no-checksum --directory ${PROJECT_BINARY_DIR} --capture --output-file ${PROJECT_BINARY_DIR}/build/reports/coverage.info
     COMMAND lcov --remove ${PROJECT_BINARY_DIR}/build/reports/coverage.info "*gtest*" "*c++*" -o ${PROJECT_BINARY_DIR}/build/reports/coverage.info
+    COMMAND lcov --remove ${PROJECT_BINARY_DIR}/build/reports/coverage.info "*gmock*" "*c++*" -o ${PROJECT_BINARY_DIR}/build/reports/coverage.info
     COMMAND genhtml ${PROJECT_BINARY_DIR}/build/reports/coverage.info -o ${PROJECT_BINARY_DIR}/build/reports
 
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}

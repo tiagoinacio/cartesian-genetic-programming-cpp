@@ -1,5 +1,4 @@
-// Copyright 2017
-// Tiago Inácio
+// copyright Tiago Inácio
 
 #include <iostream>
 #include <map>
@@ -7,10 +6,9 @@
 #include <string>
 #include "include/configuration.h"
 
-// constructors
 cgp::Configuration::Configuration()
     : _columns(10),
-    _comparisonOperator(">="),
+    _comparisonOperator("<="),
     _fitnessThreshold(0.01),
     _generations(10),
     _levelsBack(10),
@@ -51,16 +49,14 @@ void cgp::Configuration::setOffspring(unsigned int offspring) {
 }
 
 void cgp::Configuration::setMutationProbability(double mutationProbability) {
-    if (_mutationProbability < 0) {
-        throw std::invalid_argument(
-                "Invalid argument for mutationProbability. Mutation probability"
-                " must be superior to 0.");
+    if (mutationProbability < 0) {
+        throw std::out_of_range(
+                "Mutation probability must be superior to 0.");
     }
 
-    if (_mutationProbability > 100) {
-        throw std::invalid_argument(
-                "Invalid argument for mutationProbability. Mutation probability"
-                " must be inferior or equal to 100.");
+    if (mutationProbability > 1) {
+        throw std::out_of_range(
+                "Mutation probability must be inferior or equal to 1.");
     }
 
     _mutationProbability = mutationProbability;
@@ -90,6 +86,22 @@ unsigned int cgp::Configuration::levelsBack() {
     return _levelsBack;
 }
 
+std::string cgp::Configuration::comparisonOperator() {
+    return _comparisonOperator;
+}
+
+double cgp::Configuration::fitnessThreshold() {
+    return _fitnessThreshold;
+}
+
+bool cgp::Configuration::isNodeOutputTheLastOne() {
+    return _isNodeOutputTheLastOne;
+}
+
+double cgp::Configuration::mutationProbability() {
+    return _mutationProbability;
+}
+
 unsigned int cgp::Configuration::runs() {
     return _runs;
 }
@@ -107,16 +119,18 @@ unsigned int cgp::Configuration::offspring() {
 }
 
 void cgp::Configuration::toString() const {
-    std::cout << "_isNodeOutputTheLastOne: " << _isNodeOutputTheLastOne
+    std::cout << "*******************************" << std::endl;
+    std::cout << "isNodeOutputTheLastOne: " << _isNodeOutputTheLastOne
         << std::endl;
-    std::cout << "_fitnessThreshold: " << _fitnessThreshold << std::endl;
-    std::cout << "_mutationProbability: " << _mutationProbability << std::endl;
-    std::cout << "_columns: " << _columns << std::endl;
-    std::cout << "_generations: " << _generations << std::endl;
-    std::cout << "_levelsBack: " << _levelsBack << std::endl;
-    std::cout << "_offspring: " << _offspring << std::endl;
-    std::cout << "_outputs: " << _outputs << std::endl;
-    std::cout << "_rows: " << _rows << std::endl;
-    std::cout << "_runs: " << _runs << std::endl;
-    std::cout << "_comparisonOperator: " << _comparisonOperator << std::endl;
+    std::cout << "fitnessThreshold: " << _fitnessThreshold << std::endl;
+    std::cout << "mutationProbability: " << _mutationProbability << std::endl;
+    std::cout << "columns: " << _columns << std::endl;
+    std::cout << "generations: " << _generations << std::endl;
+    std::cout << "levelsBack: " << _levelsBack << std::endl;
+    std::cout << "offspring: " << _offspring << std::endl;
+    std::cout << "outputs: " << _outputs << std::endl;
+    std::cout << "rows: " << _rows << std::endl;
+    std::cout << "runs: " << _runs << std::endl;
+    std::cout << "comparisonOperator: " << _comparisonOperator << std::endl;
+    std::cout << "*******************************" << std::endl;
 }

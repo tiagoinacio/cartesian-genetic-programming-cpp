@@ -13,7 +13,6 @@ class Configuration {
  public:
     Configuration();
 
-    // setters
     void isNodeOutputTheLastOne(bool isNodeOutputTheLastOne);
     void setColumns(unsigned int columns);
     void setComparisonOperator(std::string comparisonOperator);
@@ -26,10 +25,13 @@ class Configuration {
     void setRows(unsigned int rows);
     void setRuns(unsigned int runs);
 
-    // getters
+    bool isNodeOutputTheLastOne();
     unsigned int columns();
+    std::string comparisonOperator();
+    double fitnessThreshold();
     unsigned int generations();
     unsigned int levelsBack();
+    double mutationProbability();
     unsigned int offspring();
     unsigned int outputs();
     unsigned int rows();
