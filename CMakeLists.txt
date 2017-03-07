@@ -71,7 +71,7 @@ target_link_libraries(unit-tests gtest_main gtest gmock gmock_main pthread)
 
 add_test(
     NAME test
-    COMMAND ./bin/unit-tests
+    COMMAND ${CMAKE_SOURCE_DIR}/bin/unit-tests
 )
 
 ## DOXYGEN ##
@@ -101,15 +101,15 @@ include(CodeCoverage)
 # setup_target_for_coverage(${PROJECT_NAME}_coverage unit-tests coverage)
 
 add_custom_target(coverage
-    COMMAND lcov --zerocounters --directory ${PROJECT_BINARY_DIR}
-    COMMAND lcov --capture --initial --directory ${PROJECT_BINARY_DIR} --output-file ${PROJECT_BINARY_DIR}/coverage
-    COMMAND ${PROJECT_BINARY_DIR}/bin/unit-tests
-    COMMAND lcov --no-checksum --directory ${PROJECT_BINARY_DIR} --capture --output-file ${PROJECT_BINARY_DIR}/coverage.info
-    COMMAND lcov --remove ${PROJECT_BINARY_DIR}/coverage.info "*gtest*" "*c++*" -o ${PROJECT_BINARY_DIR}/coverage.info
-    COMMAND lcov --remove ${PROJECT_BINARY_DIR}/coverage.info "*gmock*" "*c++*" -o ${PROJECT_BINARY_DIR}/coverage.info
-    COMMAND genhtml ${PROJECT_BINARY_DIR}/coverage.info -o ${PROJECT_BINARY_DIR}
+    COMMAND lcov --zerocounters --directory ${CMAKE_SOURCE_DIR}/build
+    COMMAND lcov --capture --initial --directory ${CMAKE_SOURCE_DIR}/build --output-file ${CMAKE_SOURCE_DIR}/build/coverage
+    COMMAND make test
+    COMMAND lcov --no-checksum --directory ${CMAKE_SOURCE_DIR}/build --capture --output-file ${CMAKE_SOURCE_DIR}/build/coverage.info
+    COMMAND lcov --remove ${CMAKE_SOURCE_DIR}/build/coverage.info "*gtest*" "*c++*" -o ${CMAKE_SOURCE_DIR}/build/coverage.info
+    COMMAND lcov --remove ${CMAKE_SOURCE_DIR}/build/coverage.info "*gmock*" "*c++*" -o ${CMAKE_SOURCE_DIR}/build/coverage.info
+    COMMAND genhtml ${CMAKE_SOURCE_DIR}/build/coverage.info -o ${CMAKE_SOURCE_DIR}/build
 
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/build
 )
 
 add_custom_target(check
