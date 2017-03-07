@@ -18,6 +18,7 @@ class Configuration {
     void setComparisonOperator(std::string comparisonOperator);
     void setFitnessThreshold(double fitnessThreshold);
     void setGenerations(unsigned int generations);
+    void setInputs(unsigned int inputs);
     void setLevelsBack(unsigned int levelsBack);
     void setMutationProbability(double mutationProbability);
     void setOffspring(unsigned int offspring);
@@ -30,6 +31,7 @@ class Configuration {
     std::string comparisonOperator();
     double fitnessThreshold();
     unsigned int generations();
+    unsigned int inputs();
     unsigned int levelsBack();
     double mutationProbability();
     unsigned int offspring();
@@ -40,17 +42,18 @@ class Configuration {
     void toString() const;
 
  private:
-    unsigned int _columns;
-    std::string _comparisonOperator;
-    double _fitnessThreshold;
-    unsigned int _generations;
-    unsigned int _levelsBack;
-    double _mutationProbability;
-    unsigned int _offspring;
-    unsigned int _outputs;
-    unsigned int _rows;
-    unsigned int _runs;
-    bool _isNodeOutputTheLastOne;
+    unsigned int columns_;
+    std::string comparisonOperator_;
+    double fitnessThreshold_;
+    unsigned int generations_;
+    unsigned int inputs_;
+    unsigned int levelsBack_;
+    double mutationProbability_;
+    unsigned int offspring_;
+    unsigned int outputs_;
+    unsigned int rows_;
+    unsigned int runs_;
+    bool isNodeOutputTheLastOne_;
 };
 
 };  // namespace cgp

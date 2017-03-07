@@ -19,7 +19,7 @@ file(GLOB SOURCES "src/*.cc")
 file(GLOB SPECS "test/*.cc")
 file(GLOB INCLUDES "include/*.h")
 
-add_executable(cgp ${SOURCES} main.cpp)
+add_executable(${PROJECT_NAME} ${SOURCES} main.cpp)
 
 ########
 # TEST #
@@ -102,17 +102,22 @@ include(CodeCoverage)
 
 add_custom_target(coverage
     COMMAND lcov --zerocounters --directory ${PROJECT_BINARY_DIR}
-    COMMAND lcov --capture --initial --directory ${PROJECT_BINARY_DIR} --output-file ${PROJECT_BINARY_DIR}/build/reports/coverage
+    COMMAND lcov --capture --initial --directory ${PROJECT_BINARY_DIR} --output-file ${PROJECT_BINARY_DIR}/coverage
     COMMAND ${PROJECT_BINARY_DIR}/bin/unit-tests
-    COMMAND lcov --no-checksum --directory ${PROJECT_BINARY_DIR} --capture --output-file ${PROJECT_BINARY_DIR}/build/reports/coverage.info
-    COMMAND lcov --remove ${PROJECT_BINARY_DIR}/build/reports/coverage.info "*gtest*" "*c++*" -o ${PROJECT_BINARY_DIR}/build/reports/coverage.info
-    COMMAND lcov --remove ${PROJECT_BINARY_DIR}/build/reports/coverage.info "*gmock*" "*c++*" -o ${PROJECT_BINARY_DIR}/build/reports/coverage.info
-    COMMAND genhtml ${PROJECT_BINARY_DIR}/build/reports/coverage.info -o ${PROJECT_BINARY_DIR}/build/reports
+    COMMAND lcov --no-checksum --directory ${PROJECT_BINARY_DIR} --capture --output-file ${PROJECT_BINARY_DIR}/coverage.info
+    COMMAND lcov --remove ${PROJECT_BINARY_DIR}/coverage.info "*gtest*" "*c++*" -o ${PROJECT_BINARY_DIR}/coverage.info
+    COMMAND lcov --remove ${PROJECT_BINARY_DIR}/coverage.info "*gmock*" "*c++*" -o ${PROJECT_BINARY_DIR}/coverage.info
+    COMMAND genhtml ${PROJECT_BINARY_DIR}/coverage.info -o ${PROJECT_BINARY_DIR}
 
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 )
 
 add_custom_target(check
+    COMMAND make
     COMMAND make lint
     COMMAND make coverage
+)
+
+add_custom_target(run
+    COMMAND ${CMAKE_SOURCE_DIR}/bin/${PROJECT_NAME}
 )

@@ -83,6 +83,14 @@ TEST_F(ConfigurationClass, setGenerations) {
     EXPECT_EQ(15, configuration.generations());
 }
 
+TEST_F(ConfigurationClass, setInputs) {
+    configuration.setInputs(5);
+    EXPECT_EQ(5, configuration.inputs());
+
+    configuration.setInputs(15);
+    EXPECT_EQ(15, configuration.inputs());
+}
+
 TEST_F(ConfigurationClass, setOffspring) {
     configuration.setOffspring(5);
     EXPECT_EQ(5, configuration.offspring());

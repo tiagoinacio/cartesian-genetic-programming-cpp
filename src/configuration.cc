@@ -7,45 +7,49 @@
 #include "include/configuration.h"
 
 cgp::Configuration::Configuration()
-    : _columns(10),
-    _comparisonOperator("<="),
-    _fitnessThreshold(0.01),
-    _generations(10),
-    _levelsBack(10),
-    _mutationProbability(0.1),
-    _offspring(4),
-    _outputs(1),
-    _rows(1),
-    _runs(5),
-    _isNodeOutputTheLastOne(true)
+    : columns_(10),
+    comparisonOperator_("<="),
+    fitnessThreshold_(0.01),
+    generations_(10),
+    levelsBack_(10),
+    mutationProbability_(0.1),
+    offspring_(4),
+    outputs_(1),
+    rows_(1),
+    runs_(5),
+    isNodeOutputTheLastOne_(true)
 {}
 
 void cgp::Configuration::setRows(unsigned int rows) {
-    _rows = rows;
+    rows_ = rows;
 }
 
 void cgp::Configuration::setColumns(unsigned int columns) {
-    _columns = columns;
+    columns_ = columns;
 }
 
 void cgp::Configuration::setLevelsBack(unsigned int levelsBack) {
-    _levelsBack = levelsBack;
+    levelsBack_ = levelsBack;
 }
 
 void cgp::Configuration::setRuns(unsigned int runs) {
-    _runs = runs;
+    runs_ = runs;
+}
+
+void cgp::Configuration::setInputs(unsigned int inputs) {
+    inputs_ = inputs;
 }
 
 void cgp::Configuration::setOutputs(unsigned int outputs) {
-    _outputs = outputs;
+    outputs_ = outputs;
 }
 
 void cgp::Configuration::setGenerations(unsigned int generations) {
-    _generations = generations;
+    generations_ = generations;
 }
 
 void cgp::Configuration::setOffspring(unsigned int offspring) {
-    _offspring = offspring;
+    offspring_ = offspring;
 }
 
 void cgp::Configuration::setMutationProbability(double mutationProbability) {
@@ -59,78 +63,83 @@ void cgp::Configuration::setMutationProbability(double mutationProbability) {
                 "Mutation probability must be inferior or equal to 1.");
     }
 
-    _mutationProbability = mutationProbability;
+    mutationProbability_ = mutationProbability;
 }
 
 void cgp::Configuration::setFitnessThreshold(double fitnessThreshold) {
-    _fitnessThreshold = fitnessThreshold;
+    fitnessThreshold_ = fitnessThreshold;
 }
 
 void cgp::Configuration::setComparisonOperator(std::string comparisonOperator) {
-    _comparisonOperator = comparisonOperator;
+    comparisonOperator_ = comparisonOperator;
 }
 
 void cgp::Configuration::isNodeOutputTheLastOne(bool isNodeOutputTheLastOne) {
-    _isNodeOutputTheLastOne = isNodeOutputTheLastOne;
+    isNodeOutputTheLastOne_ = isNodeOutputTheLastOne;
 }
 
 unsigned int cgp::Configuration::rows() {
-    return _rows;
+    return rows_;
 }
 
 unsigned int cgp::Configuration::columns() {
-    return _columns;
+    return columns_;
 }
 
 unsigned int cgp::Configuration::levelsBack() {
-    return _levelsBack;
+    return levelsBack_;
 }
 
 std::string cgp::Configuration::comparisonOperator() {
-    return _comparisonOperator;
+    return comparisonOperator_;
+}
+
+unsigned int cgp::Configuration::inputs() {
+    return inputs_;
 }
 
 double cgp::Configuration::fitnessThreshold() {
-    return _fitnessThreshold;
+    return fitnessThreshold_;
 }
 
 bool cgp::Configuration::isNodeOutputTheLastOne() {
-    return _isNodeOutputTheLastOne;
+    return isNodeOutputTheLastOne_;
 }
 
 double cgp::Configuration::mutationProbability() {
-    return _mutationProbability;
+    return mutationProbability_;
 }
 
 unsigned int cgp::Configuration::runs() {
-    return _runs;
+    return runs_;
 }
 
 unsigned int cgp::Configuration::outputs() {
-    return _outputs;
+    return outputs_;
 }
 
 unsigned int cgp::Configuration::generations() {
-    return _generations;
+    return generations_;
 }
 
 unsigned int cgp::Configuration::offspring() {
-    return _offspring;
+    return offspring_;
 }
 
 void cgp::Configuration::toString() const {
     std::cout << "*******************************" << std::endl;
-    std::cout << "isNodeOutputTheLastOne: " << _isNodeOutputTheLastOne
+    std::cout << "isNodeOutputTheLastOne: " << isNodeOutputTheLastOne_
         << std::endl;
-    std::cout << "fitnessThreshold: " << _fitnessThreshold << std::endl;
-    std::cout << "mutationProbability: " << _mutationProbability << std::endl;
-    std::cout << "columns: " << _columns << std::endl;
-    std::cout << "generations: " << _generations << std::endl;
-    std::cout << "levelsBack: " << _levelsBack << std::endl;
-    std::cout << "offspring: " << _offspring << std::endl;
-    std::cout << "outputs: " << _outputs << std::endl;
-    std::cout << "rows: " << _rows << std::endl;
-    std::cout << "runs: " << _runs << std::endl;
-    std::cout << "comparisonOperator: " << _comparisonOperator << std::endl;
+    std::cout << "fitnessThreshold: " << fitnessThreshold_ << std::endl;
+    std::cout << "mutationProbability: " << mutationProbability_ << std::endl;
+    std::cout << "columns: " << columns_ << std::endl;
+    std::cout << "generations: " << generations_ << std::endl;
+    std::cout << "levelsBack: " << levelsBack_ << std::endl;
+    std::cout << "offspring: " << offspring_ << std::endl;
+    std::cout << "inputs: " << inputs_ << std::endl;
+    std::cout << "outputs: " << outputs_ << std::endl;
+    std::cout << "rows: " << rows_ << std::endl;
+    std::cout << "runs: " << runs_ << std::endl;
+    std::cout << "comparisonOperator: " << comparisonOperator_ << std::endl;
     std::cout << "*******************************" << std::endl;
 }
