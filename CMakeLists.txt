@@ -121,3 +121,11 @@ add_custom_target(check
 add_custom_target(run
     COMMAND ${CMAKE_SOURCE_DIR}/bin/${PROJECT_NAME}
 )
+
+add_custom_target(build
+    COMMAND rm -rf *
+    COMMAND cmake ..
+    COMMAND make
+    COMMAND make check
+    COMMAND make run
+)

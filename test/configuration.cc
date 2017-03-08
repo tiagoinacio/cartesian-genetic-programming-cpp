@@ -165,8 +165,3 @@ TEST_F(ConfigurationClass, toString) {
     EXPECT_THAT(output, HasSubstr("runs"));
     EXPECT_THAT(output, HasSubstr("comparisonOperator"));
 }
-
-int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}

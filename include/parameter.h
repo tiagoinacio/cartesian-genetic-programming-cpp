@@ -4,19 +4,27 @@
 #ifndef CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_PARAMETER_H_
 #define CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_PARAMETER_H_
 
+#include <stdexcept>
+
 namespace cgp {
 
 template <class T>
 class Parameter {
  public:
-    Parameter() {}
+    Parameter() :
+        isMutationFnSet_(false),
+        isValueSet_(false)
+        {}
 
     Parameter(T value, T (*mutationFn)(T)) :
-        value_(value),
-        mutationFn_(mutationFn)
+        isMutationFnSet_(true),
+        isValueSet_(true),
+        mutationFn_(mutationFn),
+        value_(value)
         {}
 
     void setValue(T newValue) {
+        isValueSet_ = true;
         value_ = newValue;
     }
 
@@ -25,16 +33,23 @@ class Parameter {
     }
 
     void setMutationFn(T (*mutationFn)(T)) {
+        isMutationFnSet_ = true;
         mutationFn_ = mutationFn;
     }
 
     void mutation() {
+        if (!isValueSet_ || !isMutationFnSet_) {
+            throw std::runtime_error(
+                "Parameter<T> should have a value and a function pointer.");
+        }
         value_ = mutationFn_(value_);
     }
 
  private:
-    T value_;
+    bool isMutationFnSet_;
+    bool isValueSet_;
     T (*mutationFn_)(T);
+    T value_;
 };
 
 }  // namespace cgp
