@@ -71,7 +71,7 @@ target_link_libraries(unit-tests gtest_main gtest gmock gmock_main pthread)
 
 add_test(
     NAME test
-    COMMAND ${CMAKE_SOURCE_DIR}/bin/unit-tests
+    COMMAND ${CMAKE_BINARY_DIR}/unit-tests
 )
 
 ## DOXYGEN ##
@@ -119,7 +119,7 @@ add_custom_target(check
 )
 
 add_custom_target(run
-    COMMAND ${CMAKE_SOURCE_DIR}/bin/${PROJECT_NAME}
+    COMMAND ${CMAKE_BINARY_DIR}/${PROJECT_NAME}
 )
 
 add_custom_target(build
