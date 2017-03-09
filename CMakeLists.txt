@@ -127,5 +127,6 @@ add_custom_target(build
     COMMAND cmake ..
     COMMAND make
     COMMAND make check
+    COMMAND valgrind --track-origins=yes --leak-check=full --num-callers=100 --show-leak-kinds=all --suppressions=../suppressions bin/cartesian-genetic-programming-cpp
     COMMAND make run
 )
