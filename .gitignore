@@ -58,3 +58,6 @@ Doxyfile
 build
 
 TODO.md
+
+suppressions
+Valgr*

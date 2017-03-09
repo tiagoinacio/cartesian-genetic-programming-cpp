@@ -11,6 +11,7 @@ cgp::Configuration::Configuration()
     comparisonOperator_("<="),
     fitnessThreshold_(0.01),
     generations_(10),
+    inputs_(1),
     levelsBack_(10),
     mutationProbability_(0.1),
     offspring_(4),
@@ -127,19 +128,21 @@ unsigned int cgp::Configuration::offspring() {
 }
 
 void cgp::Configuration::toString() const {
-    std::cout << "*******************************" << std::endl;
-    std::cout << "isNodeOutputTheLastOne: " << isNodeOutputTheLastOne_
-        << std::endl;
-    std::cout << "fitnessThreshold: " << fitnessThreshold_ << std::endl;
-    std::cout << "mutationProbability: " << mutationProbability_ << std::endl;
-    std::cout << "columns: " << columns_ << std::endl;
-    std::cout << "generations: " << generations_ << std::endl;
-    std::cout << "levelsBack: " << levelsBack_ << std::endl;
-    std::cout << "offspring: " << offspring_ << std::endl;
-    std::cout << "inputs: " << inputs_ << std::endl;
-    std::cout << "outputs: " << outputs_ << std::endl;
-    std::cout << "rows: " << rows_ << std::endl;
-    std::cout << "runs: " << runs_ << std::endl;
-    std::cout << "comparisonOperator: " << comparisonOperator_ << std::endl;
-    std::cout << "*******************************" << std::endl;
+    // std::cout << "*******************************" << std::endl;
+    // std::cout << "isNodeOutputTheLastOne: " << isNodeOutputTheLastOne_
+    //     << std::endl;
+    // std::cout << "fitnessThreshold: " << fitnessThreshold_ << std::endl;
+    // std::cout << "mutationProbability: " << mutationProbability_
+    // << std::endl;
+    // std::cout << "columns: " << columns_ << std::endl;
+    // std::cout << "generations: " << generations_ << std::endl;
+    // std::cout << "levelsBack: " << levelsBack_ << std::endl;
+    // std::cout << "offspring: " << offspring_ << std::endl;
+    // std::cout << "inputs: " << inputs_ << std::endl;
+    // std::cout << "outputs: " << outputs_ << std::endl;
+    // std::cout << "rows: " << rows_ << std::endl;
+    // std::cout << "runs: " << runs_ << std::endl;
+    // std::cout << "comparisonOperator: " << comparisonOperator_
+    // << std::endl;
+    // std::cout << "*******************************" << std::endl;
 }
