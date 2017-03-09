@@ -8,8 +8,11 @@
 
 namespace cgp {
 
+class ParameterBase {
+};
+
 template <class T>
-class Parameter {
+class Parameter : public ParameterBase {
  public:
     Parameter() :
         isMutationFnSet_(false),

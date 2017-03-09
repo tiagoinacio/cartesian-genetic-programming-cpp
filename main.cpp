@@ -1,7 +1,6 @@
 /* Copyright 2017 Tiago Inácio */
 
 #include <string>
-#include <map>
 #include <iostream>
 
 #include "include/cgp.h"
@@ -35,20 +34,22 @@ int main() {
     configuration.toString();
     cgp::CGP cgp(configuration);
 
+    std::shared_ptr<cgp::Parameter<int> > firstParam(new cgp::Parameter<int>(2, &plus));
 
-    cgp::Parameter<int> firstParam(2, &plus);
+    std::cout << firstParam->getValue() << std::endl;
+    firstParam->mutation();
+    std::cout << firstParam->getValue() << std::endl;
 
-    std::cout << firstParam.getValue() << std::endl;
-    firstParam.mutation();
-    std::cout << firstParam.getValue() << std::endl;
+    std::shared_ptr<cgp::Parameter<std::string> > secondParam(new cgp::Parameter<std::string>());
 
-    cgp::Parameter<std::string> secondParam;
+    secondParam->setValue("old text");
+    secondParam->setMutationFn(changeText);
+    std::cout << secondParam->getValue() << std::endl;
+    secondParam->mutation();
+    std::cout << secondParam->getValue() << std::endl;
 
-    secondParam.setValue("old text");
-    secondParam.setMutationFn(changeText);
-    std::cout << secondParam.getValue() << std::endl;
-    secondParam.mutation();
-    std::cout << secondParam.getValue() << std::endl;
+    cgp.addParameter(firstParam);
+    cgp.addParameter(secondParam);
 
     return 0;
 }
