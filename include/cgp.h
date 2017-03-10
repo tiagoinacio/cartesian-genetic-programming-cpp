@@ -17,6 +17,7 @@ class CGP {
  public:
     explicit CGP(Configuration config);
     void addParameter(std::shared_ptr<cgp::ParameterBase> parameter);
+    void mutateParameter(int index);
  private:
     const Configuration _configuration;
     std::vector<std::shared_ptr<cgp::ParameterBase> > parameters_;

@@ -1,19 +1,16 @@
 /* Copyright 2017 Tiago Inácio */
 
-#include <string>
 #include <iostream>
+#include <memory>
+#include <string>
 
 #include "include/cgp.h"
 #include "include/configuration.h"
 #include "include/parameter.h"
 
-int plus(int x) {
-    return x + 2;
-}
+int plus(int x) { return x + 2; }
 
-std::string changeText(std::string x) {
-    return "new text";
-}
+std::string changeText(std::string x) { return "new text"; }
 
 int main() {
     cgp::Configuration configuration;
@@ -34,22 +31,25 @@ int main() {
     configuration.toString();
     cgp::CGP cgp(configuration);
 
-    std::shared_ptr<cgp::Parameter<int> > firstParam(new cgp::Parameter<int>(2, &plus));
-
-    std::cout << firstParam->getValue() << std::endl;
-    firstParam->mutation();
-    std::cout << firstParam->getValue() << std::endl;
-
-    std::shared_ptr<cgp::Parameter<std::string> > secondParam(new cgp::Parameter<std::string>());
+    std::shared_ptr<cgp::Parameter<int> > firstParam =
+        cgp::createParameter<int>(2, &plus);
+    std::shared_ptr<cgp::Parameter<std::string> > secondParam =
+        cgp::createParameter<std::string>();
 
     secondParam->setValue("old text");
     secondParam->setMutationFn(changeText);
-    std::cout << secondParam->getValue() << std::endl;
-    secondParam->mutation();
-    std::cout << secondParam->getValue() << std::endl;
 
     cgp.addParameter(firstParam);
     cgp.addParameter(secondParam);
+
+    std::cout << firstParam->getValue() << std::endl;
+    std::cout << secondParam->getValue() << std::endl;
+
+    cgp.mutateParameter(0);
+    cgp.mutateParameter(1);
+
+    std::cout << firstParam->getValue() << std::endl;
+    std::cout << secondParam->getValue() << std::endl;
 
     return 0;
 }

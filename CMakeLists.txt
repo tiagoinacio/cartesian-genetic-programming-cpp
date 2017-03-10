@@ -116,6 +116,7 @@ add_custom_target(check
     COMMAND make
     COMMAND make lint
     COMMAND make coverage
+    COMMAND valgrind --track-origins=yes --leak-check=full --num-callers=100 --show-leak-kinds=all --suppressions=../suppressions bin/cartesian-genetic-programming-cpp
 )
 
 add_custom_target(run
