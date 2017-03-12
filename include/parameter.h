@@ -9,29 +9,38 @@
 
 namespace cgp {
 
-class ParameterBase {
+class ParameterInterface {
  public:
-    virtual ~ParameterBase() {}
+    virtual ~ParameterInterface() {
+    }
     virtual void mutation() = 0;
 };
 
 template <class T>
-class Parameter : public ParameterBase {
+class Parameter : public ParameterInterface {
  public:
-    Parameter() : isMutationFnSet_(false), isValueSet_(false) {}
+    Parameter() : isMutationFnSet_(false), isValueSet_(false) {
+    }
 
-    Parameter(T value, T (*mutationFn)(T))
+    explicit Parameter(T value, T (*mutationFn)(T))
         : isMutationFnSet_(true),
           isValueSet_(true),
           mutationFn_(mutationFn),
-          value_(value) {}
+          value_(value) {
+    }
+
+    explicit Parameter(T value)
+        : isMutationFnSet_(false), isValueSet_(true), value_(value) {
+    }
 
     void setValue(T newValue) {
         isValueSet_ = true;
         value_ = newValue;
     }
 
-    T getValue() { return value_; }
+    T getValue() {
+        return value_;
+    }
 
     void setMutationFn(T (*mutationFn)(T)) {
         isMutationFnSet_ = true;
@@ -54,22 +63,13 @@ class Parameter : public ParameterBase {
     T value_;
 };
 
-template <class T>
-std::shared_ptr<cgp::Parameter<T> > createParameter(T value,
-                                                    T (*mutationFn)(T)) {
-    std::shared_ptr<cgp::Parameter<T> > pointer(
-        new cgp::Parameter<T>(value, mutationFn));
+template <typename T, typename... Args>
+std::shared_ptr<cgp::Parameter<T> > createParameter(Args... as) {
+    std::shared_ptr<cgp::Parameter<T> > pointer(new cgp::Parameter<T>(as...));
 
     return pointer;
 }
 
-template <class T>
-std::shared_ptr<cgp::Parameter<T> > createParameter() {
-    std::shared_ptr<cgp::Parameter<T> > pointer(new cgp::Parameter<T>());
+}   // namespace cgp
 
-    return pointer;
-}
-
-}  // namespace cgp
-
-#endif  // CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_PARAMETER_H_
+#endif   // CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_PARAMETER_H_

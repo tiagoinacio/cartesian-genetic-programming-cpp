@@ -7,12 +7,22 @@
 #include "include/cgp.h"
 #include "include/configuration.h"
 #include "include/parameter.h"
+#include "include/state.h"
 
-int plus(int x) { return x + 2; }
+int plus(int x) {
+    return x + 2;
+}
 
-std::string changeText(std::string x) { return "new text"; }
+std::string changeText(std::string x) {
+    return "new text";
+}
+
+void callbackOnInit(std::shared_ptr<cgp::State> state) {
+    std::cout << state->getGeneration() << std::endl;
+}
 
 int main() {
+    // Configuration
     cgp::Configuration configuration;
 
     configuration.isNodeOutputTheLastOne(false);
@@ -31,6 +41,7 @@ int main() {
     configuration.toString();
     cgp::CGP cgp(configuration);
 
+    // Parameters
     std::shared_ptr<cgp::Parameter<int> > firstParam =
         cgp::createParameter<int>(2, &plus);
     std::shared_ptr<cgp::Parameter<std::string> > secondParam =
@@ -39,17 +50,16 @@ int main() {
     secondParam->setValue("old text");
     secondParam->setMutationFn(changeText);
 
-    cgp.addParameter(firstParam);
-    cgp.addParameter(secondParam);
+    cgp.setParameter(firstParam);
+    cgp.setParameter(secondParam);
 
     std::cout << firstParam->getValue() << std::endl;
     std::cout << secondParam->getValue() << std::endl;
 
-    cgp.mutateParameter(0);
-    cgp.mutateParameter(1);
+    cgp.setCallback("on_init", callbackOnInit);
 
-    std::cout << firstParam->getValue() << std::endl;
-    std::cout << secondParam->getValue() << std::endl;
+    // Run
+    cgp.run();
 
     return 0;
 }

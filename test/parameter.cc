@@ -7,15 +7,23 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
-#include "parameter.h"
+#include "include/parameter.h"
 
-int intMutationFnPlus(int x) { return x + 2; }
+int intMutationFnPlus(int x) {
+    return x + 2;
+}
 
-int intMutationFnMinus(int x) { return x - 2; }
+int intMutationFnMinus(int x) {
+    return x - 2;
+}
 
-std::string stringMutationFnNew(std::string x) { return "new text"; }
+std::string stringMutationFnNew(std::string x) {
+    return "new text";
+}
 
-std::string stringMutationFnOld(std::string x) { return "old text"; }
+std::string stringMutationFnOld(std::string x) {
+    return "old text";
+}
 
 class TemplateParameterClass : public ::testing::Test {};
 
@@ -99,8 +107,7 @@ TEST_F(TemplateParameterClass, mutation_out_of_range) {
         intParam.mutation();
         FAIL() << "Expected std::runtime_error";
     } catch (std::runtime_error const &err) {
-        EXPECT_EQ(
-            err.what(),
+        EXPECT_EQ(err.what(),
             std::string(
                 "Parameter<T> should have a value and a function pointer."));
     } catch (...) {
@@ -115,8 +122,7 @@ TEST_F(TemplateParameterClass, mutation_out_of_range) {
         stringParam.mutation();
         FAIL() << "Expected std::runtime_error";
     } catch (std::runtime_error const &err) {
-        EXPECT_EQ(
-            err.what(),
+        EXPECT_EQ(err.what(),
             std::string(
                 "Parameter<T> should have a value and a function pointer."));
     } catch (...) {

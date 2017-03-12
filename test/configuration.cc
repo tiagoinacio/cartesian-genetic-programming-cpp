@@ -1,10 +1,12 @@
 // copyright Tiago Inácio
 
-#include "configuration.h"
 #include <limits.h>
 #include <stdexcept>
+
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
+
+#include "include/configuration.h"
 
 using testing::HasSubstr;
 
@@ -113,7 +115,7 @@ TEST_F(ConfigurationClass, setMutationProbability_outOfRange) {
         FAIL() << "Expected std::out_of_range";
     } catch (std::out_of_range const &err) {
         EXPECT_EQ(err.what(),
-                  std::string("Mutation probability must be superior to 0."));
+            std::string("Mutation probability must be superior to 0."));
     } catch (...) {
         FAIL() << "Expected std::out_of_range";
     }
@@ -123,8 +125,8 @@ TEST_F(ConfigurationClass, setMutationProbability_outOfRange) {
         FAIL() << "Expected std::out_of_range";
     } catch (std::out_of_range const &err) {
         EXPECT_EQ(err.what(),
-                  std::string(
-                      "Mutation probability must be inferior or equal to 1."));
+            std::string(
+                "Mutation probability must be inferior or equal to 1."));
     } catch (...) {
         FAIL() << "Expected std::out_of_range";
     }
