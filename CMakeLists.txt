@@ -19,7 +19,14 @@ file(GLOB SOURCES "src/*.cc")
 file(GLOB SPECS "test/*.cc")
 file(GLOB INCLUDES "include/*.h")
 
-add_executable(${PROJECT_NAME} ${SOURCES} main.cpp)
+add_executable(${PROJECT_NAME} ${SOURCES} ${Boost_LIBRARIES} main.cpp)
+
+set(Boost_USE_STATIC_LIBS ON)
+set(Boost_USE_MULTITHREADED ON)
+set(Boost_USE_STATIC_RUNTIME ON)
+find_package(Boost 1.45.0 COMPONENTS any)
+include_directories(${Boost_INCLUDE_DIRS})
+
 
 ########
 # TEST #
@@ -67,7 +74,7 @@ enable_testing()
 # Extra linking for the project.
 add_executable(unit-tests ${SOURCES} ${SPECS})
 
-target_link_libraries(unit-tests gtest_main gtest gmock gmock_main pthread)
+target_link_libraries(unit-tests gtest_main gtest gmock gmock_main pthread ${Boost_LIBRARIES})
 
 add_test(
     NAME test
@@ -113,10 +120,9 @@ add_custom_target(coverage
 )
 
 add_custom_target(check
-    COMMAND make
     COMMAND make lint
     COMMAND make coverage
-    COMMAND valgrind --track-origins=yes --leak-check=full --num-callers=100 --show-leak-kinds=all --suppressions=../suppressions bin/cartesian-genetic-programming-cpp
+    COMMAND valgrind --track-origins=yes --leak-check=full --num-callers=100 --show-leak-kinds=all --suppressions=../suppressions bin/${PROJECT_NAME}
 )
 
 add_custom_target(run
@@ -128,6 +134,5 @@ add_custom_target(build
     COMMAND cmake ..
     COMMAND make
     COMMAND make check
-    COMMAND valgrind --track-origins=yes --leak-check=full --num-callers=100 --show-leak-kinds=all --suppressions=../suppressions bin/cartesian-genetic-programming-cpp
     COMMAND make run
 )

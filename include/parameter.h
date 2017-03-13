@@ -16,7 +16,7 @@ class ParameterInterface {
     virtual void mutation() = 0;
 };
 
-template <class T>
+template <typename T>
 class Parameter : public ParameterInterface {
  public:
     Parameter() : isMutationFnSet_(false), isValueSet_(false) {

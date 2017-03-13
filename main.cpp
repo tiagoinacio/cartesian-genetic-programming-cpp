@@ -13,6 +13,14 @@ int plus(int x) {
     return x + 2;
 }
 
+double fn1(double a, double b) {
+    return a * b;
+}
+
+double fn2(double a, double b) {
+    return a + b;
+}
+
 std::string changeText(std::string x) {
     return "new text";
 }
@@ -39,7 +47,7 @@ int main() {
     configuration.setRuns(1);
 
     configuration.toString();
-    cgp::CGP cgp(configuration);
+    cgp::CGP<double> cgp(configuration);
 
     // Parameters
     std::shared_ptr<cgp::Parameter<int> > firstParam =
@@ -57,6 +65,9 @@ int main() {
     std::cout << secondParam->getValue() << std::endl;
 
     cgp.setCallback("on_init", callbackOnInit);
+
+    cgp.pushToInstructionSet(fn1);
+    cgp.pushToInstructionSet(fn2);
 
     // Run
     cgp.run();
