@@ -3,9 +3,10 @@
 
 #include "include/state.h"
 
-std::shared_ptr<cgp::State> cgp::State::create() {
-    std::shared_ptr<cgp::State> pointer(new cgp::State());
-    return pointer;
+cgp::State& cgp::State::getInstance() {
+    static cgp::State instance;
+
+    return instance;
 }
 
 void cgp::State::setGeneration(unsigned int generation) {

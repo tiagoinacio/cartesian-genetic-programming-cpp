@@ -25,8 +25,8 @@ std::string changeText(std::string x) {
     return "new text";
 }
 
-void callbackOnInit(std::shared_ptr<cgp::State> state) {
-    std::cout << state->getGeneration() << std::endl;
+void callbackOnInit(const cgp::State& state) {
+    std::cout << state.getGeneration() << std::endl;
 }
 
 int main() {
@@ -58,16 +58,16 @@ int main() {
     secondParam->setValue("old text");
     secondParam->setMutationFn(changeText);
 
-    cgp.setParameter(firstParam);
-    cgp.setParameter(secondParam);
+    cgp.pushParameter(firstParam);
+    cgp.pushParameter(secondParam);
 
     std::cout << firstParam->getValue() << std::endl;
     std::cout << secondParam->getValue() << std::endl;
 
     cgp.setCallback("on_init", callbackOnInit);
 
-    cgp.pushToInstructionSet(fn1);
-    cgp.pushToInstructionSet(fn2);
+    cgp.pushFunction(fn1);
+    cgp.pushFunction(fn2);
 
     // Run
     cgp.run();

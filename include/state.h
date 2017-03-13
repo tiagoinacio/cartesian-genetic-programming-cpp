@@ -9,18 +9,17 @@
 namespace cgp {
 
 class State {
-    // friend class CGP<T>;
-
  public:
-    State() : generation_(0) {
-    }
+    static State& getInstance();
     unsigned int getGeneration() const;
-
-//  protected:
-    static std::shared_ptr<State> create();
     void setGeneration(unsigned int generation);
 
  private:
+    State() {
+    }
+    State(State const&);
+    void operator=(State const&);
+
     unsigned int generation_;
 };
 
