@@ -10,16 +10,11 @@ namespace cgp {
 
 class State {
  public:
-    static State& getInstance();
+    State();
     unsigned int getGeneration() const;
     void setGeneration(unsigned int generation);
 
  private:
-    State() {
-    }
-    State(State const&);
-    void operator=(State const&);
-
     unsigned int generation_;
 };
 

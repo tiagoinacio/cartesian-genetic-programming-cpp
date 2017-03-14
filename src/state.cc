@@ -2,11 +2,9 @@
 // Tiago Inácio
 
 #include "include/state.h"
+#include <iostream>
 
-cgp::State& cgp::State::getInstance() {
-    static cgp::State instance;
-
-    return instance;
+cgp::State::State() : generation_(0) {
 }
 
 void cgp::State::setGeneration(unsigned int generation) {

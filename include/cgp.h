@@ -20,8 +20,7 @@ class CGP {
  public:
     explicit CGP(const Configuration configuration)
         : _configuration(configuration) {
-        cgp::State::getInstance().setGeneration(1);
-
+        state_.setGeneration(1);
         events_.push_back("on_init");
     }
 
@@ -41,11 +40,12 @@ class CGP {
     }
 
     void run() {
-        callbacks_["on_init"](cgp::State::getInstance());
+        callbacks_["on_init"](state_);
     }
 
  private:
     const Configuration _configuration;
+    cgp::State state_;
     std::vector<std::shared_ptr<cgp::ParameterInterface> > parameters_;
     std::map<std::string, void (*)(const cgp::State&)> callbacks_;
     std::vector<std::string> events_;

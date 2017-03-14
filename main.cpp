@@ -26,7 +26,7 @@ std::string changeText(std::string x) {
 }
 
 void callbackOnInit(const cgp::State& state) {
-    std::cout << state.getGeneration() << std::endl;
+    std::cout << "generation: " << state.getGeneration() << std::endl;
 }
 
 int main() {
