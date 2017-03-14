@@ -112,8 +112,8 @@ add_custom_target(coverage
     COMMAND lcov --capture --initial --directory ${CMAKE_SOURCE_DIR}/build --output-file ${CMAKE_SOURCE_DIR}/build/coverage
     COMMAND make test
     COMMAND lcov --no-checksum --directory ${CMAKE_SOURCE_DIR}/build --capture --output-file ${CMAKE_SOURCE_DIR}/build/coverage.info
-    COMMAND lcov --remove ${CMAKE_SOURCE_DIR}/build/coverage.info "*gtest*" "*c++*" -o ${CMAKE_SOURCE_DIR}/build/coverage.info
-    COMMAND lcov --remove ${CMAKE_SOURCE_DIR}/build/coverage.info "*gmock*" "*c++*" -o ${CMAKE_SOURCE_DIR}/build/coverage.info
+    COMMAND lcov --remove ${CMAKE_SOURCE_DIR}/build/coverage.info "*gtest*" "*c++*" "*test*" -o ${CMAKE_SOURCE_DIR}/build/coverage.info
+    COMMAND lcov --remove ${CMAKE_SOURCE_DIR}/build/coverage.info "*gmock*" "*c++*" "*test*" -o ${CMAKE_SOURCE_DIR}/build/coverage.info
     COMMAND genhtml ${CMAKE_SOURCE_DIR}/build/coverage.info -o ${CMAKE_SOURCE_DIR}/build
 
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/build
@@ -135,4 +135,8 @@ add_custom_target(build
     COMMAND make
     COMMAND make check
     COMMAND make run
+)
+
+add_custom_target(open
+    COMMAND open ${CMAKE_SOURCE_DIR}/build/index.html
 )
