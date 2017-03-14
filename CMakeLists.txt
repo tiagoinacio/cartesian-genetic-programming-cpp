@@ -19,14 +19,7 @@ file(GLOB SOURCES "src/*.cc")
 file(GLOB SPECS "test/*.cc")
 file(GLOB INCLUDES "include/*.h")
 
-add_executable(${PROJECT_NAME} ${SOURCES} ${Boost_LIBRARIES} main.cpp)
-
-set(Boost_USE_STATIC_LIBS ON)
-set(Boost_USE_MULTITHREADED ON)
-set(Boost_USE_STATIC_RUNTIME ON)
-find_package(Boost 1.45.0 COMPONENTS any)
-include_directories(${Boost_INCLUDE_DIRS})
-
+add_executable(${PROJECT_NAME} ${SOURCES} main.cpp)
 
 ########
 # TEST #
@@ -74,7 +67,7 @@ enable_testing()
 # Extra linking for the project.
 add_executable(unit-tests ${SOURCES} ${SPECS})
 
-target_link_libraries(unit-tests gtest_main gtest gmock gmock_main pthread ${Boost_LIBRARIES})
+target_link_libraries(unit-tests gtest_main gtest gmock gmock_main pthread)
 
 add_test(
     NAME test

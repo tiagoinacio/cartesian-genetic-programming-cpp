@@ -1,28 +1,33 @@
 // copyright Tiago Inácio
 
+#include "include/configuration.h"
 #include <iostream>
 #include <map>
 #include <stdexcept>
 #include <string>
-#include "include/configuration.h"
 
 cgp::Configuration::Configuration()
     : columns_(10),
-    comparisonOperator_("<="),
-    fitnessThreshold_(0.01),
-    generations_(10),
-    inputs_(1),
-    levelsBack_(10),
-    mutationProbability_(0.1),
-    offspring_(4),
-    outputs_(1),
-    rows_(1),
-    runs_(5),
-    isNodeOutputTheLastOne_(true)
-{}
+      comparisonOperator_("<="),
+      fitnessThreshold_(0.01),
+      generations_(10),
+      inputs_(1),
+      levelsBack_(10),
+      mutationProbability_(0.1),
+      offspring_(4),
+      outputs_(1),
+      connections_(2),
+      rows_(1),
+      runs_(5),
+      isNodeOutputTheLastOne_(true) {
+}
 
 void cgp::Configuration::setRows(unsigned int rows) {
     rows_ = rows;
+}
+
+void cgp::Configuration::setConnections(unsigned int connections) {
+    connections_ = connections;
 }
 
 void cgp::Configuration::setColumns(unsigned int columns) {
@@ -55,13 +60,12 @@ void cgp::Configuration::setOffspring(unsigned int offspring) {
 
 void cgp::Configuration::setMutationProbability(double mutationProbability) {
     if (mutationProbability < 0) {
-        throw std::out_of_range(
-                "Mutation probability must be superior to 0.");
+        throw std::out_of_range("Mutation probability must be superior to 0.");
     }
 
     if (mutationProbability > 1) {
         throw std::out_of_range(
-                "Mutation probability must be inferior or equal to 1.");
+            "Mutation probability must be inferior or equal to 1.");
     }
 
     mutationProbability_ = mutationProbability;
@@ -123,6 +127,10 @@ unsigned int cgp::Configuration::generations() {
     return generations_;
 }
 
+unsigned int cgp::Configuration::connections() {
+    return connections_;
+}
+
 unsigned int cgp::Configuration::offspring() {
     return offspring_;
 }
@@ -130,10 +138,9 @@ unsigned int cgp::Configuration::offspring() {
 void cgp::Configuration::toString() const {
     std::cout << "*******************************" << std::endl;
     std::cout << "isNodeOutputTheLastOne: " << isNodeOutputTheLastOne_
-        << std::endl;
+              << std::endl;
     std::cout << "fitnessThreshold: " << fitnessThreshold_ << std::endl;
-    std::cout << "mutationProbability: " << mutationProbability_
-    << std::endl;
+    std::cout << "mutationProbability: " << mutationProbability_ << std::endl;
     std::cout << "columns: " << columns_ << std::endl;
     std::cout << "generations: " << generations_ << std::endl;
     std::cout << "levelsBack: " << levelsBack_ << std::endl;
@@ -142,7 +149,6 @@ void cgp::Configuration::toString() const {
     std::cout << "outputs: " << outputs_ << std::endl;
     std::cout << "rows: " << rows_ << std::endl;
     std::cout << "runs: " << runs_ << std::endl;
-    std::cout << "comparisonOperator: " << comparisonOperator_
-    << std::endl;
+    std::cout << "comparisonOperator: " << comparisonOperator_ << std::endl;
     std::cout << "*******************************" << std::endl;
 }

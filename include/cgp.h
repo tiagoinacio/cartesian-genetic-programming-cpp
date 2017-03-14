@@ -30,7 +30,7 @@ class CGP {
 
     void setCallback(std::string event, void (*callback)(const cgp::State&)) {
         if (std::find(events_.begin(), events_.end(), event) == events_.end()) {
-            throw std::out_of_range("Not a valid event.");
+            throw std::out_of_range("Not a valid event callback.");
         }
         callbacks_.insert(std::make_pair(event, callback));
     }

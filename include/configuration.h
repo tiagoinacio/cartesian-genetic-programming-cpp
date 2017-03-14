@@ -14,6 +14,7 @@ class Configuration {
     Configuration();
 
     void isNodeOutputTheLastOne(bool isNodeOutputTheLastOne);
+    void setConnections(unsigned int connections);
     void setColumns(unsigned int columns);
     void setComparisonOperator(std::string comparisonOperator);
     void setFitnessThreshold(double fitnessThreshold);
@@ -28,6 +29,7 @@ class Configuration {
 
     bool isNodeOutputTheLastOne();
     unsigned int columns();
+    unsigned int connections();
     std::string comparisonOperator();
     double fitnessThreshold();
     unsigned int generations();
@@ -43,6 +45,7 @@ class Configuration {
 
  private:
     unsigned int columns_;
+    unsigned int connections_;
     std::string comparisonOperator_;
     double fitnessThreshold_;
     unsigned int generations_;
@@ -56,6 +59,6 @@ class Configuration {
     bool isNodeOutputTheLastOne_;
 };
 
-};  // namespace cgp
+};   // namespace cgp
 
-#endif  // CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_CONFIGURATION_H_
+#endif   // CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_CONFIGURATION_H_

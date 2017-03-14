@@ -45,6 +45,14 @@ TEST_F(ConfigurationClass, setRows) {
     EXPECT_EQ(15, configuration.rows());
 }
 
+TEST_F(ConfigurationClass, setConnections) {
+    configuration.setConnections(5);
+    EXPECT_EQ(5, configuration.connections());
+
+    configuration.setConnections(15);
+    EXPECT_EQ(15, configuration.connections());
+}
+
 TEST_F(ConfigurationClass, setColumns) {
     configuration.setColumns(5);
     EXPECT_EQ(5, configuration.columns());
