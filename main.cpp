@@ -13,21 +13,28 @@ int plus(int x) {
     return x + 2;
 }
 
-double fn1(double a, double b) {
-    return a * b;
-}
-
-double fn2(double a, double b) {
-    return a + b;
+double fn1(std::vector<double> args) {
+    return args[0] * args[1];
 }
 
 std::string changeText(std::string x) {
     return "new text";
 }
 
-void callbackOnInit(const cgp::State& state) {
-    std::cout << "generation: " << state.getGeneration() << std::endl;
+void callbackOnInit(const cgp::Event& event) {
+    std::cout << "generation: " << event.size()->generations() << std::endl;
 }
+
+double fitnessFunction() {
+    return 1;
+}
+
+class InstructionSet {
+ public:
+    static double fn2(std::vector<double> args) {
+        return args[0] + args[1];
+    }
+};
 
 int main() {
     // Configuration
@@ -37,7 +44,7 @@ int main() {
     configuration.setColumns(1);
     configuration.setComparisonOperator(">=");
     configuration.setFitnessThreshold(0.1);
-    configuration.setGenerations(1);
+    configuration.setGenerations(8);
     configuration.setLevelsBack(1);
     configuration.setMutationProbability(0.1);
     configuration.setOffspring(1);
@@ -67,7 +74,9 @@ int main() {
     cgp.setCallback("on_init", callbackOnInit);
 
     cgp.pushFunction(fn1);
-    cgp.pushFunction(fn2);
+    cgp.pushFunction(&InstructionSet::fn2);
+
+    cgp.addFitnessFunction(fitnessFunction);
 
     // Run
     cgp.run();

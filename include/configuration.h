@@ -27,19 +27,19 @@ class Configuration {
     void setRows(unsigned int rows);
     void setRuns(unsigned int runs);
 
-    bool isNodeOutputTheLastOne();
-    unsigned int columns();
-    unsigned int connections();
-    std::string comparisonOperator();
-    double fitnessThreshold();
-    unsigned int generations();
-    unsigned int inputs();
-    unsigned int levelsBack();
-    double mutationProbability();
-    unsigned int offspring();
-    unsigned int outputs();
-    unsigned int rows();
-    unsigned int runs();
+    bool isNodeOutputTheLastOne() const;
+    unsigned int columns() const;
+    unsigned int connections() const;
+    std::string comparisonOperator() const;
+    double fitnessThreshold() const;
+    unsigned int generations() const;
+    unsigned int inputs() const;
+    unsigned int levelsBack() const;
+    double mutationProbability() const;
+    unsigned int offspring() const;
+    unsigned int outputs() const;
+    unsigned int rows() const;
+    unsigned int runs() const;
 
     void toString() const;
 

@@ -123,10 +123,9 @@ add_custom_target(run
 )
 
 add_custom_target(build
-    COMMAND rm -rf *
-    COMMAND cmake ..
     COMMAND make
-    COMMAND make check
+    COMMAND make coverage
+    COMMAND valgrind --track-origins=yes --leak-check=full --num-callers=100 --show-leak-kinds=all --suppressions=../suppressions bin/${PROJECT_NAME}
     COMMAND make run
 )
 

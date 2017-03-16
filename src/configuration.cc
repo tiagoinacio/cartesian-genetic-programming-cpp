@@ -15,8 +15,8 @@ cgp::Configuration::Configuration()
       levelsBack_(10),
       mutationProbability_(0.1),
       offspring_(4),
-      outputs_(1),
       connections_(2),
+      outputs_(1),
       rows_(1),
       runs_(5),
       isNodeOutputTheLastOne_(true) {
@@ -83,55 +83,55 @@ void cgp::Configuration::isNodeOutputTheLastOne(bool isNodeOutputTheLastOne) {
     isNodeOutputTheLastOne_ = isNodeOutputTheLastOne;
 }
 
-unsigned int cgp::Configuration::rows() {
+unsigned int cgp::Configuration::rows() const {
     return rows_;
 }
 
-unsigned int cgp::Configuration::columns() {
+unsigned int cgp::Configuration::columns() const {
     return columns_;
 }
 
-unsigned int cgp::Configuration::levelsBack() {
+unsigned int cgp::Configuration::levelsBack() const {
     return levelsBack_;
 }
 
-std::string cgp::Configuration::comparisonOperator() {
+std::string cgp::Configuration::comparisonOperator() const {
     return comparisonOperator_;
 }
 
-unsigned int cgp::Configuration::inputs() {
+unsigned int cgp::Configuration::inputs() const {
     return inputs_;
 }
 
-double cgp::Configuration::fitnessThreshold() {
+double cgp::Configuration::fitnessThreshold() const {
     return fitnessThreshold_;
 }
 
-bool cgp::Configuration::isNodeOutputTheLastOne() {
+bool cgp::Configuration::isNodeOutputTheLastOne() const {
     return isNodeOutputTheLastOne_;
 }
 
-double cgp::Configuration::mutationProbability() {
+double cgp::Configuration::mutationProbability() const {
     return mutationProbability_;
 }
 
-unsigned int cgp::Configuration::runs() {
+unsigned int cgp::Configuration::runs() const {
     return runs_;
 }
 
-unsigned int cgp::Configuration::outputs() {
+unsigned int cgp::Configuration::outputs() const {
     return outputs_;
 }
 
-unsigned int cgp::Configuration::generations() {
+unsigned int cgp::Configuration::generations() const {
     return generations_;
 }
 
-unsigned int cgp::Configuration::connections() {
+unsigned int cgp::Configuration::connections() const {
     return connections_;
 }
 
-unsigned int cgp::Configuration::offspring() {
+unsigned int cgp::Configuration::offspring() const {
     return offspring_;
 }
 

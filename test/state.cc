@@ -15,15 +15,15 @@ class StateClass : public ::testing::Test {
 };
 
 TEST_F(StateClass, DefaultValues) {
-    EXPECT_EQ(0, state.getGeneration());
+    EXPECT_EQ(0, state.generation());
 }
 
 TEST_F(StateClass, setGeneration) {
-    EXPECT_EQ(0, state.getGeneration());
+    EXPECT_EQ(0, state.generation());
 
     state.setGeneration(5);
-    EXPECT_EQ(5, state.getGeneration());
+    EXPECT_EQ(5, state.generation());
 
     state.setGeneration(9);
-    EXPECT_EQ(9, state.getGeneration());
+    EXPECT_EQ(9, state.generation());
 }

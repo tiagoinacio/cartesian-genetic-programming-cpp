@@ -17,20 +17,25 @@ void onInitCallback(const cgp::State& stateCb) {
     state = stateCb;
 }
 
+double plus(std::vector<double> args) {
+    return args[0] * args[1];
+}
+
 class CGPClass : public ::testing::Test {
  public:
     CGPClass() : configuration_(), cgp(configuration_) {
+        cgp.pushFunction(plus);
     }
     cgp::Configuration configuration_;
-    cgp::CGP<int> cgp;
+    cgp::CGP<double> cgp;
 };
 
 TEST_F(CGPClass, setCallback_valid) {
     cgp.setCallback("on_init", &onInitCallback);
-    EXPECT_EQ(0, state.getGeneration());
+    EXPECT_EQ(0, state.generation());
 
     cgp.run();
-    EXPECT_EQ(1, state.getGeneration());
+    EXPECT_EQ(1, state.generation());
 }
 
 TEST_F(CGPClass, setCallback_invalid) {

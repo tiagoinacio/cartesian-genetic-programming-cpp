@@ -2,7 +2,6 @@
 // Tiago Inácio
 
 #include "include/state.h"
-#include <iostream>
 
 cgp::State::State() : generation_(0) {
 }
@@ -11,6 +10,14 @@ void cgp::State::setGeneration(unsigned int generation) {
     generation_ = generation;
 }
 
-unsigned int cgp::State::getGeneration() const {
+void cgp::State::setRun(unsigned int run) {
+    run_ = run;
+}
+
+unsigned int cgp::State::generation() const {
     return generation_;
+}
+
+unsigned int cgp::State::run() const {
+    return run_;
 }
