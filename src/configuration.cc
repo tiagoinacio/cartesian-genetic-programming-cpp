@@ -7,7 +7,7 @@
 #include <string>
 
 cgp::Configuration::Configuration()
-    : columns_(10),
+    : columns_(1),
       comparisonOperator_("<="),
       fitnessThreshold_(0.01),
       generations_(10),
@@ -19,11 +19,16 @@ cgp::Configuration::Configuration()
       outputs_(1),
       rows_(1),
       runs_(5),
+      parameters_(0),
       isNodeOutputTheLastOne_(true) {
 }
 
 void cgp::Configuration::setRows(unsigned int rows) {
     rows_ = rows;
+}
+
+void cgp::Configuration::setParameters(unsigned int parameters) {
+    parameters_ = parameters;
 }
 
 void cgp::Configuration::setConnections(unsigned int connections) {
@@ -89,6 +94,10 @@ unsigned int cgp::Configuration::rows() const {
 
 unsigned int cgp::Configuration::columns() const {
     return columns_;
+}
+
+unsigned int cgp::Configuration::parameters() const {
+    return parameters_;
 }
 
 unsigned int cgp::Configuration::levelsBack() const {

@@ -27,19 +27,15 @@ class Size {
     unsigned int rows() const;
     unsigned int runs() const;
 
-    void setNumberOfParameters(unsigned int parameters) {
-        parameters_ = parameters;
-    }
-
  private:
     unsigned int columns_;
-    unsigned int computationalNodes_;
+    unsigned int computational_nodes_;
     unsigned int connections_;
     unsigned int generations_;
-    unsigned int genesPerNode_;
+    unsigned int genes_per_node_;
     unsigned int genes_;
     unsigned int inputs_;
-    unsigned int levelsBack_;
+    unsigned int levels_back_;
     unsigned int nodes_;
     unsigned int offspring_;
     unsigned int outputs_;

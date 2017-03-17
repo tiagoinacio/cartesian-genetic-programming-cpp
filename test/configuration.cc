@@ -16,7 +16,7 @@ class ConfigurationClass : public ::testing::Test {
 };
 
 TEST_F(ConfigurationClass, default_configuration) {
-    EXPECT_EQ(10, configuration.columns());
+    EXPECT_EQ(1, configuration.columns());
     EXPECT_EQ("<=", configuration.comparisonOperator());
     EXPECT_EQ(0.01, configuration.fitnessThreshold());
     EXPECT_EQ(10, configuration.generations());

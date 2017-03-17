@@ -14,7 +14,14 @@ class GeneType {
  public:
     explicit GeneType(std::shared_ptr<cgp::Size> sizes);
 
+    std::vector<unsigned int> connectionGenes() const {
+        return connection_genes_;
+    }
+
  private:
+    void calculateConnectionGenes();
+
+    std::shared_ptr<cgp::Size> size_;
     std::vector<unsigned int> connection_genes_;
     std::vector<unsigned int> parameter_genes_;
     std::vector<unsigned int> program_output_genes_;

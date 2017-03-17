@@ -9,16 +9,24 @@ cgp::Size::Size(const cgp::Configuration& configuration)
     : connections_(configuration.connections()),
       generations_(configuration.generations()),
       inputs_(configuration.inputs()),
-      levelsBack_(configuration.levelsBack()),
+      levels_back_(configuration.levelsBack()),
       offspring_(configuration.offspring()),
       outputs_(configuration.outputs()),
       rows_(configuration.rows()),
+      parameters_(configuration.parameters()),
       runs_(configuration.runs()),
       columns_(configuration.columns()) {
-    computationalNodes_ = rows_ * columns_;
-    genesPerNode_ = kFunctionPerNode + connections_ + parameters_;
-    genes_ = computationalNodes_ * genesPerNode_ + outputs_;
-    nodes_ = computationalNodes_ + inputs_;
+    nodes_ = rows_ * columns_;
+    genes_per_node_ = kFunctionPerNode + connections_ + parameters_;
+    genes_ = nodes_ * genes_per_node_ + outputs_;
+}
+
+unsigned int cgp::Size::genes() const {
+    return genes_;
+}
+
+unsigned int cgp::Size::genesPerNode() const {
+    return genes_per_node_;
 }
 
 unsigned int cgp::Size::columns() const {
@@ -27,6 +35,10 @@ unsigned int cgp::Size::columns() const {
 
 unsigned int cgp::Size::inputs() const {
     return inputs_;
+}
+
+unsigned int cgp::Size::nodes() const {
+    return nodes_;
 }
 
 unsigned int cgp::Size::connections() const {
@@ -38,7 +50,7 @@ unsigned int cgp::Size::generations() const {
 }
 
 unsigned int cgp::Size::levelsBack() const {
-    return levelsBack_;
+    return levels_back_;
 }
 
 unsigned int cgp::Size::offspring() const {

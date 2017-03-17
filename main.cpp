@@ -50,8 +50,8 @@ int main() {
     configuration.setMutationProbability(0.1);
     configuration.setOffspring(1);
     configuration.setOutputs(1);
+    configuration.setConnections(3);
     configuration.setRows(1);
-    configuration.setRows(5);
     configuration.setRuns(1);
 
     configuration.toString();
