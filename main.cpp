@@ -22,7 +22,8 @@ std::string changeText(std::string x) {
 }
 
 void callbackOnInit(const cgp::Event& event) {
-    std::cout << "generation: " << event.size()->generations() << std::endl;
+    std::cout << "generations: " << event.size()->generations() << std::endl;
+    std::cout << "generation: " << event.state()->generation() << std::endl;
 }
 
 double fitnessFunction() {

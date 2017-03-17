@@ -10,10 +10,11 @@
 #include <utility>
 #include <vector>
 #include "include/configuration.h"
-#include "include/parameter.h"
-#include "include/state.h"
-#include "include/size.h"
 #include "include/event.h"
+#include "include/gene_type.h"
+#include "include/parameter.h"
+#include "include/size.h"
+#include "include/state.h"
 
 namespace cgp {
 
@@ -22,8 +23,8 @@ class CGP {
  public:
     explicit CGP(const Configuration configuration)
         : configuration_(configuration),
-        size_(new cgp::Size(configuration)),
-        state_(new cgp::State()) {
+          size_(new cgp::Size(configuration)),
+          state_(new cgp::State()) {
         state_->setGeneration(1);
         events_.push_back("on_init");
     }
@@ -50,7 +51,7 @@ class CGP {
     void run() {
         event_.setStatePtr(state_);
         event_.setSizePtr(size_);
-        size_->setNumberOfParameters(5);
+        size_->setNumberOfParameters(parameters_.size());
         callbacks_["on_init"](event_);
         connections_.push_back(2);
         connections_.push_back(3);
@@ -62,6 +63,7 @@ class CGP {
     const Configuration configuration_;
     std::shared_ptr<cgp::State> state_;
     std::shared_ptr<cgp::Size> size_;
+    std::shared_ptr<cgp::GeneType> geneType_;
     std::vector<std::shared_ptr<cgp::ParameterInterface> > parameters_;
     std::map<std::string, std::function<void(const cgp::Event&)> > callbacks_;
     std::vector<std::string> events_;
