@@ -3,7 +3,7 @@
 
 #include "include/state.h"
 
-cgp::State::State() : generation_(0) {
+cgp::State::State() : generation_(0), run_(0) {
 }
 
 void cgp::State::setGeneration(unsigned int generation) {

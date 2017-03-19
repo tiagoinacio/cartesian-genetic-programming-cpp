@@ -38,15 +38,6 @@ TEST(calculateConnectionGenes, 1_1_2_3) {
     EXPECT_EQ(expected, gene_type.connectionGenes());
 }
 
-// 1 1 0 1
-// 1 1 1 1
-// 1 1 1 3
-// 3 1 1 3
-// 3 3 1 3
-// 3 3 3 3
-// 5 5 5 5
-// 10 1 3 2
-// 10 2 0 2
 TEST(calculateConnectionGenes, 1_1_0_2) {
     unsigned int rows = 1;
     unsigned int columns = 1;
@@ -55,6 +46,19 @@ TEST(calculateConnectionGenes, 1_1_0_2) {
     cgp::GeneType gene_type(createMock(rows, columns, parameters, connections));
 
     const int arr[] = {1, 2};
+    std::vector<unsigned int> expected(arr, arr + sizeof(arr) / sizeof(arr[0]));
+
+    EXPECT_EQ(expected, gene_type.connectionGenes());
+}
+
+TEST(calculateConnectionGenes, 1_1_1_1) {
+    unsigned int rows = 1;
+    unsigned int columns = 1;
+    unsigned int parameters = 1;
+    unsigned int connections = 1;
+    cgp::GeneType gene_type(createMock(rows, columns, parameters, connections));
+
+    const int arr[] = {1};
     std::vector<unsigned int> expected(arr, arr + sizeof(arr) / sizeof(arr[0]));
 
     EXPECT_EQ(expected, gene_type.connectionGenes());
@@ -95,6 +99,20 @@ TEST(calculateConnectionGenes, 10_1_2_3) {
 
     const int arr[] = {1, 2, 3, 7, 8, 9, 13, 14, 15, 19, 20, 21, 25, 26, 27, 31,
         32, 33, 37, 38, 39, 43, 44, 45, 49, 50, 51, 55, 56, 57};
+    std::vector<unsigned int> expected(arr, arr + sizeof(arr) / sizeof(arr[0]));
+
+    EXPECT_EQ(expected, gene_type.connectionGenes());
+}
+
+TEST(calculateConnectionGenes, 10_1_0_2) {
+    unsigned int rows = 10;
+    unsigned int columns = 1;
+    unsigned int parameters = 0;
+    unsigned int connections = 2;
+    cgp::GeneType gene_type(createMock(rows, columns, parameters, connections));
+
+    const int arr[] = {1, 2, 4, 5, 7, 8, 10, 11, 13, 14, 16, 17, 19, 20, 22, 23,
+        25, 26, 28, 29};
     std::vector<unsigned int> expected(arr, arr + sizeof(arr) / sizeof(arr[0]));
 
     EXPECT_EQ(expected, gene_type.connectionGenes());

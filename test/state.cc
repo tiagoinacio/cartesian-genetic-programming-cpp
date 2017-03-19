@@ -16,6 +16,7 @@ class StateClass : public ::testing::Test {
 
 TEST_F(StateClass, DefaultValues) {
     EXPECT_EQ(0, state.generation());
+    EXPECT_EQ(0, state.run());
 }
 
 TEST_F(StateClass, setGeneration) {
@@ -26,4 +27,14 @@ TEST_F(StateClass, setGeneration) {
 
     state.setGeneration(9);
     EXPECT_EQ(9, state.generation());
+}
+
+TEST_F(StateClass, setRun) {
+    EXPECT_EQ(0, state.run());
+
+    state.setRun(5);
+    EXPECT_EQ(5, state.run());
+
+    state.setRun(9);
+    EXPECT_EQ(9, state.run());
 }

@@ -18,7 +18,7 @@ cgp::Size::Size(const cgp::Configuration& configuration)
       columns_(configuration.columns()) {
     nodes_ = rows_ * columns_;
     genes_per_node_ = kFunctionPerNode + connections_ + parameters_;
-    genes_ = nodes_ * genes_per_node_ + outputs_;
+    genes_ = nodes_ * genes_per_node_;
 }
 
 unsigned int cgp::Size::genes() const {
