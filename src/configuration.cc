@@ -11,12 +11,12 @@ cgp::Configuration::Configuration()
       comparisonOperator_("<="),
       fitnessThreshold_(0.01),
       generations_(10),
-      inputs_(1),
+      program_inputs_(1),
       levelsBack_(10),
       mutationProbability_(0.1),
       offspring_(4),
       connections_(2),
-      outputs_(1),
+      program_outputs_(1),
       rows_(1),
       runs_(5),
       parameters_(0),
@@ -47,12 +47,12 @@ void cgp::Configuration::setRuns(unsigned int runs) {
     runs_ = runs;
 }
 
-void cgp::Configuration::setInputs(unsigned int inputs) {
-    inputs_ = inputs;
+void cgp::Configuration::setProgramInputs(unsigned int programInputs) {
+    program_inputs_ = programInputs;
 }
 
-void cgp::Configuration::setOutputs(unsigned int outputs) {
-    outputs_ = outputs;
+void cgp::Configuration::setProgramOutputs(unsigned int programOutputs) {
+    program_outputs_ = programOutputs;
 }
 
 void cgp::Configuration::setGenerations(unsigned int generations) {
@@ -108,8 +108,8 @@ std::string cgp::Configuration::comparisonOperator() const {
     return comparisonOperator_;
 }
 
-unsigned int cgp::Configuration::inputs() const {
-    return inputs_;
+unsigned int cgp::Configuration::programInputs() const {
+    return program_inputs_;
 }
 
 double cgp::Configuration::fitnessThreshold() const {
@@ -128,8 +128,8 @@ unsigned int cgp::Configuration::runs() const {
     return runs_;
 }
 
-unsigned int cgp::Configuration::outputs() const {
-    return outputs_;
+unsigned int cgp::Configuration::programOutputs() const {
+    return program_outputs_;
 }
 
 unsigned int cgp::Configuration::generations() const {
@@ -154,8 +154,8 @@ void cgp::Configuration::toString() const {
     std::cout << "generations: " << generations_ << std::endl;
     std::cout << "levelsBack: " << levelsBack_ << std::endl;
     std::cout << "offspring: " << offspring_ << std::endl;
-    std::cout << "inputs: " << inputs_ << std::endl;
-    std::cout << "outputs: " << outputs_ << std::endl;
+    std::cout << "programInputs: " << program_inputs_ << std::endl;
+    std::cout << "programOutputs: " << program_outputs_ << std::endl;
     std::cout << "rows: " << rows_ << std::endl;
     std::cout << "runs: " << runs_ << std::endl;
     std::cout << "comparisonOperator: " << comparisonOperator_ << std::endl;

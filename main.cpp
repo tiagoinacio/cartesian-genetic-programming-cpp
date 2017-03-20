@@ -49,7 +49,7 @@ int main() {
     configuration.setLevelsBack(1);
     configuration.setMutationProbability(0.1);
     configuration.setOffspring(1);
-    configuration.setOutputs(1);
+    configuration.setProgramOutputs(1);
     configuration.setConnections(3);
     configuration.setRows(1);
     configuration.setRuns(1);

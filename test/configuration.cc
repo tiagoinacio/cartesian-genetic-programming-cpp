@@ -23,7 +23,7 @@ TEST_F(ConfigurationClass, default_configuration) {
     EXPECT_EQ(10, configuration.levelsBack());
     EXPECT_EQ(0.1, configuration.mutationProbability());
     EXPECT_EQ(4, configuration.offspring());
-    EXPECT_EQ(1, configuration.outputs());
+    EXPECT_EQ(1, configuration.programOutputs());
     EXPECT_EQ(1, configuration.rows());
     EXPECT_EQ(5, configuration.runs());
     EXPECT_EQ(true, configuration.isNodeOutputTheLastOne());
@@ -77,12 +77,12 @@ TEST_F(ConfigurationClass, setRuns) {
     EXPECT_EQ(15, configuration.runs());
 }
 
-TEST_F(ConfigurationClass, setOutputs) {
-    configuration.setOutputs(5);
-    EXPECT_EQ(5, configuration.outputs());
+TEST_F(ConfigurationClass, setProgramOutputs) {
+    configuration.setProgramOutputs(5);
+    EXPECT_EQ(5, configuration.programOutputs());
 
-    configuration.setOutputs(15);
-    EXPECT_EQ(15, configuration.outputs());
+    configuration.setProgramOutputs(15);
+    EXPECT_EQ(15, configuration.programOutputs());
 }
 
 TEST_F(ConfigurationClass, setGenerations) {
@@ -93,12 +93,12 @@ TEST_F(ConfigurationClass, setGenerations) {
     EXPECT_EQ(15, configuration.generations());
 }
 
-TEST_F(ConfigurationClass, setInputs) {
-    configuration.setInputs(5);
-    EXPECT_EQ(5, configuration.inputs());
+TEST_F(ConfigurationClass, setProgramInputs) {
+    configuration.setProgramInputs(5);
+    EXPECT_EQ(5, configuration.programInputs());
 
-    configuration.setInputs(15);
-    EXPECT_EQ(15, configuration.inputs());
+    configuration.setProgramInputs(15);
+    EXPECT_EQ(15, configuration.programInputs());
 }
 
 TEST_F(ConfigurationClass, setOffspring) {
@@ -170,7 +170,7 @@ TEST_F(ConfigurationClass, toString) {
     EXPECT_THAT(output, HasSubstr("generations"));
     EXPECT_THAT(output, HasSubstr("levelsBack"));
     EXPECT_THAT(output, HasSubstr("offspring"));
-    EXPECT_THAT(output, HasSubstr("outputs"));
+    EXPECT_THAT(output, HasSubstr("programOutputs"));
     EXPECT_THAT(output, HasSubstr("rows"));
     EXPECT_THAT(output, HasSubstr("runs"));
     EXPECT_THAT(output, HasSubstr("comparisonOperator"));

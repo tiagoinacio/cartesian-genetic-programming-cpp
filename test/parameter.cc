@@ -33,6 +33,12 @@ TEST_F(TemplateParameterClass, constructor_with_args) {
     EXPECT_EQ(5, intParam.getValue());
 }
 
+TEST_F(TemplateParameterClass, destructor) {
+    cgp::Parameter<int> *intParam = new cgp::Parameter<int>(5, intMutationFnPlus);
+
+    delete intParam;
+}
+
 TEST_F(TemplateParameterClass, default_constructor) {
     cgp::Parameter<int> intParam;
 

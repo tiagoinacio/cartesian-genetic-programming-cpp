@@ -8,10 +8,10 @@ const unsigned int kFunctionPerNode = 1;
 cgp::Size::Size(const cgp::Configuration& configuration)
     : connections_(configuration.connections()),
       generations_(configuration.generations()),
-      inputs_(configuration.inputs()),
+      program_inputs_(configuration.programInputs()),
       levels_back_(configuration.levelsBack()),
       offspring_(configuration.offspring()),
-      outputs_(configuration.outputs()),
+      program_outputs_(configuration.programOutputs()),
       rows_(configuration.rows()),
       parameters_(configuration.parameters()),
       runs_(configuration.runs()),
@@ -33,8 +33,8 @@ unsigned int cgp::Size::columns() const {
     return columns_;
 }
 
-unsigned int cgp::Size::inputs() const {
-    return inputs_;
+unsigned int cgp::Size::programInputs() const {
+    return program_inputs_;
 }
 
 unsigned int cgp::Size::nodes() const {
@@ -57,8 +57,8 @@ unsigned int cgp::Size::offspring() const {
     return offspring_;
 }
 
-unsigned int cgp::Size::outputs() const {
-    return outputs_;
+unsigned int cgp::Size::programOutputs() const {
+    return program_outputs_;
 }
 
 unsigned int cgp::Size::parameters() const {

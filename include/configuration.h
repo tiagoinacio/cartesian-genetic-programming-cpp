@@ -20,11 +20,11 @@ class Configuration {
     void setComparisonOperator(std::string comparisonOperator);
     void setFitnessThreshold(double fitnessThreshold);
     void setGenerations(unsigned int generations);
-    void setInputs(unsigned int inputs);
+    void setProgramInputs(unsigned int programInputs);
     void setLevelsBack(unsigned int levelsBack);
     void setMutationProbability(double mutationProbability);
     void setOffspring(unsigned int offspring);
-    void setOutputs(unsigned int outputs);
+    void setProgramOutputs(unsigned int programOutputs);
     void setRows(unsigned int rows);
     void setRuns(unsigned int runs);
 
@@ -34,11 +34,11 @@ class Configuration {
     std::string comparisonOperator() const;
     double fitnessThreshold() const;
     unsigned int generations() const;
-    unsigned int inputs() const;
+    unsigned int programInputs() const;
     unsigned int levelsBack() const;
     double mutationProbability() const;
     unsigned int offspring() const;
-    unsigned int outputs() const;
+    unsigned int programOutputs() const;
     unsigned int rows() const;
     unsigned int runs() const;
     unsigned int parameters() const;
@@ -52,11 +52,11 @@ class Configuration {
     std::string comparisonOperator_;
     double fitnessThreshold_;
     unsigned int generations_;
-    unsigned int inputs_;
+    unsigned int program_inputs_;
     unsigned int levelsBack_;
     double mutationProbability_;
     unsigned int offspring_;
-    unsigned int outputs_;
+    unsigned int program_outputs_;
     unsigned int rows_;
     unsigned int runs_;
     bool isNodeOutputTheLastOne_;

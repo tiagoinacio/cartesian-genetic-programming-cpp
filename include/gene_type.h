@@ -18,14 +18,23 @@ class GeneType {
         return connection_genes_;
     }
 
+    std::vector<unsigned int> parameterGenes() const {
+        return parameter_genes_;
+    }
+
+    std::vector<unsigned int> functionGenes() const {
+        return function_genes_;
+    }
+
  private:
     void calculateConnectionGenes();
+    void calculateParameterGenes();
+    void calculateFunctionGenes();
 
     std::shared_ptr<cgp::Size> size_;
     std::vector<unsigned int> connection_genes_;
     std::vector<unsigned int> parameter_genes_;
-    std::vector<unsigned int> program_output_genes_;
-    std::vector<unsigned int> program_input_genes_;
+    std::vector<unsigned int> function_genes_;
 };
 
 }   // namespace cgp
