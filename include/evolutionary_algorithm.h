@@ -8,22 +8,21 @@
 #include <memory>
 
 #include "include/algorithm.h"
-#include "include/size.h"
-#include "include/state.h"
 #include "include/gene_type.h"
 #include "include/offspring.h"
+#include "include/size.h"
+#include "include/state.h"
 
 namespace cgp {
 
 class EvolutionaryAlgorithm : public Algorithm {
  public:
-    virtual ~EvolutionaryAlgorithm() {}
+    virtual ~EvolutionaryAlgorithm() {
+    }
 
-    EvolutionaryAlgorithm();
-
-    void setStatePtr(std::shared_ptr<cgp::State> state);
-    void setGeneTypePtr(std::shared_ptr<cgp::GeneType> gene_type);
-    void setSizePtr(std::shared_ptr<cgp::Size> size);
+    EvolutionaryAlgorithm(std::shared_ptr<cgp::State> state,
+        std::shared_ptr<cgp::Size> size,
+        std::shared_ptr<cgp::GeneType> gene_type);
 
     virtual void run() {
         evolutionaryLoop_();
@@ -31,6 +30,7 @@ class EvolutionaryAlgorithm : public Algorithm {
     }
 
  private:
+    EvolutionaryAlgorithm();
     void evolutionaryLoop_();
 
     std::shared_ptr<cgp::Size> size_;

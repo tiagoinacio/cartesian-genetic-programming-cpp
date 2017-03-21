@@ -8,9 +8,9 @@
 #include "gtest/gtest.h"
 
 #include "include/configuration.h"
-#include "include/state.h"
-#include "include/size.h"
 #include "include/event.h"
+#include "include/size.h"
+#include "include/state.h"
 
 using testing::ElementsAre;
 
@@ -21,24 +21,13 @@ TEST(Constructor, default) {
     EXPECT_EQ(event.size(), 0);
 }
 
-TEST(setStatePtr, it_should_set_State_pointer) {
-    cgp::Event event;
-    std::shared_ptr<cgp::State> state(new cgp::State);
-
-    EXPECT_EQ(event.state(), 0);
-
-    event.setStatePtr(state);
-    EXPECT_EQ(event.state()->generation(), 0);
-}
-
-TEST(setSizePtr, default) {
-    cgp::Event event;
+TEST(constructor, it_should_set_all_pointers) {
     cgp::Configuration configuration;
+    std::shared_ptr<cgp::State> state(new cgp::State);
     std::shared_ptr<cgp::Size> size(new cgp::Size(configuration));
 
-    EXPECT_EQ(event.size(), 0);
+    cgp::Event event = cgp::Event(state, size);
 
-    event.setSizePtr(size);
+    EXPECT_EQ(event.state()->generation(), 0);
     EXPECT_EQ(event.size()->columns(), 1);
 }
-

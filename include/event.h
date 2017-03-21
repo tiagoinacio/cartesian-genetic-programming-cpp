@@ -15,6 +15,8 @@ class Event {
  public:
     Event();
 
+    Event(std::shared_ptr<cgp::State> state, std::shared_ptr<cgp::Size> size);
+
     std::shared_ptr<cgp::State> state() const {
         return pState_;
     }
@@ -22,9 +24,6 @@ class Event {
     std::shared_ptr<cgp::Size> size() const {
         return pSize_;
     }
-
-    void setStatePtr(std::shared_ptr<cgp::State> pState);
-    void setSizePtr(std::shared_ptr<cgp::Size> pSize);
 
  private:
     std::shared_ptr<cgp::State> pState_;

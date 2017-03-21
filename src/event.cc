@@ -6,10 +6,7 @@
 cgp::Event::Event() : pState_(0), pSize_(0) {
 }
 
-void cgp::Event::setStatePtr(std::shared_ptr<cgp::State> pState) {
-    pState_ = pState;
-}
-
-void cgp::Event::setSizePtr(std::shared_ptr<cgp::Size> pSize) {
-    pSize_ = pSize;
+cgp::Event::Event(
+    std::shared_ptr<cgp::State> state, std::shared_ptr<cgp::Size> size)
+    : pState_(state), pSize_(size) {
 }
