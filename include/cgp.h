@@ -6,6 +6,7 @@
 
 #include <map>
 #include <memory>
+#include <stdexcept>
 #include <string>
 #include <utility>
 #include <vector>
@@ -15,6 +16,7 @@
 #include "include/parameter.h"
 #include "include/size.h"
 #include "include/state.h"
+#include "include/evolutionary_algorithm.h"
 
 namespace cgp {
 
@@ -23,8 +25,8 @@ class CGP {
  public:
     explicit CGP(const Configuration configuration)
         : configuration_(configuration),
-          size_(new cgp::Size(configuration)),
           state_(new cgp::State()),
+          size_(new cgp::Size(configuration)),
           gene_type_(new cgp::GeneType(size_)) {
         state_->setGeneration(1);
         events_.push_back("on_init");
@@ -50,21 +52,43 @@ class CGP {
     }
 
     void run() {
-        // if number of parameters in configuration is different from the ones
-        // provided by the user, throw
-        event_.setStatePtr(state_);
-        event_.setSizePtr(size_);
-        callbacks_["on_init"](event_);
-        connections_.push_back(2);
-        connections_.push_back(3);
-        std::cout << "instruction set: " << instructionSet_[0](connections_)
-                  << std::endl;
+        if (configurationIsValid_()) {
+            initEvent_();
+            callbacks_["on_init"](event_);
+
+            connections_.push_back(2);
+            connections_.push_back(3);
+            std::cout << "instruction set: " << instructionSet_[0](connections_)
+                      << std::endl;
+
+            ea_.setStatePtr(state_);
+            ea_.setSizePtr(size_);
+            ea_.setGeneTypePtr(gene_type_);
+            ea_.run();
+        } else {
+            std::cout << "You configured " << configuration_.parameters()
+                      << " parameters, but only " << parameters_.size()
+                      << " parameters were provided." << std::endl;
+        }
     }
 
  private:
+    void initEvent_() {
+        event_.setStatePtr(state_);
+        event_.setSizePtr(size_);
+    }
+
+    bool configurationIsValid_() throw(std::invalid_argument) {
+        if (parameters_.size() != configuration_.parameters()) {
+            return false;
+        }
+        return true;
+    }
+
     const Configuration configuration_;
     std::shared_ptr<cgp::State> state_;
     std::shared_ptr<cgp::Size> size_;
+    cgp::EvolutionaryAlgorithm ea_;
     std::shared_ptr<cgp::GeneType> gene_type_;
     std::vector<std::shared_ptr<cgp::ParameterInterface> > parameters_;
     std::map<std::string, std::function<void(const cgp::Event&)> > callbacks_;

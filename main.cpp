@@ -42,17 +42,18 @@ int main() {
     cgp::Configuration configuration;
 
     configuration.isNodeOutputTheLastOne(false);
-    configuration.setColumns(1);
-    configuration.setComparisonOperator(">=");
+    configuration.setColumns(10);
+    configuration.setComparisonOperator("<=");
     configuration.setFitnessThreshold(0.1);
-    configuration.setGenerations(8);
-    configuration.setLevelsBack(1);
+    configuration.setGenerations(100);
+    configuration.setLevelsBack(10);
     configuration.setMutationProbability(0.1);
-    configuration.setOffspring(1);
+    configuration.setOffspring(4);
     configuration.setProgramOutputs(1);
-    configuration.setConnections(3);
+    configuration.setConnections(2);
+    configuration.setParameters(2);
     configuration.setRows(1);
-    configuration.setRuns(1);
+    configuration.setRuns(5);
 
     configuration.toString();
     cgp::CGP<double> cgp(configuration);
