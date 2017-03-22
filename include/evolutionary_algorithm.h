@@ -9,7 +9,7 @@
 
 #include "include/algorithm.h"
 #include "include/gene_type.h"
-#include "include/offspring.h"
+#include "include/genotype.h"
 #include "include/size.h"
 #include "include/state.h"
 

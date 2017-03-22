@@ -14,7 +14,9 @@ cgp::EvolutionaryAlgorithm::EvolutionaryAlgorithm(
 }
 
 void cgp::EvolutionaryAlgorithm::evolutionaryLoop_() {
-    cgp::Offspring offspring = cgp::Offspring(state_, size_, gene_type_);
+    cgp::Genotype genotype;
+
+    genotype.create(state_, size_, gene_type_);
 
     while (state_->run() < size_->runs()) {
         while (state_->generation() < size_->generations()) {
