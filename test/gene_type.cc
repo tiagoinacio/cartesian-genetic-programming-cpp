@@ -13,18 +13,9 @@
 #include "include/configuration.h"
 #include "include/gene_type.h"
 #include "include/size.h"
+#include "test/to_vec.h"
 
 using testing::ElementsAre;
-
-std::vector<unsigned int> toVec(const int arr[], const size_t size) {
-    std::vector<unsigned int> vec;
-
-    for (int i = 0; i < size; i++) {
-        vec.push_back(arr[i]);
-    }
-
-    return vec;
-}
 
 std::shared_ptr<cgp::Size> createMock(unsigned int rows, unsigned int columns,
     unsigned int connections, unsigned int parameters) {
@@ -41,9 +32,9 @@ std::shared_ptr<cgp::Size> createMock(unsigned int rows, unsigned int columns,
 TEST(TC01, 1R_1C_1C_1P) {
     cgp::GeneType gene_type(createMock(1, 1, 1, 1));
 
-    const int functionGenes[] = {1};
-    const int connectionGenes[] = {2};
-    const int parameterGenes[] = {3};
+    const int functionGenes[] = {0};
+    const int connectionGenes[] = {1};
+    const int parameterGenes[] = {2};
 
     EXPECT_EQ(toVec(functionGenes, gene_type.functionGenes().size()),
         gene_type.functionGenes());
@@ -60,8 +51,8 @@ TEST(TC02, 1R_1C_1C_0P) {
     const unsigned int parameters = 0;
     cgp::GeneType gene_type(createMock(rows, columns, connections, parameters));
 
-    const int functionGenes[] = {1};
-    const int connectionGenes[] = {2};
+    const int functionGenes[] = {0};
+    const int connectionGenes[] = {1};
     const int parameterGenes[] = {};
 
     EXPECT_EQ(toVec(functionGenes, gene_type.functionGenes().size()),
@@ -79,9 +70,9 @@ TEST(TC03, 1R_1C_3C_2P) {
     const unsigned int parameters = 2;
     cgp::GeneType gene_type(createMock(rows, columns, connections, parameters));
 
-    const int functionGenes[] = {1};
-    const int connectionGenes[] = {2, 3, 4};
-    const int parameterGenes[] = {5, 6};
+    const int functionGenes[] = {0};
+    const int connectionGenes[] = {1, 2, 3};
+    const int parameterGenes[] = {4, 5};
 
     EXPECT_EQ(toVec(functionGenes, gene_type.functionGenes().size()),
         gene_type.functionGenes());
@@ -94,9 +85,9 @@ TEST(TC03, 1R_1C_3C_2P) {
 TEST(TC04, 1R_2C_2C_3P) {
     cgp::GeneType gene_type(createMock(1, 2, 2, 3));
 
-    int functionGenes[] = {1, 7};
-    int connectionGenes[] = {2, 3, 8, 9};
-    int parameterGenes[] = {4, 5, 6, 10, 11, 12};
+    int functionGenes[] = {0, 6};
+    int connectionGenes[] = {1, 2, 7, 8};
+    int parameterGenes[] = {3, 4, 5, 9, 10, 11};
 
     EXPECT_EQ(toVec(functionGenes, gene_type.functionGenes().size()),
         gene_type.functionGenes());
@@ -109,10 +100,10 @@ TEST(TC04, 1R_2C_2C_3P) {
 TEST(TC05, 5R_1C_2C_3P) {
     cgp::GeneType gene_type(createMock(5, 1, 2, 3));
 
-    int functionGenes[] = {1, 7, 13, 19, 25};
-    int connectionGenes[] = {2, 3, 8, 9, 14, 15, 20, 21, 26, 27};
+    int functionGenes[] = {0, 6, 12, 18, 24};
+    int connectionGenes[] = {1, 2, 7, 8, 13, 14, 19, 20, 25, 26};
     int parameterGenes[] = {
-        4, 5, 6, 10, 11, 12, 16, 17, 18, 22, 23, 24, 28, 29, 30};
+        3, 4, 5, 9, 10, 11, 15, 16, 17, 21, 22, 23, 27, 28, 29};
 
     EXPECT_EQ(toVec(functionGenes, gene_type.functionGenes().size()),
         gene_type.functionGenes());
@@ -125,11 +116,11 @@ TEST(TC05, 5R_1C_2C_3P) {
 TEST(TC05, 10R_1C_2C_3P) {
     cgp::GeneType gene_type(createMock(10, 1, 2, 3));
 
-    int functionGenes[] = {1, 7, 13, 19, 25, 31, 37, 43, 49, 55};
-    int connectionGenes[] = {2, 3, 8, 9, 14, 15, 20, 21, 26, 27, 32, 33, 38, 39,
-        44, 45, 50, 51, 56, 57};
-    int parameterGenes[] = {4, 5, 6, 10, 11, 12, 16, 17, 18, 22, 23, 24, 28, 29,
-        30, 34, 35, 36, 40, 41, 42, 46, 47, 48, 52, 53, 54, 58, 59, 60};
+    int functionGenes[] = {0, 6, 12, 18, 24, 30, 36, 42, 48, 54};
+    int connectionGenes[] = {1, 2, 7, 8, 13, 14, 19, 20, 25, 26, 31, 32, 37, 38,
+        43, 44, 49, 50, 55, 56};
+    int parameterGenes[] = {3, 4, 5, 9, 10, 11, 15, 16, 17, 21, 22, 23, 27, 28,
+        29, 33, 34, 35, 39, 40, 41, 45, 46, 47, 51, 52, 53, 57, 58, 59};
 
     EXPECT_EQ(toVec(functionGenes, gene_type.functionGenes().size()),
         gene_type.functionGenes());
@@ -143,10 +134,10 @@ TEST(TC06, 5_3_0_2) {
     cgp::GeneType gene_type(createMock(5, 3, 0, 2));
 
     int functionGenes[] = {
-        1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34, 37, 40, 43};
+        0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42};
     int connectionGenes[] = {};
-    int parameterGenes[] = {2, 3, 5, 6, 8, 9, 11, 12, 14, 15, 17, 18, 20, 21,
-        23, 24, 26, 27, 29, 30, 32, 33, 35, 36, 38, 39, 41, 42, 44, 45};
+    int parameterGenes[] = {1, 2, 4, 5, 7, 8, 10, 11, 13, 14, 16, 17, 19, 20,
+        22, 23, 25, 26, 28, 29, 31, 32, 34, 35, 37, 38, 40, 41, 43, 44};
 
     EXPECT_EQ(toVec(functionGenes, gene_type.functionGenes().size()),
         gene_type.functionGenes());
@@ -159,17 +150,17 @@ TEST(TC06, 5_3_0_2) {
 TEST(TC07, 3_6_4_3) {
     cgp::GeneType gene_type(createMock(3, 6, 4, 3));
 
-    int functionGenes[] = {1, 9, 17, 25, 33, 41, 49, 57, 65, 73, 81, 89, 97,
-        105, 113, 121, 129, 137};
-    int connectionGenes[] = {2, 3, 4, 5, 10, 11, 12, 13, 18, 19, 20, 21, 26, 27,
-        28, 29, 34, 35, 36, 37, 42, 43, 44, 45, 50, 51, 52, 53, 58, 59, 60, 61,
-        66, 67, 68, 69, 74, 75, 76, 77, 82, 83, 84, 85, 90, 91, 92, 93, 98, 99,
-        100, 101, 106, 107, 108, 109, 114, 115, 116, 117, 122, 123, 124, 125,
-        130, 131, 132, 133, 138, 139, 140, 141};
-    int parameterGenes[] = {6, 7, 8, 14, 15, 16, 22, 23, 24, 30, 31, 32, 38, 39,
-        40, 46, 47, 48, 54, 55, 56, 62, 63, 64, 70, 71, 72, 78, 79, 80, 86, 87,
-        88, 94, 95, 96, 102, 103, 104, 110, 111, 112, 118, 119, 120, 126, 127,
-        128, 134, 135, 136, 142, 143, 144};
+    int functionGenes[] = {0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96,
+        104, 112, 120, 128, 136};
+    int connectionGenes[] = {1, 2, 3, 4, 9, 10, 11, 12, 17, 18, 19, 20, 25, 26,
+        27, 28, 33, 34, 35, 36, 41, 42, 43, 44, 49, 50, 51, 52, 57, 58, 59, 60,
+        65, 66, 67, 68, 73, 74, 75, 76, 81, 82, 83, 84, 89, 90, 91, 92, 97, 98,
+        99, 100, 105, 106, 107, 108, 113, 114, 115, 116, 121, 122, 123, 124,
+        129, 130, 131, 132, 137, 138, 139, 140};
+    int parameterGenes[] = {5, 6, 7, 13, 14, 15, 21, 22, 23, 29, 30, 31, 37, 38,
+        39, 45, 46, 47, 53, 54, 55, 61, 62, 63, 69, 70, 71, 77, 78, 79, 85, 86,
+        87, 93, 94, 95, 101, 102, 103, 109, 110, 111, 117, 118, 119, 125, 126,
+        127, 133, 134, 135, 141, 142, 143};
 
     std::copy(gene_type.connectionGenes().begin(),
         gene_type.connectionGenes().end(),

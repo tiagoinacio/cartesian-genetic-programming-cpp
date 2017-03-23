@@ -12,7 +12,7 @@ namespace cgp {
 
 class GeneType {
  public:
-    explicit GeneType(std::shared_ptr<cgp::Size> sizes);
+    explicit GeneType(std::shared_ptr<cgp::Size> size);
 
     std::vector<unsigned int> connectionGenes() const {
         return connection_genes_;

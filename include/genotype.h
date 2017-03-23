@@ -19,9 +19,7 @@ class Genotype {
         std::shared_ptr<cgp::Size> size,
         std::shared_ptr<cgp::GeneType> gene_type);
 
-    std::vector<unsigned int> genes() {
-        return genes_;
-    }
+    std::vector<unsigned int> genes();
 
     void insertFunctionGenes(std::shared_ptr<cgp::State> state,
         std::shared_ptr<cgp::Size> size,

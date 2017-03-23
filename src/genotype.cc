@@ -6,19 +6,24 @@
 
 void cgp::Genotype::create(std::shared_ptr<cgp::State> state,
     std::shared_ptr<cgp::Size> size, std::shared_ptr<cgp::GeneType> gene_type) {
-    genes_.reserve(size->genes());
+    genes_.resize(size->genes());
 
+    std::cout << "GENOTYPE_CREATE " << size->genes() << " "
+              << gene_type->functionGenes().size() << std::endl;
     insertFunctionGenes(state, size, gene_type);
     insertConnectionGenes(state, size, gene_type);
     insertParameterGenes(state, size, gene_type);
 }
 
+std::vector<unsigned int> cgp::Genotype::genes() {
+    return genes_;
+}
+
 void cgp::Genotype::insertFunctionGenes(std::shared_ptr<cgp::State> state,
     std::shared_ptr<cgp::Size> size, std::shared_ptr<cgp::GeneType> gene_type) {
-    for (unsigned int i = 0; i <= gene_type->functionGenes().size(); i++) {
-        std::cout << genes_[i] << std::endl;
-        genes_[i] = 5;
-        std::cout << genes_[i] << std::endl;
+    std::vector<unsigned int> function_genes = gene_type->functionGenes();
+    for (unsigned int i = 0; i < function_genes.size(); i++) {
+        genes_[function_genes[i]] = 5;
     }
 }
 
