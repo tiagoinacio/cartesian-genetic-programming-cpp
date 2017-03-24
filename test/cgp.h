@@ -30,17 +30,17 @@ class CGPClass : public ::testing::Test {
     cgp::CGP<double> cgp;
 };
 
-TEST_F(CGPClass, setCallback_valid) {
-    cgp.setCallback("on_init", &onInitCallback);
+TEST_F(CGPClass, subscribe_valid) {
+    cgp.subscribe("on_init", &onInitCallback);
     EXPECT_EQ(0, state.generation());
 
     cgp.run();
     EXPECT_EQ(1, state.generation());
 }
 
-TEST_F(CGPClass, setCallback_invalid) {
+TEST_F(CGPClass, subscribe_invalid) {
     try {
-        cgp.setCallback("on_fake_callback", &onInitCallback);
+        cgp.subscribe("on_fake_callback", &onInitCallback);
         FAIL() << "Not a valid event callback.";
     } catch (std::out_of_range const &err) {
         EXPECT_EQ(err.what(),

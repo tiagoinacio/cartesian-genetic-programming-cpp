@@ -47,6 +47,7 @@ int main() {
     configuration.setFitnessThreshold(0.1);
     configuration.setGenerations(100);
     configuration.setLevelsBack(10);
+    configuration.setFunctions(10);
     configuration.setMutationProbability(0.1);
     configuration.setOffspring(4);
     configuration.setProgramOutputs(1);
@@ -73,7 +74,7 @@ int main() {
     std::cout << firstParam->getValue() << std::endl;
     std::cout << secondParam->getValue() << std::endl;
 
-    cgp.setCallback("on_init", callbackOnInit);
+    cgp.subscribe("on_init", callbackOnInit);
 
     cgp.pushFunction(fn1);
     cgp.pushFunction(&InstructionSet::fn2);

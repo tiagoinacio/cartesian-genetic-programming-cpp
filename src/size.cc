@@ -11,6 +11,7 @@ cgp::Size::Size(const cgp::Configuration& configuration)
       program_inputs_(configuration.programInputs()),
       levels_back_(configuration.levelsBack()),
       offspring_(configuration.offspring()),
+      functions_(configuration.functions()),
       program_outputs_(configuration.programOutputs()),
       rows_(configuration.rows()),
       parameters_(configuration.parameters()),
@@ -23,6 +24,10 @@ cgp::Size::Size(const cgp::Configuration& configuration)
 
 unsigned int cgp::Size::genes() const {
     return genes_;
+}
+
+unsigned int cgp::Size::functions() const {
+    return functions_;
 }
 
 unsigned int cgp::Size::genesPerNode() const {

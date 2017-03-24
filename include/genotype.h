@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "include/gene_type.h"
+#include "include/function_gene.h"
 #include "include/size.h"
 #include "include/state.h"
 

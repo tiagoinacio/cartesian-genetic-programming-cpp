@@ -24,6 +24,7 @@ class Configuration {
     void setLevelsBack(unsigned int levelsBack);
     void setMutationProbability(double mutationProbability);
     void setOffspring(unsigned int offspring);
+    void setFunctions(unsigned int functions);
     void setProgramOutputs(unsigned int programOutputs);
     void setRows(unsigned int rows);
     void setRuns(unsigned int runs);
@@ -35,6 +36,7 @@ class Configuration {
     double fitnessThreshold() const;
     unsigned int generations() const;
     unsigned int programInputs() const;
+    unsigned int functions() const;
     unsigned int levelsBack() const;
     double mutationProbability() const;
     unsigned int offspring() const;
@@ -52,6 +54,7 @@ class Configuration {
     std::string comparisonOperator_;
     double fitnessThreshold_;
     unsigned int generations_;
+    unsigned int functions_;
     unsigned int program_inputs_;
     unsigned int levelsBack_;
     double mutationProbability_;

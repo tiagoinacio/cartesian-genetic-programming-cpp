@@ -36,7 +36,7 @@ class CGP {
         parameters_.push_back(parameter);
     }
 
-    void setCallback(std::string event, void (*callback)(const cgp::Event&)) {
+    void subscribe(std::string event, void (*callback)(const cgp::Event&)) {
         if (std::find(events_.begin(), events_.end(), event) == events_.end()) {
             throw std::out_of_range("Not a valid event callback.");
         }

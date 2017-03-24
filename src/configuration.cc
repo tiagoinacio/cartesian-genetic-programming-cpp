@@ -14,6 +14,7 @@ cgp::Configuration::Configuration()
       program_inputs_(1),
       levelsBack_(10),
       mutationProbability_(0.1),
+      functions_(1),
       offspring_(4),
       connections_(2),
       program_outputs_(1),
@@ -25,6 +26,10 @@ cgp::Configuration::Configuration()
 
 void cgp::Configuration::setRows(unsigned int rows) {
     rows_ = rows;
+}
+
+void cgp::Configuration::setFunctions(unsigned int functions) {
+    functions_ = functions;
 }
 
 void cgp::Configuration::setParameters(unsigned int parameters) {
@@ -94,6 +99,10 @@ unsigned int cgp::Configuration::rows() const {
 
 unsigned int cgp::Configuration::columns() const {
     return columns_;
+}
+
+unsigned int cgp::Configuration::functions() const {
+    return functions_;
 }
 
 unsigned int cgp::Configuration::parameters() const {
