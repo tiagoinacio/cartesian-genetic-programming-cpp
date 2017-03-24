@@ -20,11 +20,11 @@ using testing::Ge;
 using testing::Le;
 using testing::AllOf;
 
-TEST(genotype_constructor, function_genes_5_elements) {
+TEST(genotype_constructor, function_genes_3_elements) {
     cgp::Configuration configuration;
     configuration.setConnections(0);
     configuration.setParameters(0);
-    configuration.setFunctions(5);
+    configuration.setFunctions(3);
 
     std::shared_ptr<cgp::Size> size(new cgp::Size(configuration));
     std::shared_ptr<cgp::GeneType> gene_type(new cgp::GeneType(size));
@@ -33,7 +33,7 @@ TEST(genotype_constructor, function_genes_5_elements) {
 
     genotype.create(state, size, gene_type);
 
-    EXPECT_THAT(genotype.genes()[0], AllOf(Ge(0),Le(5)));
+    EXPECT_THAT(genotype.genes()[0], AllOf(Ge(0),Le(3)));
 }
 
 TEST(genotype_constructor, function_genes_1_element) {
@@ -49,5 +49,6 @@ TEST(genotype_constructor, function_genes_1_element) {
 
     genotype.create(state, size, gene_type);
 
-    EXPECT_THAT(genotype.genes()[0], 1);
+    // first and only function
+    EXPECT_THAT(genotype.genes()[0], 0);
 }

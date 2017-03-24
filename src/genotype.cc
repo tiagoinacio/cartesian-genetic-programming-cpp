@@ -11,7 +11,7 @@ void cgp::Genotype::create(std::shared_ptr<cgp::State> state,
     insertParameterGenes(state, size, gene_type);
 }
 
-std::vector<unsigned int> cgp::Genotype::genes() {
+std::vector<int> cgp::Genotype::genes() {
     return genes_;
 }
 
