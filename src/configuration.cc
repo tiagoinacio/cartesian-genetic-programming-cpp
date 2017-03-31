@@ -162,6 +162,8 @@ void cgp::Configuration::toString() const {
     std::cout << "columns: " << columns_ << std::endl;
     std::cout << "generations: " << generations_ << std::endl;
     std::cout << "levelsBack: " << levelsBack_ << std::endl;
+    std::cout << "connections: " << connections_ << std::endl;
+    std::cout << "parameters: " << connections_ << std::endl;
     std::cout << "offspring: " << offspring_ << std::endl;
     std::cout << "programInputs: " << program_inputs_ << std::endl;
     std::cout << "programOutputs: " << program_outputs_ << std::endl;

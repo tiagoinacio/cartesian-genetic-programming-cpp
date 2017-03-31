@@ -7,8 +7,10 @@
 #include <memory>
 #include <vector>
 
-#include "include/gene_type.h"
+#include "include/connection_gene.h"
 #include "include/function_gene.h"
+#include "include/gene_type.h"
+#include "include/parameter.h"
 #include "include/size.h"
 #include "include/state.h"
 
@@ -18,9 +20,12 @@ class Genotype {
  public:
     void create(std::shared_ptr<cgp::State> state,
         std::shared_ptr<cgp::Size> size,
-        std::shared_ptr<cgp::GeneType> gene_type);
+        std::shared_ptr<cgp::GeneType> gene_type,
+        std::vector<std::shared_ptr<cgp::ParameterInterface> > parameters);
 
     std::vector<int> genes();
+
+    void toString();
 
     void insertFunctionGenes(std::shared_ptr<cgp::State> state,
         std::shared_ptr<cgp::Size> size,
@@ -36,6 +41,8 @@ class Genotype {
 
  private:
     std::vector<int> genes_;
+    std::shared_ptr<cgp::Size> size_;
+    std::vector<std::shared_ptr<cgp::ParameterInterface> > parameters_;
 };
 
 }   // namespace cgp

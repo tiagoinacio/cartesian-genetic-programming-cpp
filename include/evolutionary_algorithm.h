@@ -6,10 +6,12 @@
 
 #include <iostream>
 #include <memory>
+#include <vector>
 
 #include "include/algorithm.h"
 #include "include/gene_type.h"
 #include "include/genotype.h"
+#include "include/parameter.h"
 #include "include/size.h"
 #include "include/state.h"
 
@@ -22,20 +24,22 @@ class EvolutionaryAlgorithm : public Algorithm {
 
     EvolutionaryAlgorithm(std::shared_ptr<cgp::State> state,
         std::shared_ptr<cgp::Size> size,
-        std::shared_ptr<cgp::GeneType> gene_type);
+        std::shared_ptr<cgp::GeneType> gene_type,
+        std::vector<std::shared_ptr<cgp::ParameterInterface> >);
 
     virtual void run() {
         evolutionaryLoop_();
-        std::cout << "class EvolutionaryAlgorithm" << std::endl;
     }
 
  private:
     EvolutionaryAlgorithm();
     void evolutionaryLoop_();
 
+    cgp::Genotype genotype_;
+    std::shared_ptr<cgp::State> state_;
     std::shared_ptr<cgp::Size> size_;
     std::shared_ptr<cgp::GeneType> gene_type_;
-    std::shared_ptr<cgp::State> state_;
+    std::vector<std::shared_ptr<cgp::ParameterInterface> > parameters_;
 };
 
 }   // namespace cgp
