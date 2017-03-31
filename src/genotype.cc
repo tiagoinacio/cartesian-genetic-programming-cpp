@@ -69,9 +69,10 @@ void cgp::Genotype::toString() {
         }
         g = (j - size_->parameters() + 1);
         if (g >= 0 && g % size_->genesPerNode() == 0) {
-            std::cout << "        ";
+            std::cout << "          ";
         }
         std::cout << *i << ' ';
         j++;
     }
+    std::cout << "***************************************" << std::endl;
 }
