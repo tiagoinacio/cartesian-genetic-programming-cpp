@@ -6,6 +6,7 @@
 void cgp::Genotype::create(std::shared_ptr<cgp::State> state,
     std::shared_ptr<cgp::Size> size, std::shared_ptr<cgp::GeneType> gene_type,
     std::vector<std::shared_ptr<cgp::ParameterInterface> > parameters) {
+    srand(time(NULL));
     genes_.resize(size->genes());
 
     for (int i = 0; i < size->genes(); ++i) {
@@ -28,8 +29,7 @@ void cgp::Genotype::insertFunctionGenes(std::shared_ptr<cgp::State> state,
     std::shared_ptr<cgp::Size> size, std::shared_ptr<cgp::GeneType> gene_type) {
     std::vector<unsigned int> function_genes = gene_type->functionGenes();
     for (unsigned int i = 0; i < function_genes.size(); i++) {
-        genes_[function_genes[i]] =
-            cgp::FunctionGene::create(size->functions());
+        genes_[function_genes[i]] = cgp::Gene::function(size->functions());
     }
 }
 
@@ -37,7 +37,8 @@ void cgp::Genotype::insertConnectionGenes(std::shared_ptr<cgp::State> state,
     std::shared_ptr<cgp::Size> size, std::shared_ptr<cgp::GeneType> gene_type) {
     std::vector<unsigned int> connection_genes = gene_type->connectionGenes();
     for (unsigned int i = 0; i < connection_genes.size(); i++) {
-        genes_[connection_genes[i]] = cgp::ConnectionGene::create();
+        genes_[connection_genes[i]] =
+            cgp::Gene::connection(connection_genes[i], size->genesPerNode());
     }
 }
 
@@ -74,5 +75,6 @@ void cgp::Genotype::toString() {
         std::cout << *i << ' ';
         j++;
     }
-    std::cout << "***************************************" << std::endl;
+    std::cout << std::endl
+              << "***************************************" << std::endl;
 }

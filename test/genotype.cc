@@ -8,8 +8,8 @@
 #include "gtest/gtest.h"
 
 #include "include/configuration.h"
-#include "include/function_gene.h"
 #include "include/gene_type.h"
+#include "include/gene.h"
 #include "include/genotype.h"
 #include "include/size.h"
 #include "include/state.h"
@@ -34,7 +34,7 @@ TEST(genotype_constructor, function_genes_3_elements) {
 
     genotype.create(state, size, gene_type, parameters);
 
-    EXPECT_THAT(genotype.genes()[0], AllOf(Ge(0),Le(3)));
+    EXPECT_THAT(genotype.genes()[0], AllOf(Ge(0), Le(3)));
 }
 
 TEST(genotype_constructor, function_genes_1_element) {

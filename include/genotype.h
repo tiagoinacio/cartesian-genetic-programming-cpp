@@ -7,8 +7,7 @@
 #include <memory>
 #include <vector>
 
-#include "include/connection_gene.h"
-#include "include/function_gene.h"
+#include "include/gene.h"
 #include "include/gene_type.h"
 #include "include/parameter.h"
 #include "include/size.h"

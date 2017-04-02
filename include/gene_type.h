@@ -4,6 +4,7 @@
 #ifndef CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_GENE_TYPE_H_
 #define CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_GENE_TYPE_H_
 
+#include <math.h>
 #include <memory>
 #include <vector>
 #include "include/size.h"
@@ -24,6 +25,11 @@ class GeneType {
 
     std::vector<unsigned int> functionGenes() const {
         return function_genes_;
+    }
+
+    static unsigned int findWhichNodeBelongsTo(
+        unsigned int gene_index, unsigned int genes_per_node) {
+        return ceil(gene_index / genes_per_node);
     }
 
  private:

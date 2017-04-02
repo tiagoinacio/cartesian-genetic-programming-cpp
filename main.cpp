@@ -47,7 +47,7 @@ int main() {
     configuration.setFitnessThreshold(0.1);
     configuration.setGenerations(100);
     configuration.setLevelsBack(10);
-    configuration.setFunctions(10);
+    configuration.setFunctions(2);
     configuration.setMutationProbability(0.1);
     configuration.setOffspring(4);
     configuration.setProgramOutputs(1);

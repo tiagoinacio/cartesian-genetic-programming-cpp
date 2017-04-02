@@ -2,7 +2,6 @@
 // Tiago Inácio
 
 #include "include/gene_type.h"
-#include <iostream>
 
 const unsigned int kFunctionPerNode = 1;
 
