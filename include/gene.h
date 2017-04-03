@@ -8,6 +8,7 @@
 #include <time.h>
 #include <iostream>
 #include <stdexcept>
+#include <vector>
 #include "include/gene_type.h"
 
 namespace cgp {
@@ -15,10 +16,11 @@ namespace cgp {
 class Gene {
  public:
     static unsigned int function(size_t max_number_of_functions);
-    static unsigned int connection(
-        unsigned int gene_index, unsigned int genes_per_node);
+    static unsigned int connection(unsigned int gene_index,
+        unsigned int genes_per_node, unsigned int levels_back,
+        unsigned int program_inputs);
     static unsigned int parameter();
 };
-}
+}   // namespace cgp
 
 #endif   // CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_GENE_H_

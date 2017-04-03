@@ -46,11 +46,12 @@ int main() {
     configuration.setComparisonOperator("<=");
     configuration.setFitnessThreshold(0.1);
     configuration.setGenerations(100);
-    configuration.setLevelsBack(10);
+    configuration.setLevelsBack(2);
     configuration.setFunctions(2);
     configuration.setMutationProbability(0.1);
     configuration.setOffspring(4);
     configuration.setProgramOutputs(1);
+    configuration.setProgramInputs(2);
     configuration.setConnections(2);
     configuration.setParameters(2);
     configuration.setRows(1);

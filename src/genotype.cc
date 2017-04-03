@@ -37,16 +37,21 @@ void cgp::Genotype::insertConnectionGenes(std::shared_ptr<cgp::State> state,
     std::shared_ptr<cgp::Size> size, std::shared_ptr<cgp::GeneType> gene_type) {
     std::vector<unsigned int> connection_genes = gene_type->connectionGenes();
     for (unsigned int i = 0; i < connection_genes.size(); i++) {
-        genes_[connection_genes[i]] =
-            cgp::Gene::connection(connection_genes[i], size->genesPerNode());
+        genes_[connection_genes[i]] = cgp::Gene::connection(connection_genes[i],
+            size->genesPerNode(), size->levelsBack(), size->programInputs());
     }
 }
 
 void cgp::Genotype::insertParameterGenes(std::shared_ptr<cgp::State> state,
     std::shared_ptr<cgp::Size> size, std::shared_ptr<cgp::GeneType> gene_type) {
     std::vector<unsigned int> parameter_genes = gene_type->parameterGenes();
+    unsigned int j = 0;
+    unsigned int max_parameters = size->parameters();
     for (unsigned int i = 0; i < parameter_genes.size(); i++) {
-        genes_[parameter_genes[i]] = 4;
+        genes_[parameter_genes[i]] = j++;
+        if (j == max_parameters) {
+            j = 0;
+        }
     }
 }
 
@@ -55,26 +60,38 @@ void cgp::Genotype::toString() {
     int f = 0;
     int g = 0;
 
-    std::cout << "***************************************" << std::endl;
-    std::cout << "* function | connections | parameters *" << std::endl;
-    std::cout << "***************************************";
+    std::cout << "**********************************************" << std::endl
+              << "* node | function | connections | parameters *" << std::endl
+              << "**********************************************" << std::endl;
+
+    for (unsigned int a = 0; a < size_->programInputs(); ++a) {
+        std::cout << "  i" << std::setfill('0') << std::setw(3) << a
+                  << std::endl;
+    }
     for (std::vector<int>::const_iterator i = genes_.begin(); i != genes_.end();
          ++i) {
         if (j % size_->genesPerNode() == 0) {
-            std::cout << std::endl;
-            std::cout << "     ";
+            unsigned int node_index = cgp::GeneType::findWhichNodeBelongsTo(
+                j, size_->genesPerNode(), size_->programInputs());
+            if (node_index != size_->programInputs()) {
+                std::cout << std::endl;
+            }
+
+            std::cout << "   " << std::setfill('0') << std::setw(3)
+                      << node_index << "     ";
         }
         f = (j - size_->parameters() - size_->connections() + 1);
         if (f >= 0 && f % size_->genesPerNode() == 0) {
-            std::cout << "          ";
+            std::cout << "       ";
         }
         g = (j - size_->parameters() + 1);
         if (g >= 0 && g % size_->genesPerNode() == 0) {
-            std::cout << "          ";
+            std::cout << "     ";
         }
-        std::cout << *i << ' ';
+        std::cout << std::setfill('0') << std::setw(3) << *i << ' ';
+
         j++;
     }
     std::cout << std::endl
-              << "***************************************" << std::endl;
+              << "**********************************************" << std::endl;
 }

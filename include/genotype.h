@@ -4,6 +4,7 @@
 #ifndef CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_GENOTYPE_H_
 #define CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_GENOTYPE_H_
 
+#include <iomanip>
 #include <memory>
 #include <vector>
 
