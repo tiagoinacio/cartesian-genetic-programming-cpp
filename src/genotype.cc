@@ -55,7 +55,14 @@ void cgp::Genotype::insertParameterGenes(std::shared_ptr<cgp::State> state,
     }
 }
 
-void cgp::Genotype::toString() {
+void cgp::Genotype::insertProgramOutputs(std::shared_ptr<cgp::Size> size) {
+    for (unsigned int i = size->genes() - size->programOutputs();
+         i < size->genes(); ++i) {
+        genes_[i] = i;
+    }
+}
+
+void cgp::Genotype::toString(bool isToShowReference) {
     int j = 0;
     int f = 0;
     int g = 0;
@@ -68,6 +75,7 @@ void cgp::Genotype::toString() {
         std::cout << "  i" << std::setfill('0') << std::setw(3) << a
                   << std::endl;
     }
+    int ii = size_->programInputs();
     for (std::vector<int>::const_iterator i = genes_.begin(); i != genes_.end();
          ++i) {
         if (j % size_->genesPerNode() == 0) {
@@ -77,8 +85,12 @@ void cgp::Genotype::toString() {
                 std::cout << std::endl;
             }
 
-            std::cout << "   " << std::setfill('0') << std::setw(3)
-                      << node_index << "     ";
+            std::cout << "   " << std::setfill('0') << std::setw(3);
+            if (isToShowReference) {
+                std::cout << "        ";
+            } else {
+                std::cout << node_index << "     ";
+            }
         }
         f = (j - size_->parameters() - size_->connections() + 1);
         if (f >= 0 && f % size_->genesPerNode() == 0) {
@@ -88,9 +100,26 @@ void cgp::Genotype::toString() {
         if (g >= 0 && g % size_->genesPerNode() == 0) {
             std::cout << "     ";
         }
-        std::cout << std::setfill('0') << std::setw(3) << *i << ' ';
+        std::cout << std::setfill('0') << std::setw(3);
+       if (isToShowReference) {
+           std::cout << ii << ' ';
+       } else {
+           std::cout << *i << ' ';
+       }
 
         j++;
+        ii++;
+    }
+    for (unsigned int a = 0; a < size_->programOutputs(); ++a) {
+        std::cout << std::endl
+            << "  o" << std::setfill('0') << std::setw(3);
+        if (isToShowReference) {
+            std::cout << ii;
+        } else {
+            std::cout << a;
+        }
+        std::cout << std::endl;
+        ii++;
     }
     std::cout << std::endl
               << "**********************************************" << std::endl;

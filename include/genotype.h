@@ -25,7 +25,7 @@ class Genotype {
 
     std::vector<int> genes();
 
-    void toString();
+    void toString(bool isToShowReference = false);
 
     void insertFunctionGenes(std::shared_ptr<cgp::State> state,
         std::shared_ptr<cgp::Size> size,
@@ -38,6 +38,8 @@ class Genotype {
     void insertParameterGenes(std::shared_ptr<cgp::State> state,
         std::shared_ptr<cgp::Size> size,
         std::shared_ptr<cgp::GeneType> gene_type);
+
+    void insertProgramOutputs(std::shared_ptr<cgp::Size> size);
 
  private:
     std::vector<int> genes_;

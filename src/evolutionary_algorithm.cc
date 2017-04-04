@@ -21,6 +21,7 @@ void cgp::EvolutionaryAlgorithm::evolutionaryLoop_() {
     genotype_.create(state_, size_, gene_type_, parameters_);
 
     genotype_.toString();
+    genotype_.toString(true);
 
     while (state_->run() < size_->runs()) {
         while (state_->generation() < size_->generations()) {

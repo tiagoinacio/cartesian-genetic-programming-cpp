@@ -32,7 +32,8 @@ TEST_F(SizeClass, default_configuration) {
     EXPECT_EQ(1, size.columns());
     EXPECT_EQ(5, size.runs());
     EXPECT_EQ(1, size.nodes());
-    EXPECT_EQ(3, size.genes());
+    EXPECT_EQ(3, size.genesInNodes());
+    EXPECT_EQ(5, size.genes());
     EXPECT_EQ(3, size.genesPerNode());
     EXPECT_EQ(1, size.rows());
 }
@@ -53,7 +54,8 @@ TEST(Size, nodes_25) {
     EXPECT_EQ(5, size.columns());
     EXPECT_EQ(5, size.runs());
     EXPECT_EQ(25, size.nodes());
-    EXPECT_EQ(75, size.genes());
+    EXPECT_EQ(75, size.genesInNodes());
+    EXPECT_EQ(77, size.genes());
     EXPECT_EQ(3, size.genesPerNode());
     EXPECT_EQ(5, size.rows());
 }
@@ -74,7 +76,8 @@ TEST(Size, nodes_5_rows) {
     EXPECT_EQ(1, size.columns());
     EXPECT_EQ(5, size.runs());
     EXPECT_EQ(5, size.nodes());
-    EXPECT_EQ(15, size.genes());
+    EXPECT_EQ(15, size.genesInNodes());
+    EXPECT_EQ(17, size.genes());
     EXPECT_EQ(3, size.genesPerNode());
     EXPECT_EQ(5, size.rows());
 }
@@ -95,7 +98,8 @@ TEST(Size, nodes_5_columns) {
     EXPECT_EQ(5, size.columns());
     EXPECT_EQ(5, size.runs());
     EXPECT_EQ(5, size.nodes());
-    EXPECT_EQ(15, size.genes());
+    EXPECT_EQ(15, size.genesInNodes());
+    EXPECT_EQ(17, size.genes());
     EXPECT_EQ(3, size.genesPerNode());
     EXPECT_EQ(1, size.rows());
 }
@@ -145,10 +149,11 @@ TEST(Size, genes_50) {
     configuration.setProgramOutputs(1);
     cgp::Size size(configuration);
 
-    EXPECT_EQ(50, size.genes());
+    EXPECT_EQ(50, size.genesInNodes());
+    EXPECT_EQ(52, size.genes());
 }
 
-TEST(Size, genes_60) {
+TEST(Size, genes_62) {
     cgp::Configuration configuration;
     configuration.setRows(2);
     configuration.setColumns(6);
@@ -156,5 +161,6 @@ TEST(Size, genes_60) {
     configuration.setParameters(1);
     cgp::Size size(configuration);
 
-    EXPECT_EQ(60, size.genes());
+    EXPECT_EQ(60, size.genesInNodes());
+    EXPECT_EQ(62, size.genes());
 }

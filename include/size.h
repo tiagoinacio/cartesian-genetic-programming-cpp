@@ -18,6 +18,7 @@ class Size {
     unsigned int generations() const;
     unsigned int genes() const;
     unsigned int genesPerNode() const;
+    unsigned int genesInNodes() const;
     unsigned int programInputs() const;
     unsigned int functions() const;
     unsigned int levelsBack() const;
@@ -35,6 +36,7 @@ class Size {
     unsigned int generations_;
     unsigned int functions_;
     unsigned int genes_per_node_;
+    unsigned int genes_in_nodes_;
     unsigned int genes_;
     unsigned int program_inputs_;
     unsigned int levels_back_;
