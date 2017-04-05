@@ -6,17 +6,17 @@
 const unsigned int kFunctionPerNode = 1;
 
 cgp::Size::Size(std::shared_ptr<cgp::Configuration> configuration)
-    : connections_(configuration->connections()),
+    : columns_(configuration->columns()),
+      connections_(configuration->connections()),
+      functions_(configuration->functions()),
       generations_(configuration->generations()),
-      program_inputs_(configuration->programInputs()),
       levels_back_(configuration->levelsBack()),
       offspring_(configuration->offspring()),
-      functions_(configuration->functions()),
+      parameters_(configuration->parameters()),
+      program_inputs_(configuration->programInputs()),
       program_outputs_(configuration->programOutputs()),
       rows_(configuration->rows()),
-      parameters_(configuration->parameters()),
-      runs_(configuration->runs()),
-      columns_(configuration->columns()) {
+      runs_(configuration->runs()) {
     nodes_ = rows_ * columns_;
     genes_per_node_ = kFunctionPerNode + connections_ + parameters_;
     genes_in_nodes_ = nodes_ * genes_per_node_;

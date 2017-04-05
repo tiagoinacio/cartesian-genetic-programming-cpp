@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "include/algorithm.h"
+#include "include/fitness_args.h"
 #include "include/gene_type.h"
 #include "include/genotype.h"
 #include "include/parameter.h"
@@ -27,7 +28,8 @@ class EvolutionaryAlgorithm : public Algorithm {
         std::shared_ptr<cgp::State> state, std::shared_ptr<cgp::Size> size,
         std::shared_ptr<cgp::GeneType> gene_type,
         std::vector<std::shared_ptr<cgp::ParameterInterface> > parameters,
-        std::vector<std::function<T(std::vector<T>)> > instruction_set)
+        std::vector<std::function<T(std::vector<T>)> > instruction_set,
+        std::function<double(cgp::FitnessArgs<T>)> fitness_function)
         : configuration_(configuration),
           state_(state),
           size_(size),
@@ -45,7 +47,7 @@ class EvolutionaryAlgorithm : public Algorithm {
 
     void evolutionaryLoop_() {
         genotype_.create(state_, configuration_, size_, gene_type_,
-            instruction_set_, parameters_);
+            instruction_set_, parameters_, fitness_function_);
 
         genotype_.toString();
         genotype_.toString(true);
@@ -66,6 +68,7 @@ class EvolutionaryAlgorithm : public Algorithm {
     std::shared_ptr<cgp::GeneType> gene_type_;
     std::vector<std::shared_ptr<cgp::ParameterInterface> > parameters_;
     std::vector<std::function<T(std::vector<T>)> > instruction_set_;
+    std::function<double(cgp::FitnessArgs<T>)> fitness_function_;
 };
 
 }   // namespace cgp

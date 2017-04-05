@@ -8,6 +8,7 @@
 #include <utility>
 #include <vector>
 
+#include "include/size.h"
 #include "include/state.h"
 
 namespace cgp {

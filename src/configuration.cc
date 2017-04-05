@@ -9,19 +9,19 @@
 cgp::Configuration::Configuration()
     : columns_(1),
       comparisonOperator_("<="),
+      connections_(2),
       fitnessThreshold_(0.01),
+      functions_(1),
       generations_(10),
-      program_inputs_(1),
+      isNodeOutputTheLastOne_(true),
       levelsBack_(10),
       mutationProbability_(0.1),
-      functions_(1),
       offspring_(4),
-      connections_(2),
+      parameters_(0),
+      program_inputs_(1),
       program_outputs_(1),
       rows_(1),
-      runs_(5),
-      parameters_(0),
-      isNodeOutputTheLastOne_(true) {
+      runs_(5) {
 }
 
 void cgp::Configuration::setRows(unsigned int rows) {

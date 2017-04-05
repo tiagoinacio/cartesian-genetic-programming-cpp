@@ -63,9 +63,9 @@ class CGP {
             std::cout << "instruction set: "
                       << instruction_set_[0](connections_) << std::endl;
 
-            cgp::EvolutionaryAlgorithm<T> ea_ =
-                cgp::EvolutionaryAlgorithm<T>(configuration_, state_, size_,
-                    gene_type_, parameters_, instruction_set_);
+            cgp::EvolutionaryAlgorithm<T> ea_ = cgp::EvolutionaryAlgorithm<T>(
+                configuration_, state_, size_, gene_type_, parameters_,
+                instruction_set_, fitness_function_);
             ea_.run();
         } else {
             std::cout << "You configured " << configuration_->parameters()

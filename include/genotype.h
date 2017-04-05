@@ -31,22 +31,19 @@ class Genotype {
         std::shared_ptr<cgp::Size> size,
         std::shared_ptr<cgp::GeneType> gene_type,
         std::vector<std::function<T(std::vector<T>)> > instructionSet,
-        std::vector<std::shared_ptr<cgp::ParameterInterface> > parameters) {
+        std::vector<std::shared_ptr<cgp::ParameterInterface> > parameters,
+        std::function<double(cgp::FitnessArgs<T>)> fitness_function) {
         srand(time(NULL));
 
+        configuration_ = configuration;
         instructionSet_ = instructionSet;
+        fitness_function_ = fitness_function;
         parameters_ = parameters;
         size_ = size;
         state_ = state;
 
-        initializeGenes(gene_type, state);
-
-        fitnessArgs_.setConfiguration(configuration_);
-        fitnessArgs_.setInstructionSet(instructionSet_);
-        fitnessArgs_.setSize(size_);
-        fitnessArgs_.setState(state_);
-
-        callFitness();
+        createGenotype_(gene_type, state);
+        calculateFitness_();
     }
 
     std::vector<int> genes() {
@@ -160,10 +157,14 @@ class Genotype {
     }
 
  private:
-    void callFitness() {
+    void calculateFitness_() {
+        fitnessArgs_.setConfiguration(configuration_);
+        fitnessArgs_.setInstructionSet(instructionSet_);
+        fitnessArgs_.setSize(size_);
+        fitnessArgs_.setState(state_);
     }
 
-    void initializeGenes(std::shared_ptr<cgp::GeneType> gene_type,
+    void createGenotype_(std::shared_ptr<cgp::GeneType> gene_type,
         std::shared_ptr<cgp::State> state) {
         genes_.resize(size_->genes());
 
@@ -185,6 +186,7 @@ class Genotype {
     std::vector<int> genes_;
     std::vector<std::function<T(std::vector<T>)> > instructionSet_;
     std::vector<std::shared_ptr<cgp::ParameterInterface> > parameters_;
+    std::function<double(cgp::FitnessArgs<T>)> fitness_function_;
 };
 
 }   // namespace cgp

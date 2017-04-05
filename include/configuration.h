@@ -49,20 +49,20 @@ class Configuration {
 
  private:
     unsigned int columns_;
-    unsigned int connections_;
-    unsigned int parameters_;
     std::string comparisonOperator_;
+    unsigned int connections_;
     double fitnessThreshold_;
-    unsigned int generations_;
     unsigned int functions_;
-    unsigned int program_inputs_;
+    unsigned int generations_;
+    bool isNodeOutputTheLastOne_;
     unsigned int levelsBack_;
     double mutationProbability_;
     unsigned int offspring_;
+    unsigned int parameters_;
+    unsigned int program_inputs_;
     unsigned int program_outputs_;
     unsigned int rows_;
     unsigned int runs_;
-    bool isNodeOutputTheLastOne_;
 };
 
 };   // namespace cgp
