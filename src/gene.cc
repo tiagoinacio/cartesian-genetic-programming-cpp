@@ -14,16 +14,12 @@ unsigned int cgp::Gene::connection(unsigned int gene_index,
         gene_index, genes_per_node, program_inputs);
     std::vector<int> possible_node_connections;
 
-    std::cout << "possible connections to node " << node_from_gene << std::endl;
-
     unsigned int count = 1;
     for (unsigned int i = node_from_gene - 1; i; i--) {
         if (count > levels_back) {
             break;
         }
         possible_node_connections.push_back(i);
-        std::cout << "pushing node: " << i << " to node " << node_from_gene
-                  << std::endl;
         count++;
     }
 

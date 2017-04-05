@@ -83,9 +83,22 @@ class Genotype {
     }
 
     void insertProgramOutputs() {
-        for (unsigned int i = size_->genes() - size_->programOutputs();
-             i < size_->genes(); ++i) {
-            genes_[i] = i;
+        if (configuration_->isNodeOutputTheLastOne()) {
+            for (unsigned int i = size_->genes() - size_->programOutputs();
+                 i < size_->genes(); ++i) {
+                genes_[i] = i;
+            }
+        } else {
+            unsigned int lastGeneOfNodes =
+                size_->genes() - size_->programOutputs();
+            for (unsigned int i = lastGeneOfNodes; i < size_->genes(); ++i) {
+                std::cout << i << std::endl;
+                std::cout << genes_[i] << std::endl;
+                genes_[i] = cgp::Gene::connection(lastGeneOfNodes,
+                    size_->genesPerNode(), size_->levelsBack(),
+                    size_->programInputs());
+                std::cout << genes_[i] << std::endl;
+            }
         }
     }
 
@@ -139,6 +152,9 @@ class Genotype {
 
             j++;
             ii++;
+            if (j == size_->genesInNodes()) {
+                break;
+            }
         }
         for (unsigned int a = 0; a < size_->programOutputs(); ++a) {
             std::cout << std::endl
@@ -146,7 +162,7 @@ class Genotype {
             if (isToShowReference) {
                 std::cout << ii;
             } else {
-                std::cout << a;
+                std::cout << genes_[a];
             }
             std::cout << std::endl;
             ii++;
@@ -176,6 +192,7 @@ class Genotype {
         insertFunctionGenes(state, gene_type);
         insertConnectionGenes(state, gene_type);
         insertParameterGenes(state, gene_type);
+        insertProgramOutputs();
     }
 
     cgp::FitnessArgs<T> fitnessArgs_;
