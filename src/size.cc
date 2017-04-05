@@ -5,23 +5,23 @@
 
 const unsigned int kFunctionPerNode = 1;
 
-cgp::Size::Size(const cgp::Configuration& configuration)
-    : connections_(configuration.connections()),
-      generations_(configuration.generations()),
-      program_inputs_(configuration.programInputs()),
-      levels_back_(configuration.levelsBack()),
-      offspring_(configuration.offspring()),
-      functions_(configuration.functions()),
-      program_outputs_(configuration.programOutputs()),
-      rows_(configuration.rows()),
-      parameters_(configuration.parameters()),
-      runs_(configuration.runs()),
-      columns_(configuration.columns()) {
+cgp::Size::Size(std::shared_ptr<cgp::Configuration> configuration)
+    : connections_(configuration->connections()),
+      generations_(configuration->generations()),
+      program_inputs_(configuration->programInputs()),
+      levels_back_(configuration->levelsBack()),
+      offspring_(configuration->offspring()),
+      functions_(configuration->functions()),
+      program_outputs_(configuration->programOutputs()),
+      rows_(configuration->rows()),
+      parameters_(configuration->parameters()),
+      runs_(configuration->runs()),
+      columns_(configuration->columns()) {
     nodes_ = rows_ * columns_;
     genes_per_node_ = kFunctionPerNode + connections_ + parameters_;
     genes_in_nodes_ = nodes_ * genes_per_node_;
-    genes_ = genes_in_nodes_ + configuration.programInputs() +
-             configuration.programOutputs();
+    genes_ = genes_in_nodes_ + configuration->programInputs() +
+             configuration->programOutputs();
 }
 
 unsigned int cgp::Size::genes() const {

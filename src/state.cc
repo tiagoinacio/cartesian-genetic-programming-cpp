@@ -14,10 +14,26 @@ void cgp::State::setRun(unsigned int run) {
     run_ = run;
 }
 
+void cgp::State::setActiveNodes(std::vector<int> activeNodes) {
+    activeNodes_ = activeNodes;
+}
+
+void cgp::State::setGenes(std::vector<int> genes) {
+    genes_ = genes;
+}
+
 unsigned int cgp::State::generation() const {
     return generation_;
 }
 
 unsigned int cgp::State::run() const {
     return run_;
+}
+
+std::vector<int> cgp::State::activeNodes() const {
+    return activeNodes_;
+}
+
+std::vector<int> cgp::State::genes() const {
+    return genes_;
 }

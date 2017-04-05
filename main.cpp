@@ -8,6 +8,7 @@
 #include "include/configuration.h"
 #include "include/parameter.h"
 #include "include/state.h"
+#include "include/fitness_args.h"
 
 int plus(int x) {
     return x + 2;
@@ -26,7 +27,7 @@ void callbackOnInit(const cgp::Event& event) {
     std::cout << "generation: " << event.state()->generation() << std::endl;
 }
 
-double fitnessFunction() {
+double fitnessFunction(cgp::FitnessArgs<double> args) {
     return 1;
 }
 
@@ -39,25 +40,24 @@ class InstructionSet {
 
 int main() {
     // Configuration
-    cgp::Configuration configuration;
+    std::shared_ptr<cgp::Configuration> configuration(new cgp::Configuration());
 
-    configuration.isNodeOutputTheLastOne(false);
-    configuration.setColumns(10);
-    configuration.setComparisonOperator("<=");
-    configuration.setFitnessThreshold(0.1);
-    configuration.setGenerations(100);
-    configuration.setLevelsBack(2);
-    configuration.setFunctions(2);
-    configuration.setMutationProbability(0.1);
-    configuration.setOffspring(4);
-    configuration.setProgramOutputs(1);
-    configuration.setProgramInputs(2);
-    configuration.setConnections(2);
-    configuration.setParameters(2);
-    configuration.setRows(1);
-    configuration.setRuns(5);
+    configuration->isNodeOutputTheLastOne(false);
+    configuration->setColumns(10);
+    configuration->setComparisonOperator("<=");
+    configuration->setFitnessThreshold(0.1);
+    configuration->setGenerations(100);
+    configuration->setLevelsBack(2);
+    configuration->setFunctions(2);
+    configuration->setMutationProbability(0.1);
+    configuration->setOffspring(4);
+    configuration->setProgramOutputs(1);
+    configuration->setProgramInputs(2);
+    configuration->setConnections(2);
+    configuration->setParameters(2);
+    configuration->setRows(1);
+    configuration->setRuns(5);
 
-    configuration.toString();
     cgp::CGP<double> cgp(configuration);
 
     // Parameters

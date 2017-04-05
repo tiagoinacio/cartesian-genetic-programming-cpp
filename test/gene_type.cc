@@ -19,11 +19,11 @@ using testing::ElementsAre;
 
 std::shared_ptr<cgp::Size> createMock(unsigned int rows, unsigned int columns,
     unsigned int connections, unsigned int parameters) {
-    cgp::Configuration configuration;
-    configuration.setRows(rows);
-    configuration.setColumns(columns);
-    configuration.setConnections(connections);
-    configuration.setParameters(parameters);
+    std::shared_ptr<cgp::Configuration> configuration(new cgp::Configuration());
+    configuration->setRows(rows);
+    configuration->setColumns(columns);
+    configuration->setConnections(connections);
+    configuration->setParameters(parameters);
 
     std::shared_ptr<cgp::Size> size(new cgp::Size(configuration));
     return size;

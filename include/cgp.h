@@ -13,6 +13,7 @@
 #include "include/configuration.h"
 #include "include/event.h"
 #include "include/evolutionary_algorithm.h"
+#include "include/fitness_args.h"
 #include "include/gene_type.h"
 #include "include/parameter.h"
 #include "include/size.h"
@@ -23,7 +24,7 @@ namespace cgp {
 template <typename T>
 class CGP {
  public:
-    explicit CGP(const Configuration configuration)
+    explicit CGP(std::shared_ptr<cgp::Configuration> configuration)
         : configuration_(configuration),
           state_(new cgp::State()),
           size_(new cgp::Size(configuration)),
@@ -44,11 +45,12 @@ class CGP {
     }
 
     void pushFunction(std::function<T(std::vector<T>)> fn) {
-        instructionSet_.push_back(fn);
+        instruction_set_.push_back(fn);
     }
 
-    void addFitnessFunction(std::function<double(void)> fitnessFunction) {
-        fitnessFunction_ = fitnessFunction;
+    void addFitnessFunction(
+        std::function<double(cgp::FitnessArgs<T>)> fitnessFunction) {
+        fitness_function_ = fitnessFunction;
     }
 
     void run() {
@@ -58,14 +60,15 @@ class CGP {
 
             connections_.push_back(2);
             connections_.push_back(3);
-            std::cout << "instruction set: " << instructionSet_[0](connections_)
-                      << std::endl;
+            std::cout << "instruction set: "
+                      << instruction_set_[0](connections_) << std::endl;
 
-            cgp::EvolutionaryAlgorithm ea_ = cgp::EvolutionaryAlgorithm(
-                state_, size_, gene_type_, parameters_);
+            cgp::EvolutionaryAlgorithm<T> ea_ =
+                cgp::EvolutionaryAlgorithm<T>(configuration_, state_, size_,
+                    gene_type_, parameters_, instruction_set_);
             ea_.run();
         } else {
-            std::cout << "You configured " << configuration_.parameters()
+            std::cout << "You configured " << configuration_->parameters()
                       << " parameters, but only " << parameters_.size()
                       << " parameters were provided." << std::endl;
         }
@@ -73,22 +76,22 @@ class CGP {
 
  private:
     bool configurationIsValid_() throw(std::invalid_argument) {
-        if (parameters_.size() != configuration_.parameters()) {
+        if (parameters_.size() != configuration_->parameters()) {
             return false;
         }
         return true;
     }
 
-    const Configuration configuration_;
+    std::shared_ptr<cgp::Configuration> configuration_;
     std::shared_ptr<cgp::State> state_;
     std::shared_ptr<cgp::Size> size_;
     std::shared_ptr<cgp::GeneType> gene_type_;
     std::vector<std::shared_ptr<cgp::ParameterInterface> > parameters_;
     std::map<std::string, std::function<void(const cgp::Event&)> > callbacks_;
     std::vector<std::string> events_;
-    std::vector<std::function<T(std::vector<T>)> > instructionSet_;
+    std::vector<std::function<T(std::vector<T>)> > instruction_set_;
     std::vector<T> connections_;
-    std::function<double(void)> fitnessFunction_;
+    std::function<double(cgp::FitnessArgs<T>)> fitness_function_;
     cgp::Event event_;
 };
 

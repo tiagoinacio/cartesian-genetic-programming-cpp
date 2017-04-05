@@ -4,13 +4,15 @@
 #ifndef CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_SIZE_H_
 #define CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_SIZE_H_
 
+#include <memory>
+
 #include "include/configuration.h"
 
 namespace cgp {
 
 class Size {
  public:
-    explicit Size(const cgp::Configuration& configuration);
+    explicit Size(std::shared_ptr<cgp::Configuration> configuration);
 
     unsigned int columns() const;
     unsigned int computationalNodes() const;

@@ -22,7 +22,7 @@ TEST(Constructor, default) {
 }
 
 TEST(constructor, it_should_set_all_pointers) {
-    cgp::Configuration configuration;
+    std::shared_ptr<cgp::Configuration> configuration(new cgp::Configuration());
     std::shared_ptr<cgp::State> state(new cgp::State);
     std::shared_ptr<cgp::Size> size(new cgp::Size(configuration));
 
