@@ -19,7 +19,7 @@ file(GLOB SOURCES "src/*.cc")
 file(GLOB SPECS "test/*.cc")
 file(GLOB INCLUDES "include/*.h")
 
-add_executable(${PROJECT_NAME} ${SOURCES} main.cpp)
+add_executable(${PROJECT_NAME} ${SOURCES} examples/symbolic-regression.cc)
 
 ########
 # TEST #

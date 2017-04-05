@@ -48,7 +48,7 @@ class FitnessArgs {
  private:
     std::shared_ptr<cgp::Configuration> configuration_;
     std::shared_ptr<cgp::Size> size_;
-    std::shared_ptr<cgp::State> state;
+    std::shared_ptr<cgp::State> state_;
     std::vector<std::function<T(std::vector<T>)> > instructionSet_;
 };
 
