@@ -6,8 +6,8 @@
 
 #include <iomanip>
 #include <memory>
-#include <vector>
 #include <utility>
+#include <vector>
 
 #include "include/configuration.h"
 #include "include/fitness_args.h"
@@ -26,28 +26,20 @@ class Genotype {
         return fitness_;
     }
 
-    void create(
-        std::shared_ptr<cgp::State> state,
+    void create(std::shared_ptr<cgp::State> state,
         std::shared_ptr<cgp::Configuration> configuration,
         std::shared_ptr<cgp::Size> size,
         std::shared_ptr<cgp::GeneType> gene_type,
         std::vector<std::function<T(std::vector<T>)> > instructionSet,
         std::vector<std::shared_ptr<cgp::ParameterInterface> > parameters) {
         srand(time(NULL));
-        genes_.resize(size->genes());
-
-        for (int i = 0; i < size->genes(); ++i) {
-            genes_[i] = 0;
-        }
 
         instructionSet_ = instructionSet;
         parameters_ = parameters;
         size_ = size;
         state_ = state;
-        parameters_ = parameters;
-        insertFunctionGenes(state, gene_type);
-        insertConnectionGenes(state, gene_type);
-        insertParameterGenes(state, gene_type);
+
+        initializeGenes(gene_type, state);
 
         fitnessArgs_.setConfiguration(configuration_);
         fitnessArgs_.setInstructionSet(instructionSet_);
@@ -169,6 +161,19 @@ class Genotype {
 
  private:
     void callFitness() {
+    }
+
+    void initializeGenes(std::shared_ptr<cgp::GeneType> gene_type,
+        std::shared_ptr<cgp::State> state) {
+        genes_.resize(size_->genes());
+
+        for (int i = 0; i < size_->genes(); ++i) {
+            genes_[i] = 0;
+        }
+
+        insertFunctionGenes(state, gene_type);
+        insertConnectionGenes(state, gene_type);
+        insertParameterGenes(state, gene_type);
     }
 
     cgp::FitnessArgs<T> fitnessArgs_;
