@@ -33,15 +33,22 @@ class FitnessArgs {
         instructionSet_ = instructionSet;
     }
 
-    std::vector<int> genes() {
-        return genes_;
+    std::shared_ptr<cgp::State> state() {
+        return state_;
+    }
+
+    std::shared_ptr<cgp::Configuration> configuration() {
+        return configuration_;
+    }
+
+    std::shared_ptr<cgp::Size> size() {
+        return size_;
     }
 
  private:
     std::shared_ptr<cgp::Configuration> configuration_;
     std::shared_ptr<cgp::Size> size_;
-    std::shared_ptr<cgp::State> state_;
-    std::vector<int> genes_;
+    std::shared_ptr<cgp::State> state;
     std::vector<std::function<T(std::vector<T>)> > instructionSet_;
 };
 

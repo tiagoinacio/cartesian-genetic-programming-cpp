@@ -28,6 +28,7 @@ void callbackOnInit(const cgp::Event& event) {
 }
 
 double fitnessFunction(cgp::FitnessArgs<double> args) {
+    std::cout << "calling fitness function: " << args.state()->generation() << std::endl;
     return 1;
 }
 

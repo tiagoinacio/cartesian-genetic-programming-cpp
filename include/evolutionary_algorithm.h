@@ -35,7 +35,8 @@ class EvolutionaryAlgorithm : public Algorithm {
           size_(size),
           gene_type_(gene_type),
           parameters_(parameters),
-          instruction_set_(instruction_set) {
+          instruction_set_(instruction_set),
+          fitness_function_(fitness_function) {
     }
 
     virtual void run() {

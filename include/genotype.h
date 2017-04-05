@@ -162,6 +162,7 @@ class Genotype {
         fitnessArgs_.setInstructionSet(instructionSet_);
         fitnessArgs_.setSize(size_);
         fitnessArgs_.setState(state_);
+        fitness_function_(fitnessArgs_);
     }
 
     void createGenotype_(std::shared_ptr<cgp::GeneType> gene_type,
