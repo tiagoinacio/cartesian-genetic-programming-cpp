@@ -44,6 +44,7 @@ class Genotype {
 
         createGenotype_(gene_type, state);
         calculateFitness_();
+        findActiveNodes();
     }
 
     std::vector<int> genes() {
@@ -92,12 +93,9 @@ class Genotype {
             unsigned int lastGeneOfNodes =
                 size_->genes() - size_->programOutputs();
             for (unsigned int i = lastGeneOfNodes; i < size_->genes(); ++i) {
-                std::cout << i << std::endl;
-                std::cout << genes_[i] << std::endl;
                 genes_[i] = cgp::Gene::connection(lastGeneOfNodes,
                     size_->genesPerNode(), size_->levelsBack(),
                     size_->programInputs());
-                std::cout << genes_[i] << std::endl;
             }
         }
     }
@@ -162,7 +160,7 @@ class Genotype {
             if (isToShowReference) {
                 std::cout << ii;
             } else {
-                std::cout << genes_[a];
+                std::cout << genes_[size_->genes() - a - 1];
             }
             std::cout << std::endl;
             ii++;
@@ -195,8 +193,20 @@ class Genotype {
         insertProgramOutputs();
     }
 
+    void findActiveNodes() {
+        // push program outputs
+        const size_t size_program_outputs = size_->programOutputs();
+        const size_t size_genes = size_->genes();
+        for (unsigned int i = size_program_outputs; i; --i) {
+            active_nodes_.push_back(genes_[size_genes - i]);
+            std::cout << size_genes << " " << i << " push "
+                      << genes_[size_genes - i] << std::endl;
+        }
+    }
+
     cgp::FitnessArgs<T> fitnessArgs_;
     double fitness_;
+    std::vector<int> active_nodes_;
     std::shared_ptr<cgp::Configuration> configuration_;
     std::shared_ptr<cgp::GeneType> gene_type_;
     std::shared_ptr<cgp::Size> size_;
