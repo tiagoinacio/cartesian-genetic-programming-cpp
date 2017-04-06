@@ -6,6 +6,7 @@
 
 #include <iomanip>
 #include <memory>
+#include <set>
 #include <utility>
 #include <vector>
 
@@ -101,73 +102,29 @@ class Genotype {
     }
 
     void toString(bool isToShowReference = false) {
-        int j = 0;
-        int f = 0;
-        int g = 0;
+        for (std::vector<int>::const_iterator iter = genes_.begin();
+             iter != genes_.end(); ++iter)
+            std::cout << " " << *iter;
 
-        std::cout << "**********************************************"
-                  << std::endl
-                  << "* node | function | connections | parameters *"
-                  << std::endl
-                  << "**********************************************"
-                  << std::endl;
-
-        for (unsigned int a = 0; a < size_->programInputs(); ++a) {
-            std::cout << "  i" << std::setfill('0') << std::setw(3) << a
-                      << std::endl;
-        }
-        int ii = size_->programInputs();
-        for (std::vector<int>::const_iterator i = genes_.begin();
-             i != genes_.end(); ++i) {
-            if (j % size_->genesPerNode() == 0) {
-                unsigned int node_index = cgp::GeneType::findWhichNodeBelongsTo(
-                    j, size_->genesPerNode(), size_->programInputs());
-                if (node_index != size_->programInputs()) {
-                    std::cout << std::endl;
-                }
-
-                std::cout << "   " << std::setfill('0') << std::setw(3);
-                if (isToShowReference) {
-                    std::cout << "        ";
-                } else {
-                    std::cout << node_index << "     ";
-                }
-            }
-            f = (j - size_->parameters() - size_->connections() + 1);
-            if (f >= 0 && f % size_->genesPerNode() == 0) {
-                std::cout << "       ";
-            }
-            g = (j - size_->parameters() + 1);
-            if (g >= 0 && g % size_->genesPerNode() == 0) {
-                std::cout << "     ";
-            }
-            std::cout << std::setfill('0') << std::setw(3);
-            if (isToShowReference) {
-                std::cout << ii << ' ';
-            } else {
-                std::cout << *i << ' ';
-            }
-
-            j++;
-            ii++;
-            if (j == size_->genesInNodes()) {
-                break;
-            }
-        }
-        for (unsigned int a = 0; a < size_->programOutputs(); ++a) {
-            std::cout << std::endl
-                      << "  o" << std::setfill('0') << std::setw(3);
-            if (isToShowReference) {
-                std::cout << ii;
-            } else {
-                std::cout << genes_[size_->genes() - a - 1];
-            }
-            std::cout << std::endl;
-            ii++;
-        }
         std::cout << std::endl
                   << "**********************************************"
                   << std::endl;
+
+        for (int i = 0; i < size_->programInputs(); ++i) {
+            std::cout << genes_[i] << std::endl;
+        }
+
+        for (int i = size_->programInputs();
+             i < size_->genesInNodes() + size_->programInputs(); ++i) {
+            if ((i - size_->programInputs()) % size_->genesPerNode() == 0) {
+                std::cout << std::endl;
+            }
+            std::cout << genes_[i] << " ";
+        }
+        for (int i = size_->genesInNodes() + size_->programInputs();
+             i < size_->genes(); ++i) {
+            std::cout << std::endl << std::endl << genes_[i] << std::endl;
+        }
     }
 
  private:
@@ -184,7 +141,11 @@ class Genotype {
         genes_.resize(size_->genes());
 
         for (int i = 0; i < size_->genes(); ++i) {
-            genes_[i] = 0;
+            if (i < size_->programInputs()) {
+                genes_[i] = i;
+            } else {
+                genes_[i] = 0;
+            }
         }
 
         insertFunctionGenes(state, gene_type);
@@ -194,19 +155,46 @@ class Genotype {
     }
 
     void findActiveNodes() {
+        std::set<int>::iterator iter;
+
         // push program outputs
         const size_t size_program_outputs = size_->programOutputs();
         const size_t size_genes = size_->genes();
         for (unsigned int i = size_program_outputs; i; --i) {
-            active_nodes_.push_back(genes_[size_genes - i]);
-            std::cout << size_genes << " " << i << " push "
-                      << genes_[size_genes - i] << std::endl;
+            active_nodes_.insert(genes_[size_genes - i]);
+        }
+
+        // push connections
+        const size_t size_nodes = size_->nodes();
+        const size_t size_program_inputs = size_->programInputs();
+        for (unsigned int i =
+                 size_nodes + size_program_inputs + size_->programOutputs();
+             i; --i) {
+            iter = active_nodes_.find(i);
+            if (iter == active_nodes_.end()) {
+                continue;
+            }
+
+            for (unsigned int j = 0; j < size_->connections(); ++j) {
+                unsigned int node_index = genes_[(i * size_->genesPerNode()) -
+                                                 size_->genesPerNode() + j];
+                iter = active_nodes_.find(node_index);
+                if (iter == active_nodes_.end()) {
+                    active_nodes_.insert(node_index);
+                }
+            }
+        }
+
+        std::cout << "Active Nodes:" << std::endl;
+        for (std::set<int>::iterator iter = active_nodes_.begin();
+             iter != active_nodes_.end(); ++iter) {
+            std::cout << *iter << std::endl;
         }
     }
 
     cgp::FitnessArgs<T> fitnessArgs_;
     double fitness_;
-    std::vector<int> active_nodes_;
+    std::set<int> active_nodes_;
     std::shared_ptr<cgp::Configuration> configuration_;
     std::shared_ptr<cgp::GeneType> gene_type_;
     std::shared_ptr<cgp::Size> size_;

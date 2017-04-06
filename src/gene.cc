@@ -15,7 +15,7 @@ unsigned int cgp::Gene::connection(unsigned int gene_index,
     std::vector<int> possible_node_connections;
 
     unsigned int count = 1;
-    for (unsigned int i = node_from_gene - 1; i; i--) {
+    for (int i = node_from_gene - 2; i >= 0; i--) {
         if (count > levels_back) {
             break;
         }
