@@ -51,7 +51,7 @@ class EvolutionaryAlgorithm : public Algorithm {
             instruction_set_, parameters_, fitness_function_);
 
         genotype_.toString();
-        genotype_.toString(true);
+        // genotype_.toString(true);
 
         while (state_->run() < size_->runs()) {
             while (state_->generation() < size_->generations()) {

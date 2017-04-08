@@ -2,7 +2,9 @@
 
 #include <iostream>
 #include <memory>
+#include <set>
 #include <string>
+#include <vector>
 
 #include "include/cgp.h"
 #include "include/configuration.h"
@@ -27,29 +29,43 @@ void callbackOnInit(const cgp::Event& event) {
     std::cout << "generation: " << event.state()->generation() << std::endl;
 }
 
-double fitnessFunction(cgp::FitnessArgs<double> args) {
-    std::cout << "calling fitness function: " << args.state()->generation()
-              << std::endl;
-    return 1;
-}
+struct program_inputs {};
 
 class Fitness {
  public:
     static double fn(cgp::FitnessArgs<double> args) {
-        return 2;
-    }
-};
+        std::cout << "calling fitness function" << std::endl;
+        static std::vector<std::string> x;
+        static std::vector<std::string> y;
+        for (double i = -1; i <= 1; i = i + 0.04) {
+            std::cout << i;
+            x.push_back("x");
+            double exp = pow(i, 6) - 2 * pow(i, 4) + pow(i, 2);
+            y.push_back(std::to_string(exp));
+        }
 
-class ProgramInputs {
- public:
-    ProgramInputs() {
+        double score;
+        std::map<int, double> node_values;
+        std::set<int> active_nodes = args.activeNodes();
+        std::set<int>::iterator iterator;
+        for (int i = 0; i < 50; ++i) {
+            std::cout << "node " << i << " " << 1;
+
+            for (iterator = active_nodes.begin();
+                 iterator != active_nodes.end(); ++iterator) {
+                std::cout << "active node " << *iterator << std::endl;
+            }
+        }
+
+        return 1;
     }
 };
 
 class Configuration {
  public:
     static std::shared_ptr<cgp::Configuration> create() {
-        std::shared_ptr<cgp::Configuration> configuration(new cgp::Configuration());
+        std::shared_ptr<cgp::Configuration> configuration(
+            new cgp::Configuration());
 
         configuration->isNodeOutputTheLastOne(false);
         configuration->setRows(1);
@@ -116,6 +132,7 @@ int main() {
     cgp.addFitnessFunction(&Fitness::fn);
 
     cgp.run();
+    std::cout << "Symbolic regression example" << std::endl;
 
     return 0;
 }

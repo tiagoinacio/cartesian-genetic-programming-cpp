@@ -44,8 +44,8 @@ class Genotype {
         state_ = state;
 
         createGenotype_(gene_type, state);
-        calculateFitness_();
         findActiveNodes();
+        calculateFitness_();
     }
 
     std::vector<int> genes() {
@@ -133,6 +133,7 @@ class Genotype {
         fitnessArgs_.setInstructionSet(instructionSet_);
         fitnessArgs_.setSize(size_);
         fitnessArgs_.setState(state_);
+        fitnessArgs_.setActiveNodes(active_nodes_);
         fitness_function_(fitnessArgs_);
     }
 
@@ -183,12 +184,6 @@ class Genotype {
                     active_nodes_.insert(node_index);
                 }
             }
-        }
-
-        std::cout << "Active Nodes:" << std::endl;
-        for (std::set<int>::iterator iter = active_nodes_.begin();
-             iter != active_nodes_.end(); ++iter) {
-            std::cout << *iter << std::endl;
         }
     }
 

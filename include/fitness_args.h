@@ -5,6 +5,7 @@
 #define CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_FITNESS_ARGS_H_
 
 #include <memory>
+#include <set>
 #include <utility>
 #include <vector>
 
@@ -33,6 +34,14 @@ class FitnessArgs {
         instructionSet_ = instructionSet;
     }
 
+    void setActiveNodes(std::set<int> active_nodes) {
+        active_nodes_ = active_nodes;
+    }
+
+    std::set<int> activeNodes() {
+        return active_nodes_;
+    }
+
     std::shared_ptr<cgp::State> state() {
         return state_;
     }
@@ -46,6 +55,7 @@ class FitnessArgs {
     }
 
  private:
+    std::set<int> active_nodes_;
     std::shared_ptr<cgp::Configuration> configuration_;
     std::shared_ptr<cgp::Size> size_;
     std::shared_ptr<cgp::State> state_;
