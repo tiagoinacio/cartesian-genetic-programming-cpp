@@ -45,6 +45,7 @@ class Genotype {
 
         createGenotype_(gene_type, state);
         findActiveNodes();
+        state->setGenes(genes_);
         calculateFitness_();
     }
 
@@ -176,9 +177,10 @@ class Genotype {
                 continue;
             }
 
-            for (unsigned int j = 0; j < size_->connections(); ++j) {
-                unsigned int node_index = genes_[(i * size_->genesPerNode()) -
-                                                 size_->genesPerNode() + j];
+            for (unsigned int j = 1; j <= size_->connections(); ++j) {
+                unsigned int node_index =
+                    genes_[(i * size_->genesPerNode()) - size_->genesPerNode() +
+                           j + size_->programInputs()];
                 iter = active_nodes_.find(node_index);
                 if (iter == active_nodes_.end()) {
                     active_nodes_.insert(node_index);

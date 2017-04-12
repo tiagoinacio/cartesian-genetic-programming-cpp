@@ -27,7 +27,7 @@ class GeneType {
         return function_genes_;
     }
 
-    static unsigned int findWhichNodeBelongsTo(unsigned int gene_index,
+    static int findWhichNodeBelongsTo(int gene_index,
         unsigned int genes_per_node, unsigned int program_inputs) {
         return ceil(gene_index / genes_per_node) + program_inputs;
     }

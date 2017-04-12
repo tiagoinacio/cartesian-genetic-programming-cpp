@@ -47,6 +47,10 @@ class EvolutionaryAlgorithm : public Algorithm {
     EvolutionaryAlgorithm();
 
     void evolutionaryLoop_() {
+        std::vector<T> a;
+        a.push_back(2);
+        a.push_back(3);
+        instruction_set_[0](a);
         genotype_.create(state_, configuration_, size_, gene_type_,
             instruction_set_, parameters_, fitness_function_);
 

@@ -31,11 +31,15 @@ class FitnessArgs {
 
     void setInstructionSet(
         std::vector<std::function<T(std::vector<T>)> > instructionSet) {
-        instructionSet_ = instructionSet;
+        instruction_set_ = instructionSet;
     }
 
     void setActiveNodes(std::set<int> active_nodes) {
         active_nodes_ = active_nodes;
+    }
+
+    std::vector<std::function<T(std::vector<T>)> > instructionSet() {
+        return instruction_set_;
     }
 
     std::set<int> activeNodes() {
@@ -59,7 +63,7 @@ class FitnessArgs {
     std::shared_ptr<cgp::Configuration> configuration_;
     std::shared_ptr<cgp::Size> size_;
     std::shared_ptr<cgp::State> state_;
-    std::vector<std::function<T(std::vector<T>)> > instructionSet_;
+    std::vector<std::function<T(std::vector<T>)> > instruction_set_;
 };
 
 }   // namespace cgp

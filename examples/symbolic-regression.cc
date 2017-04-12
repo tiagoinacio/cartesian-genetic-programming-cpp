@@ -29,19 +29,32 @@ void callbackOnInit(const cgp::Event& event) {
     std::cout << "generation: " << event.state()->generation() << std::endl;
 }
 
+std::string getFunctionString(int x) {
+    switch (x) {
+        case 0:
+            return "+";
+        case 1:
+            return "-";
+        case 2:
+            return "*";
+        case 3:
+            return "/";
+    }
+    return "++++";
+}
+
 struct program_inputs {};
 
 class Fitness {
  public:
     static double fn(cgp::FitnessArgs<double> args) {
         std::cout << "calling fitness function" << std::endl;
-        static std::vector<std::string> x;
-        static std::vector<std::string> y;
+        static std::vector<double> x;
+        static std::vector<double> y;
         for (double i = -1; i <= 1; i = i + 0.04) {
             std::cout << i;
-            x.push_back("x");
-            double exp = pow(i, 6) - 2 * pow(i, 4) + pow(i, 2);
-            y.push_back(std::to_string(exp));
+            x.push_back(i);
+            y.push_back(pow(i, 6) - 2 * pow(i, 4) + pow(i, 2));
         }
 
         double score;
@@ -49,11 +62,44 @@ class Fitness {
         std::set<int> active_nodes = args.activeNodes();
         std::set<int>::iterator iterator;
         for (int i = 0; i < 50; ++i) {
-            std::cout << "node " << i << " " << 1;
+            node_values[0] = x[i];
 
+            std::cout << "active nodes: ";
+            for (std::set<int>::iterator e = active_nodes.begin(); e != active_nodes.end(); ++e)
+                    std::cout << *e << ' ';
+            std::cout << std::endl;
+            std::cout << node_values[0] << std::endl << std::endl;
             for (iterator = active_nodes.begin();
                  iterator != active_nodes.end(); ++iterator) {
-                std::cout << "active node " << *iterator << std::endl;
+                if (*iterator < args.size()->programInputs()) {
+                    continue;
+                }
+
+                // get the gene index that points to the function-gene of the
+                // active node
+                int fn_gene_index = (*iterator) * args.size()->genesPerNode() +
+                                    args.size()->programInputs() -
+                                    args.size()->genesPerNode();
+                std::cout << "fn_gene_index " << fn_gene_index << " of node "
+                          << *iterator << std::endl;
+                std::vector<double> fn_args;
+                std::vector<int> genes = args.state()->genes();
+                fn_args.push_back(node_values[genes[fn_gene_index + 1]]);
+                fn_args.push_back(node_values[genes[fn_gene_index + 2]]);
+
+                node_values[*iterator] =
+                    args.instructionSet()[genes[fn_gene_index]](fn_args);
+
+                std::cout << "node " << *iterator << " = "
+                          << node_values[*iterator] << std::endl
+                          << genes[fn_gene_index + 1] << " "
+                          << getFunctionString(genes[fn_gene_index]) << " "
+                          << genes[fn_gene_index + 2] << " " << std::endl
+                          << node_values[genes[fn_gene_index + 1]] << " "
+                          << getFunctionString(genes[fn_gene_index]) << " "
+                          << node_values[genes[fn_gene_index + 2]] << " "
+                          << std::endl
+                          << std::endl;
             }
         }
 
@@ -79,7 +125,7 @@ class Configuration {
         configuration->setMutationProbability(0.2);
         configuration->setOffspring(4);
         configuration->setProgramOutputs(1);
-        configuration->setProgramInputs(2);
+        configuration->setProgramInputs(1);
         configuration->setConnections(2);
         configuration->setParameters(0);
 
