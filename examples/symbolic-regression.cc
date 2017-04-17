@@ -1,5 +1,6 @@
 /* Copyright 2017 Tiago Inácio */
 
+#include <cmath>   // std::abs
 #include <iostream>
 #include <memory>
 #include <set>
@@ -9,6 +10,7 @@
 #include "include/cgp.h"
 #include "include/configuration.h"
 #include "include/fitness_args.h"
+#include "include/logger.h"
 #include "include/parameter.h"
 #include "include/state.h"
 
@@ -25,8 +27,10 @@ std::string changeText(std::string x) {
 }
 
 void callbackOnInit(const cgp::Event& event) {
-    std::cout << "generations: " << event.size()->generations() << std::endl;
-    std::cout << "generation: " << event.state()->generation() << std::endl;
+    // cgp::Log::log << "generations: " << event.size()->generations() <<
+    // std::endl;
+    // cgp::Log::log << "generation: " << event.state()->generation() <<
+    // std::endl;
 }
 
 std::string getFunctionString(int x) {
@@ -48,27 +52,23 @@ struct program_inputs {};
 class Fitness {
  public:
     static double fn(cgp::FitnessArgs<double> args) {
-        std::cout << "calling fitness function" << std::endl;
         static std::vector<double> x;
         static std::vector<double> y;
+        static cgp::Logger log(
+            new std::ofstream("symbolic-regression.log", std::ios::trunc),
+            true);
         for (double i = -1; i <= 1; i = i + 0.04) {
-            std::cout << i;
             x.push_back(i);
             y.push_back(pow(i, 6) - 2 * pow(i, 4) + pow(i, 2));
         }
 
-        double score;
+        double score = 0;
         std::map<int, double> node_values;
         std::set<int> active_nodes = args.activeNodes();
         std::set<int>::iterator iterator;
         for (int i = 0; i < 50; ++i) {
             node_values[0] = x[i];
 
-            std::cout << "active nodes: ";
-            for (std::set<int>::iterator e = active_nodes.begin(); e != active_nodes.end(); ++e)
-                    std::cout << *e << ' ';
-            std::cout << std::endl;
-            std::cout << node_values[0] << std::endl << std::endl;
             for (iterator = active_nodes.begin();
                  iterator != active_nodes.end(); ++iterator) {
                 if (*iterator < args.size()->programInputs()) {
@@ -80,8 +80,6 @@ class Fitness {
                 int fn_gene_index = (*iterator) * args.size()->genesPerNode() +
                                     args.size()->programInputs() -
                                     args.size()->genesPerNode();
-                std::cout << "fn_gene_index " << fn_gene_index << " of node "
-                          << *iterator << std::endl;
                 std::vector<double> fn_args;
                 std::vector<int> genes = args.state()->genes();
                 fn_args.push_back(node_values[genes[fn_gene_index + 1]]);
@@ -90,20 +88,20 @@ class Fitness {
                 node_values[*iterator] =
                     args.instructionSet()[genes[fn_gene_index]](fn_args);
 
-                std::cout << "node " << *iterator << " = "
-                          << node_values[*iterator] << std::endl
-                          << genes[fn_gene_index + 1] << " "
-                          << getFunctionString(genes[fn_gene_index]) << " "
-                          << genes[fn_gene_index + 2] << " " << std::endl
-                          << node_values[genes[fn_gene_index + 1]] << " "
-                          << getFunctionString(genes[fn_gene_index]) << " "
-                          << node_values[genes[fn_gene_index + 2]] << " "
-                          << std::endl
-                          << std::endl;
+                // log << "node " << *iterator << " = " <<
+                // node_values[*iterator];
+                // log << genes[fn_gene_index << 1] << " "
+                //     << getFunctionString(genes[fn_gene_index]) << " "
+                //     << genes[fn_gene_index << 2] << " ";
+                // log << node_values[genes[fn_gene_index << 1]] << " "
+                //     << getFunctionString(genes[fn_gene_index]) << " "
+                //     << node_values[genes[fn_gene_index << 2]] << " ";
+
+                score = score + (std::abs(node_values[*iterator] - y[i]));
             }
         }
 
-        return 1;
+        return score;
     }
 };
 
@@ -119,7 +117,7 @@ class Configuration {
         configuration->setLevelsBack(10);
         configuration->setComparisonOperator("<=");
         configuration->setFitnessThreshold(0.1);
-        configuration->setGenerations(1000);
+        configuration->setGenerations(10);
         configuration->setRuns(5);
         configuration->setFunctions(4);
         configuration->setMutationProbability(0.2);
@@ -156,6 +154,8 @@ int main() {
     // Configuration
     cgp::CGP<double> cgp(Configuration::create());
 
+    cgp.setDebug(true);
+
     // Parameters
     // std::shared_ptr<cgp::Parameter<int> > firstParam =
     //     cgp::createParameter<int>(2, &plus);
@@ -178,7 +178,6 @@ int main() {
     cgp.addFitnessFunction(&Fitness::fn);
 
     cgp.run();
-    std::cout << "Symbolic regression example" << std::endl;
 
     return 0;
 }

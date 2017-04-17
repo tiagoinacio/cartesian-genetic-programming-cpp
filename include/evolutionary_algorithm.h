@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include <memory>
+#include <string>
 #include <vector>
 
 #include "include/algorithm.h"
@@ -37,6 +38,7 @@ class EvolutionaryAlgorithm : public Algorithm {
           parameters_(parameters),
           instruction_set_(instruction_set),
           fitness_function_(fitness_function) {
+        srand(time(NULL));
     }
 
     virtual void run() {
@@ -46,6 +48,31 @@ class EvolutionaryAlgorithm : public Algorithm {
  private:
     EvolutionaryAlgorithm();
 
+    bool compareSolutions(double a, double b, std::string fitness_operator) {
+        if (fitness_operator == "<=") {
+            return a <= b;
+        }
+        if (fitness_operator == ">=") {
+            return a >= b;
+        }
+        if (fitness_operator == ">") {
+            return a > b;
+        }
+        return a < b;
+    }
+
+    void generation(int limit) {
+        for (int i = 0; i <= limit; ++i) {
+            cgp::Genotype<T> l_genotype;
+            l_genotype.create(state_, configuration_, size_, gene_type_,
+                instruction_set_, parameters_, fitness_function_);
+            if (compareSolutions(genotype_.fitness(), l_genotype.fitness(),
+                    configuration_->comparisonOperator())) {
+                genotype_ = l_genotype;
+            }
+        }
+    }
+
     void evolutionaryLoop_() {
         std::vector<T> a;
         a.push_back(2);
@@ -54,12 +81,29 @@ class EvolutionaryAlgorithm : public Algorithm {
         genotype_.create(state_, configuration_, size_, gene_type_,
             instruction_set_, parameters_, fitness_function_);
 
-        genotype_.toString();
-        // genotype_.toString(true);
+        generation(size_->offspring() - 1);
 
+        std::cout << "# starting evolutionary loop" << std::endl;
         while (state_->run() < size_->runs()) {
+            std::cout << "# starting run " << state_->run() << std::endl;
             while (state_->generation() < size_->generations()) {
+                std::cout << "# starting generation " << state_->generation()
+                          << std::endl;
                 state_->setGeneration(state_->generation() + 1);
+                for (int i = 0; i < size_->offspring(); ++i) {
+                    cgp::Genotype<T> l_genotype;
+                    l_genotype.create(genotype_.genes(), state_, configuration_,
+                        size_, gene_type_, instruction_set_, parameters_,
+                        fitness_function_);
+                    l_genotype.mutation();
+                    if (compareSolutions(genotype_.fitness(),
+                            l_genotype.fitness(),
+                            configuration_->comparisonOperator())) {
+                        genotype_.create(l_genotype.genes(), state_,
+                            configuration_, size_, gene_type_, instruction_set_,
+                            parameters_, fitness_function_);
+                    }
+                }
             }
             state_->setGeneration(0);
             state_->setRun(state_->run() + 1);

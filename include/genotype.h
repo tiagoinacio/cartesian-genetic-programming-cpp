@@ -4,8 +4,10 @@
 #ifndef CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_GENOTYPE_H_
 #define CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_GENOTYPE_H_
 
+#include <stdlib.h>
 #include <iomanip>
 #include <memory>
+#include <random>
 #include <set>
 #include <utility>
 #include <vector>
@@ -34,18 +36,38 @@ class Genotype {
         std::vector<std::function<T(std::vector<T>)> > instructionSet,
         std::vector<std::shared_ptr<cgp::ParameterInterface> > parameters,
         std::function<double(cgp::FitnessArgs<T>)> fitness_function) {
-        srand(time(NULL));
-
         configuration_ = configuration;
         instructionSet_ = instructionSet;
         fitness_function_ = fitness_function;
         parameters_ = parameters;
         size_ = size;
         state_ = state;
+        gene_type_ = gene_type;
 
-        createGenotype_(gene_type, state);
-        findActiveNodes();
-        state->setGenes(genes_);
+        createGenotype_();
+        findActiveNodes_();
+        state_->setGenes(genes_);
+        calculateFitness_();
+    }
+
+    void create(std::vector<int> genes, std::shared_ptr<cgp::State> state,
+        std::shared_ptr<cgp::Configuration> configuration,
+        std::shared_ptr<cgp::Size> size,
+        std::shared_ptr<cgp::GeneType> gene_type,
+        std::vector<std::function<T(std::vector<T>)> > instructionSet,
+        std::vector<std::shared_ptr<cgp::ParameterInterface> > parameters,
+        std::function<double(cgp::FitnessArgs<T>)> fitness_function) {
+        configuration_ = configuration;
+        instructionSet_ = instructionSet;
+        fitness_function_ = fitness_function;
+        parameters_ = parameters;
+        size_ = size;
+        state_ = state;
+        gene_type_ = gene_type;
+
+        genes_ = genes;
+        findActiveNodes_();
+        state_->setGenes(genes_);
         calculateFitness_();
     }
 
@@ -53,18 +75,23 @@ class Genotype {
         return genes_;
     }
 
-    void insertFunctionGenes(std::shared_ptr<cgp::State> state,
-        std::shared_ptr<cgp::GeneType> gene_type) {
-        std::vector<unsigned int> function_genes = gene_type->functionGenes();
+    void setGenes(std::vector<int> genes) {
+        genes_ = genes;
+        findActiveNodes_();
+        state_->setGenes(genes_);
+        calculateFitness_();
+    }
+
+    void insertFunctionGenes() {
+        std::vector<unsigned int> function_genes = gene_type_->functionGenes();
         for (unsigned int i = 0; i < function_genes.size(); i++) {
             genes_[function_genes[i]] = cgp::Gene::function(size_->functions());
         }
     }
 
-    void insertConnectionGenes(std::shared_ptr<cgp::State> state,
-        std::shared_ptr<cgp::GeneType> gene_type) {
+    void insertConnectionGenes() {
         std::vector<unsigned int> connection_genes =
-            gene_type->connectionGenes();
+            gene_type_->connectionGenes();
         for (unsigned int i = 0; i < connection_genes.size(); i++) {
             genes_[connection_genes[i]] = cgp::Gene::connection(
                 connection_genes[i], size_->genesPerNode(), size_->levelsBack(),
@@ -72,9 +99,9 @@ class Genotype {
         }
     }
 
-    void insertParameterGenes(std::shared_ptr<cgp::State> state,
-        std::shared_ptr<cgp::GeneType> gene_type) {
-        std::vector<unsigned int> parameter_genes = gene_type->parameterGenes();
+    void insertParameterGenes() {
+        std::vector<unsigned int> parameter_genes =
+            gene_type_->parameterGenes();
         unsigned int j = 0;
         unsigned int max_parameters = size_->parameters();
         for (unsigned int i = 0; i < parameter_genes.size(); i++) {
@@ -128,6 +155,34 @@ class Genotype {
         }
     }
 
+    void mutation() {
+        for (int i = size_->programInputs(); i < size_->genesInNodes(); ++i) {
+            std::random_device rd;
+            std::mt19937 e2(rd());
+            std::uniform_real_distribution<> dist(0, 10);
+            double random_number = dist(e2) / 10;
+            if (random_number <= configuration_->mutationProbability()) {
+                std::vector<unsigned int> connection_genes =
+                    gene_type_->connectionGenes();
+                if (std::find(connection_genes.begin(), connection_genes.end(),
+                        i) != connection_genes.end()) {
+                    genes_[i] = cgp::Gene::connection(i, size_->genesPerNode(),
+                        size_->levelsBack(), size_->programInputs());
+                }
+
+                std::vector<unsigned int> function_genes =
+                    gene_type_->functionGenes();
+                if (std::find(function_genes.begin(), function_genes.end(),
+                        i) != function_genes.end()) {
+                    genes_[i] = cgp::Gene::function(size_->functions());
+                }
+            }
+        }
+        insertGenes_();
+        findActiveNodes_();
+        calculateFitness_();
+    }
+
  private:
     void calculateFitness_() {
         fitnessArgs_.setConfiguration(configuration_);
@@ -135,11 +190,10 @@ class Genotype {
         fitnessArgs_.setSize(size_);
         fitnessArgs_.setState(state_);
         fitnessArgs_.setActiveNodes(active_nodes_);
-        fitness_function_(fitnessArgs_);
+        fitness_ = fitness_function_(fitnessArgs_);
     }
 
-    void createGenotype_(std::shared_ptr<cgp::GeneType> gene_type,
-        std::shared_ptr<cgp::State> state) {
+    void createGenotype_() {
         genes_.resize(size_->genes());
 
         for (int i = 0; i < size_->genes(); ++i) {
@@ -149,14 +203,17 @@ class Genotype {
                 genes_[i] = 0;
             }
         }
+        insertGenes_();
+    }
 
-        insertFunctionGenes(state, gene_type);
-        insertConnectionGenes(state, gene_type);
-        insertParameterGenes(state, gene_type);
+    void insertGenes_() {
+        insertFunctionGenes();
+        insertConnectionGenes();
+        insertParameterGenes();
         insertProgramOutputs();
     }
 
-    void findActiveNodes() {
+    void findActiveNodes_() {
         std::set<int>::iterator iter;
 
         // push program outputs

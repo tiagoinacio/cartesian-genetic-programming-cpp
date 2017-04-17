@@ -48,6 +48,10 @@ class CGP {
         instruction_set_.push_back(fn);
     }
 
+    void setDebug(bool isDebugActive) {
+        debug_ = isDebugActive;
+    }
+
     void addFitnessFunction(
         std::function<double(cgp::FitnessArgs<T>)> fitnessFunction) {
         fitness_function_ = fitnessFunction;
@@ -57,11 +61,6 @@ class CGP {
         if (configurationIsValid_()) {
             cgp::Event event_ = cgp::Event(state_, size_);
             callbacks_["on_init"](event_);
-
-            connections_.push_back(2);
-            connections_.push_back(3);
-            std::cout << "instruction set: "
-                      << instruction_set_[0](connections_) << std::endl;
 
             cgp::EvolutionaryAlgorithm<T> ea_ = cgp::EvolutionaryAlgorithm<T>(
                 configuration_, state_, size_, gene_type_, parameters_,
@@ -93,6 +92,7 @@ class CGP {
     std::vector<T> connections_;
     std::function<double(cgp::FitnessArgs<T>)> fitness_function_;
     cgp::Event event_;
+    bool debug_;
 };
 
 };   // namespace cgp
