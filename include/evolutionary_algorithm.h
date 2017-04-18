@@ -68,7 +68,7 @@ class EvolutionaryAlgorithm : public Algorithm {
             cgp::Genotype<T> m_genotype_;
             m_genotype_.create(state_, configuration_, size_, gene_type_,
                 instruction_set_, parameters_, fitness_function_);
-            if (compareSolutions(f_genotype_.fitness(), m_genotype_.fitness(),
+            if (compareSolutions(m_genotype_.fitness(), f_genotype_.fitness(),
                     configuration_->comparisonOperator())) {
                 f_genotype_ = m_genotype_;
             }
@@ -85,18 +85,19 @@ class EvolutionaryAlgorithm : public Algorithm {
         while (state_->run() < size_->runs()) {
             LOG << "# starting run " << state_->run() << "\n";
             while (state_->generation() < size_->generations()) {
-                LOG << "# starting generation " << state_->generation() << "\n";
-                state_->setGeneration(state_->generation() + 1);
                 for (int i = 0; i < size_->offspring(); ++i) {
                     cgp::Genotype<T> m_genotype_;
                     m_genotype_ = f_genotype_;
                     m_genotype_.mutation();
-                    if (compareSolutions(f_genotype_.fitness(),
-                            m_genotype_.fitness(),
+                    if (compareSolutions(m_genotype_.fitness(),
+                            f_genotype_.fitness(),
                             configuration_->comparisonOperator())) {
                         f_genotype_ = m_genotype_;
                     }
                 }
+                LOG << "# generation " << state_->generation() << " score "
+                    << f_genotype_.fitness() << "\n";
+                state_->setGeneration(state_->generation() + 1);
             }
             state_->setGeneration(0);
             state_->setRun(state_->run() + 1);

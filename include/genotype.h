@@ -47,6 +47,7 @@ class Genotype {
         createGenotype_();
         findActiveNodes_();
         state_->setGenes(genes_);
+        setupFitnessArgs_();
         calculateFitness_();
     }
 
@@ -61,11 +62,20 @@ class Genotype {
             gene_type_ = genotype.geneType();
 
             genes_ = genotype.genes();
-            findActiveNodes_();
+            active_nodes_ = genotype.activeNodes();
             state_->setGenes(genes_);
-            calculateFitness_();
+            setupFitnessArgs_();
+            fitness_ = genotype.fitness();
         }
         return *this;
+    }
+
+    std::set<int> activeNodes() const {
+        return active_nodes_;
+    }
+
+    double fitness() const {
+        return fitness_;
     }
 
     std::shared_ptr<cgp::State> state() const {
@@ -104,6 +114,7 @@ class Genotype {
         genes_ = genes;
         findActiveNodes_();
         state_->setGenes(genes_);
+        setupFitnessArgs_();
         calculateFitness_();
     }
 
@@ -205,16 +216,21 @@ class Genotype {
         }
         insertGenes_();
         findActiveNodes_();
+        state_->setGenes(genes_);
+        setupFitnessArgs_();
         calculateFitness_();
     }
 
  private:
-    void calculateFitness_() {
+    void setupFitnessArgs_() {
         fitnessArgs_.setConfiguration(configuration_);
         fitnessArgs_.setInstructionSet(instruction_set_);
         fitnessArgs_.setSize(size_);
         fitnessArgs_.setState(state_);
         fitnessArgs_.setActiveNodes(active_nodes_);
+    }
+
+    void calculateFitness_() {
         fitness_ = fitness_function_(fitnessArgs_);
     }
 

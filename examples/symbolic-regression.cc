@@ -101,7 +101,6 @@ class Fitness {
             }
         }
 
-        std::cout << "score: " << score << "\n";
         return score;
     }
 };
@@ -119,8 +118,8 @@ class Configuration {
         configuration->setLevelsBack(10);
         configuration->setComparisonOperator("<=");
         configuration->setFitnessThreshold(0.1);
-        configuration->setGenerations(10);
-        configuration->setRuns(5);
+        configuration->setGenerations(1000);
+        configuration->setRuns(1);
         configuration->setFunctions(4);
         configuration->setMutationProbability(0.2);
         configuration->setOffspring(4);
