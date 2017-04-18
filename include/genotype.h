@@ -37,7 +37,7 @@ class Genotype {
         std::vector<std::shared_ptr<cgp::ParameterInterface> > parameters,
         std::function<double(cgp::FitnessArgs<T>)> fitness_function) {
         configuration_ = configuration;
-        instructionSet_ = instructionSet;
+        instruction_set_ = instructionSet;
         fitness_function_ = fitness_function;
         parameters_ = parameters;
         size_ = size;
@@ -50,28 +50,53 @@ class Genotype {
         calculateFitness_();
     }
 
-    void create(std::vector<int> genes, std::shared_ptr<cgp::State> state,
-        std::shared_ptr<cgp::Configuration> configuration,
-        std::shared_ptr<cgp::Size> size,
-        std::shared_ptr<cgp::GeneType> gene_type,
-        std::vector<std::function<T(std::vector<T>)> > instructionSet,
-        std::vector<std::shared_ptr<cgp::ParameterInterface> > parameters,
-        std::function<double(cgp::FitnessArgs<T>)> fitness_function) {
-        configuration_ = configuration;
-        instructionSet_ = instructionSet;
-        fitness_function_ = fitness_function;
-        parameters_ = parameters;
-        size_ = size;
-        state_ = state;
-        gene_type_ = gene_type;
+    Genotype<T>& operator=(const Genotype<T>& genotype) {
+        if (&genotype != this) {
+            configuration_ = genotype.configuration();
+            instruction_set_ = genotype.instructionSet();
+            fitness_function_ = genotype.fitnessFunction();
+            parameters_ = genotype.parameters();
+            size_ = genotype.size();
+            state_ = genotype.state();
+            gene_type_ = genotype.geneType();
 
-        genes_ = genes;
-        findActiveNodes_();
-        state_->setGenes(genes_);
-        calculateFitness_();
+            genes_ = genotype.genes();
+            findActiveNodes_();
+            state_->setGenes(genes_);
+            calculateFitness_();
+        }
+        return *this;
     }
 
-    std::vector<int> genes() {
+    std::shared_ptr<cgp::State> state() const {
+        return state_;
+    }
+
+    std::shared_ptr<cgp::Configuration> configuration() const {
+        return configuration_;
+    }
+
+    std::shared_ptr<cgp::Size> size() const {
+        return size_;
+    }
+
+    std::shared_ptr<cgp::GeneType> geneType() const {
+        return gene_type_;
+    }
+
+    std::vector<std::function<T(std::vector<T>)> > instructionSet() const {
+        return instruction_set_;
+    }
+
+    std::vector<std::shared_ptr<cgp::ParameterInterface> > parameters() const {
+        return parameters_;
+    }
+
+    std::function<double(cgp::FitnessArgs<T>)> fitnessFunction() const {
+        return fitness_function_;
+    }
+
+    std::vector<int> genes() const {
         return genes_;
     }
 
@@ -186,7 +211,7 @@ class Genotype {
  private:
     void calculateFitness_() {
         fitnessArgs_.setConfiguration(configuration_);
-        fitnessArgs_.setInstructionSet(instructionSet_);
+        fitnessArgs_.setInstructionSet(instruction_set_);
         fitnessArgs_.setSize(size_);
         fitnessArgs_.setState(state_);
         fitnessArgs_.setActiveNodes(active_nodes_);
@@ -254,7 +279,7 @@ class Genotype {
     std::shared_ptr<cgp::Size> size_;
     std::shared_ptr<cgp::State> state_;
     std::vector<int> genes_;
-    std::vector<std::function<T(std::vector<T>)> > instructionSet_;
+    std::vector<std::function<T(std::vector<T>)> > instruction_set_;
     std::vector<std::shared_ptr<cgp::ParameterInterface> > parameters_;
     std::function<double(cgp::FitnessArgs<T>)> fitness_function_;
 };

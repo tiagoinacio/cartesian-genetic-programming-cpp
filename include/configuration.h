@@ -14,6 +14,7 @@ class Configuration {
     Configuration();
 
     void isNodeOutputTheLastOne(bool isNodeOutputTheLastOne);
+    void setDebug(bool debug);
     void setConnections(unsigned int connections);
     void setParameters(unsigned int parameters);
     void setColumns(unsigned int columns);
@@ -30,6 +31,7 @@ class Configuration {
     void setRuns(unsigned int runs);
 
     bool isNodeOutputTheLastOne() const;
+    bool debug() const;
     unsigned int columns() const;
     unsigned int connections() const;
     std::string comparisonOperator() const;
@@ -54,6 +56,7 @@ class Configuration {
     double fitnessThreshold_;
     unsigned int functions_;
     unsigned int generations_;
+    bool debug_;
     bool isNodeOutputTheLastOne_;
     unsigned int levelsBack_;
     double mutationProbability_;

@@ -17,7 +17,10 @@ class Logger {
     bool m_owner;
 
  public:
-    Logger(std::ostream* stream, bool owner) {
+    Logger() : m_out(nullptr), m_owner(false), to_debug_(false) {
+    }
+    Logger(std::ostream* stream, bool owner, bool toDebug = false)
+        : to_debug_(toDebug), m_owner(false), m_out(nullptr) {
         setStream(stream, owner);
     }
     virtual ~Logger() {
@@ -25,9 +28,12 @@ class Logger {
     }
     template <typename T>
     Logger& operator<<(const T& object) {
-        if (!m_out)
-            throw std::runtime_error("No stream set for Logger class");
-        (*m_out) << object;
+        if (to_debug_) {
+            if (!m_out) {
+                throw std::runtime_error("No stream set for Logger class");
+            }
+            (*m_out) << object;
+        }
         return *this;
     }
 
@@ -38,6 +44,7 @@ class Logger {
         m_out = stream;
         m_owner = owner;
     }
+    bool to_debug_;
 };
 
 };       // namespace cgp

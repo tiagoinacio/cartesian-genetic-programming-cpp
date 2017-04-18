@@ -21,11 +21,16 @@ cgp::Configuration::Configuration()
       program_inputs_(1),
       program_outputs_(1),
       rows_(1),
+      debug_(true),
       runs_(5) {
 }
 
 void cgp::Configuration::setRows(unsigned int rows) {
     rows_ = rows;
+}
+
+void cgp::Configuration::setDebug(bool debug) {
+    debug_ = debug;
 }
 
 void cgp::Configuration::setFunctions(unsigned int functions) {
@@ -103,6 +108,10 @@ unsigned int cgp::Configuration::columns() const {
 
 unsigned int cgp::Configuration::functions() const {
     return functions_;
+}
+
+bool cgp::Configuration::debug() const {
+    return debug_;
 }
 
 unsigned int cgp::Configuration::parameters() const {

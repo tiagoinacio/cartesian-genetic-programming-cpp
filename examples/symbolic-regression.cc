@@ -55,7 +55,7 @@ class Fitness {
         static std::vector<double> x;
         static std::vector<double> y;
         static cgp::Logger log(
-            new std::ofstream("symbolic-regression.log", std::ios::trunc),
+            new std::ofstream("symbolic-regression.log", std::ios::trunc), true,
             true);
         for (double i = -1; i <= 1; i = i + 0.04) {
             x.push_back(i);
@@ -101,6 +101,7 @@ class Fitness {
             }
         }
 
+        std::cout << "score: " << score << "\n";
         return score;
     }
 };
@@ -112,6 +113,7 @@ class Configuration {
             new cgp::Configuration());
 
         configuration->isNodeOutputTheLastOne(false);
+        configuration->setDebug(true);
         configuration->setRows(1);
         configuration->setColumns(10);
         configuration->setLevelsBack(10);
