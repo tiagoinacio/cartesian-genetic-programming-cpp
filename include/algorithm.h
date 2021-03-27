@@ -1,8 +1,8 @@
 // Copyright 2017
 // Tiago Inácio
 
-#ifndef CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_ALGORITHM_H_
-#define CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_ALGORITHM_H_
+#ifndef INCLUDE_ALGORITHM_H_
+#define INCLUDE_ALGORITHM_H_
 
 namespace cgp {
 
@@ -14,4 +14,4 @@ class Algorithm {
 };
 
 }   // namespace cgp
-#endif   // CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_ALGORITHM_H_
+#endif   // INCLUDE_ALGORITHM_H_

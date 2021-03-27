@@ -1,8 +1,8 @@
 // Copyright 2017
 // Tiago Inácio
 
-#ifndef CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_EVENT_H_
-#define CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_EVENT_H_
+#ifndef INCLUDE_EVENT_H_
+#define INCLUDE_EVENT_H_
 
 #include <memory>
 
@@ -31,4 +31,4 @@ class Event {
 };
 
 }   // namespace cgp
-#endif   // CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_EVENT_H_
+#endif   // INCLUDE_EVENT_H_

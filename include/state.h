@@ -1,8 +1,8 @@
 // Copyright 2017
 // Tiago Inácio
 
-#ifndef CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_STATE_H_
-#define CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_STATE_H_
+#ifndef INCLUDE_STATE_H_
+#define INCLUDE_STATE_H_
 
 #include <vector>
 
@@ -29,4 +29,4 @@ class State {
 };
 
 }   // namespace cgp
-#endif   // CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_STATE_H_
+#endif   // INCLUDE_STATE_H_

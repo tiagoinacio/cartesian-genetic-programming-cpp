@@ -1,8 +1,8 @@
 // Copyright 2017
 // Tiago Inácio
 
-#ifndef CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_GENE_H_
-#define CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_GENE_H_
+#ifndef INCLUDE_GENE_H_
+#define INCLUDE_GENE_H_
 
 #include <stdlib.h>
 #include <time.h>
@@ -23,4 +23,4 @@ class Gene {
 };
 }   // namespace cgp
 
-#endif   // CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_GENE_H_
+#endif   // INCLUDE_GENE_H_

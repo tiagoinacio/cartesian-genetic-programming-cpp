@@ -1,8 +1,8 @@
 // Copyright 2017
 // Tiago Inácio
 
-#ifndef CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_PARAMETER_H_
-#define CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_PARAMETER_H_
+#ifndef INCLUDE_PARAMETER_H_
+#define INCLUDE_PARAMETER_H_
 
 #include <memory>
 #include <stdexcept>
@@ -72,4 +72,4 @@ std::shared_ptr<cgp::Parameter<T> > createParameter(Args... as) {
 
 }   // namespace cgp
 
-#endif   // CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_PARAMETER_H_
+#endif   // INCLUDE_PARAMETER_H_

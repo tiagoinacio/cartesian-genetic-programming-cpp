@@ -1,8 +1,8 @@
 // Copyright 2017
 // Tiago Inácio
 
-#ifndef CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_LOGGER_H_
-#define CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_LOGGER_H_
+#ifndef INCLUDE_LOGGER_H_
+#define INCLUDE_LOGGER_H_
 
 #include <ctime>
 #include <fstream>
@@ -48,4 +48,4 @@ class Logger {
 };
 
 };       // namespace cgp
-#endif   // CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_LOGGER_H_
+#endif   // INCLUDE_LOGGER_H_

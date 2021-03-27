@@ -1,8 +1,8 @@
 // Copyright 2017
 // Tiago Inácio
 
-#ifndef CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_SIZE_H_
-#define CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_SIZE_H_
+#ifndef INCLUDE_SIZE_H_
+#define INCLUDE_SIZE_H_
 
 #include <memory>
 
@@ -51,4 +51,4 @@ class Size {
 };
 
 }   // namespace cgp
-#endif   // CARTESIAN_GENETIC_PROGRAMMING_CPP_INCLUDE_SIZE_H_
+#endif   // INCLUDE_SIZE_H_
